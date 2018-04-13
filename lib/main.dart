@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Service.dart';
 
 void main() => runApp(new MyApp());
 
@@ -20,6 +21,52 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: new MyTabbedPage(),
+    );
+  }
+}
+
+class MyTabbedPage extends StatefulWidget {
+  const MyTabbedPage({ Key key }) : super(key: key);
+  @override
+  _MyTabbedPageState createState() => new _MyTabbedPageState();
+}
+
+class _MyTabbedPageState extends State<MyTabbedPage> with SingleTickerProviderStateMixin {
+  final List<Tab> myTabs = <Tab>[
+    new Tab(text: 'LEFT'),
+    new Tab(text: 'RIGHT'),
+  ];
+
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = new TabController(vsync: this, length: myTabs.length);
+  }
+
+ @override
+ void dispose() {
+   _tabController.dispose();
+   super.dispose();
+ }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        bottom: new TabBar(
+          controller: _tabController,
+          tabs: myTabs,
+        ),
+      ),
+      body: new TabBarView(
+        controller: _tabController,
+        children: myTabs.map((Tab tab) {
+          return new Center(child: new Text(tab.text));
+        }).toList(),
+      ),
     );
   }
 }
@@ -52,7 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+      Service().update();
+      //_counter++;
     });
   }
 
