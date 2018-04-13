@@ -1,0 +1,66 @@
+PODS:
+  - Firebase/Core (4.11.0):
+    - FirebaseAnalytics (= 4.1.0)
+    - FirebaseCore (= 4.0.18)
+  - Firebase/Database (4.11.0):
+    - Firebase/Core
+    - FirebaseDatabase (= 4.1.5)
+  - firebase_core (0.0.1):
+    - Firebase/Core
+    - Flutter
+  - firebase_database (0.0.1):
+    - Firebase/Database
+    - Flutter
+  - FirebaseAnalytics (4.1.0):
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - nanopb (~> 0.3)
+  - FirebaseCore (4.0.18):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseDatabase (4.1.5):
+    - FirebaseAnalytics (~> 4.1)
+    - FirebaseCore (~> 4.0)
+    - leveldb-library (~> 1.18)
+  - FirebaseInstanceID (2.0.10):
+    - FirebaseCore (~> 4.0)
+  - Flutter (1.0.0)
+  - GoogleToolboxForMac/Defines (2.1.3)
+  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - leveldb-library (1.20)
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
+
+DEPENDENCIES:
+  - firebase_core (from `Pods/.symlinks/plugins/firebase_core-0.1.2/ios`)
+  - firebase_database (from `Pods/.symlinks/plugins/firebase_database-0.4.3/ios`)
+  - Flutter (from `Pods/.symlinks/flutter/ios`)
+
+EXTERNAL SOURCES:
+  firebase_core:
+    :path: Pods/.symlinks/plugins/firebase_core-0.1.2/ios
+  firebase_database:
+    :path: Pods/.symlinks/plugins/firebase_database-0.4.3/ios
+  Flutter:
+    :path: Pods/.symlinks/flutter/ios
+
+SPEC CHECKSUMS:
+  Firebase: cc13dfab1038c8b45d7903e01fc690451d6d0b24
+  firebase_core: 77642556f0dc44ac1aa4d867813d0962dead61bf
+  firebase_database: b78d1e592c4f3cf826497dae722116a937aa99e0
+  FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
+  FirebaseCore: b981f47e5254cbcfdeb483355300d743f6fcab2c
+  FirebaseDatabase: 5f0bc6134c5c237cf55f9e1249d406770a75eafd
+  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+
+PODFILE CHECKSUM: 0420ab312a523ae0eecfb1fc19ea51dd82cc17c7
+
+COCOAPODS: 1.3.1

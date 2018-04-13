@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Service.dart';
 import 'package:flutter_calendar/flutter_calendar.dart';
 
 
@@ -37,6 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter() {
     setState(() {
       _counter++;
+      Service().update();
+
     });
   }
 
@@ -45,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
-        
+
       ),
       bottomNavigationBar: new BottomNavigationBar(
           currentIndex: selectedTabIndex,
