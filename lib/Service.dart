@@ -18,14 +18,17 @@ class Service {
   void update() {
     var yearString = "2018";
     var monthString = "03";
-    var url = baseURL + "parking/\(yearString)-\(monthString)-01";
+    var url = baseURL + "parking/$yearString-$monthString-01";
 
     print(url);
-
+    
     var httpClient = new HttpClient();
     var uri = new Uri.https('api.github.com', '/users/1');
     
-    var t = httpClient.get("api", 80, "/users/1");
+
+    var t = httpClient.get("mobileoffice-api-poc.azurewebsites.net", 443, "/ms-parkApp-0.0.1-SNAPSHOT/$baseURL");
+    
+    
     t.then((value) =>
      print(value) 
     );
