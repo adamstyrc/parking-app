@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'Service.dart';
 import 'package:flutter_calendar/flutter_calendar.dart';
+import 'Calendarro.dart';
 
 
 void main() => runApp(new MyApp());
@@ -59,23 +60,24 @@ class _MyHomePageState extends State<MyHomePage> {
             new BottomNavigationBarItem(icon: new Icon(Icons.account_circle), title: new Text('Account')),
           ]),
       body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Calendar(
-              showCalendarPickerIcon: false,
-              showTodayAction: false,
-              isExpandable: true
-            ),
-            new Text(
-              'You have pushed the button this many times:',
-            ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+        child: new Calendarro(),
+//        child: new Column(
+//          mainAxisAlignment: MainAxisAlignment.center,
+//          children: <Widget>[
+//            new Calendar(
+//              showCalendarPickerIcon: false,
+//              showTodayAction: false,
+//              isExpandable: true
+//            ),
+//            new Text(
+//              'You have pushed the button this many times:',
+//            ),
+//            new Text(
+//              '$_counter',
+//              style: Theme.of(context).textTheme.display1,
+//            ),
+//          ],
+//        ),
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: _incrementCounter,
