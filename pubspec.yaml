@@ -8,7 +8,7 @@ dependencies:
   cupertino_icons: ^0.1.0
   flutter_calendar: ^0.0.1
   json: any
-  firebase_database: any
+  #firebase_database: any
   async_loader: "^0.1.1"
   json_annotation: ^0.2.2
 
