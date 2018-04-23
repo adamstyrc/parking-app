@@ -5,6 +5,8 @@ import 'package:json/json.dart';
 import 'package:http_parser/http_parser.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'Models/User.dart';
+import 'dart:convert';
 
 class Service {
   static final _singleton = new Service._internal();
@@ -52,7 +54,11 @@ class Service {
    .whenComplete(() => print('completed'))
    .then((http.Response r) => r.body)
    .then((body) =>
-    print(body) 
-   );
+      User.fromJson(JSON.decode(body))
+   )
+   .then((user) =>
+     print(user)
+   )
+   ;
   }
 }
