@@ -40,6 +40,10 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
       Service().update();
+      Service()
+        .getMonth(12, 2018)
+        .asObservable()
+        .listen((data)=>print(data));
 
     });
   }
