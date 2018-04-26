@@ -5,40 +5,82 @@ import 'package:flutter/material.dart';
 class Calendarro extends StatefulWidget {
 
   @override
-  CalendarroState createState() => new CalendarroState();
+  CalendarroState createState() => new CalendarroState(
+      startDate: DateTime(2018, 4, 24),
+      endDate: DateTime(2018, 5, 22),
+    displayMode: DisplayMode.WEEKS
+  );
 
 }
 
+enum DisplayMode { MONTHS, WEEKS }
+
 class CalendarroState extends State<Calendarro> {
+  CalendarroState({
+    this.displayMode,
+    this.startDate,
+    this.endDate
+  });
+
+  DateTime startDate;
+  DateTime endDate;
+  DisplayMode displayMode;
+
+  int pagesCount;
+
   @override
   Widget build(BuildContext context) {
-    return new PageView.builder(
-      itemBuilder: (context, position) => new CalendarPage(),
-      itemCount: 10,
+    int daysRange = endDate.difference(startDate).inDays;
+    pagesCount = daysRange ~/ 7 + 1;
+    return new Container(
+        child: new PageView.builder(
+      itemBuilder: (context, position) => buildCalendarPage(position),
+      itemCount: pagesCount,
+
+        ),
     );
+  }
+
+  Widget buildCalendarPage(int position) {
+    int startDayOffset = startDate.weekday - DateTime.monday;
+
+    DateTime pageStartDate;
+    DateTime pageEndDate;
+    if (position == 0) {
+      pageStartDate = startDate;
+      pageEndDate = startDate.add(new Duration(days: 6 - startDayOffset));
+    } else if (position == pagesCount - 1) {
+      pageStartDate = startDate.add(new Duration(days: 7 * position - startDayOffset));
+      pageEndDate = endDate;
+    } else {
+      pageStartDate = startDate.add(new Duration(days: 7 * position - startDayOffset));
+      pageEndDate = startDate.add(new Duration(days: 7 * position + 6 - startDayOffset));
+    }
+    //DisplayMode == WEEKS
+
+    return new CalendarPage(
+        pageStartDate: pageStartDate,
+        pageEndDate: pageEndDate,
+        startDayOffset: startDayOffset);
+
+
   }
 }
 
 class CalendarPage extends StatelessWidget {
+  CalendarPage({
+    this.pageStartDate,
+    this.pageEndDate,
+    this.startDayOffset
+});
+
+  DateTime pageStartDate;
+  DateTime pageEndDate;
+  int startDayOffset;
 
   @override
   Widget build(BuildContext context) {
     return new Container(
-//      child: new GridView.count(
-//        primary: false,
-//        padding: const EdgeInsets.all(20.0),
-//        crossAxisSpacing: 10.0,
-//        crossAxisCount: 2,
-//        children: <Widget>[
-//          const Text('He\'d have you all unravel at the'),
-//          const Text('Heed not the rabble'),
-//          const Text('Sound of screams but the'),
-//          const Text('Who scream'),
-//          const Text('Revolution is coming...'),
-//          const Text('Revolution, they...'),
-//        ],
-//      )
-
         child: Column(
             children: buildRows()
         )
@@ -49,43 +91,62 @@ class CalendarPage extends StatelessWidget {
     List<Widget> rows = [];
     rows.add(new CalendarDayLabelsView());
 
-    for (var i = 0; i < 2; i++) {
-      rows.add(buildCalendarRow());
-    }
-
+    rows.add(
+      new Row(children: buildCalendarItems())
+    );
+//    DateTime currentDate = pageStartDate;
+//    while (currentDate.day != pageEndDate.day) {
+//      rows.add(buildCalendarRow(pageStartDate.add(new Duration(days: 7*i))));
+//    }
     return rows;
   }
 
-  Widget buildCalendarRow() {
-    return new Row(
-      children: <Widget>[
-        CalendarDayItem(),
-        CalendarDayItem(),
-        CalendarDayItem(),
-        CalendarDayItem(),
-        CalendarDayItem(),
-        CalendarDayItem(),
-        CalendarDayItem()
-      ],
-    );
+  List<Widget> buildCalendarItems() {
+    List<Widget> items = [];
+
+
+    for (int i = 0; i < 7; i++) {
+      if (i + 1 >= pageStartDate.weekday && i + 1 <= pageEndDate.weekday) {
+        DateTime dateTime = pageStartDate.add(new Duration(days: i));
+        items.add(CalendarDayItem(date: dateTime));
+      } else {
+        items.add(new Expanded(child: new Text(""),));
+      }
+    }
+
+    return items;
   }
 
-//    new GridView.builder(gridDelegate: null, itemBuilder: null)
-//    new Row(
-//      children: <Widget>[new Expanded(
-//          child: new Text("Sun", textAlign: TextAlign.center)
-//      )]
-//    )
-//    ]);
-
-
+  Widget buildCalendarItem(DateTime date) {
+    return new CalendarDayItem(date: date);
+  }
 }
 
 class CalendarDayItem extends StatelessWidget {
+  CalendarDayItem({this.date});
+
+  DateTime date;
+  int count = 0;
+
   @override
   Widget build(BuildContext context) {
+    bool isWeekend = date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
+    var textColor = isWeekend ? Colors.grey : Colors.black;
+
     return new Expanded(
-        child: new Text("10", textAlign: TextAlign.center)
+          child: new Container(
+//          decoration: new BoxDecoration(
+//              shape: BoxShape.circle,
+//              color: const Color(0xff7c94b6)
+//          ),
+            height: 40.0,
+            child: new Center(
+    child: new Text("${date.day}",
+        textAlign: TextAlign.center,
+      style: new TextStyle(color: textColor),
+    )
+            )
+          )
     );
   }
 }

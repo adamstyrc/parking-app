@@ -59,8 +59,17 @@ class _MyHomePageState extends State<MyHomePage> {
             new BottomNavigationBarItem(icon: new Icon(Icons.calendar_today), title: new Text('Planner')),
             new BottomNavigationBarItem(icon: new Icon(Icons.account_circle), title: new Text('Account')),
           ]),
-      body: new Center(
-        child: new Calendarro(),
+      body: new Container(
+        height: 200.0,
+    child: new Column(
+    children: <Widget>[
+    new Expanded(
+    child: new Calendarro()
+    )
+    ],
+    )
+
+
 //        child: new Column(
 //          mainAxisAlignment: MainAxisAlignment.center,
 //          children: <Widget>[
