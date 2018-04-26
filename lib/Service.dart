@@ -7,6 +7,8 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'Models/User.dart';
 import 'dart:convert';
+import 'package:rxdart/rxdart.dart';
+import 'Utils/Variable.dart';
 
 class Service {
   static final _singleton = new Service._internal();
@@ -15,6 +17,8 @@ class Service {
   factory Service() {
     return _singleton;
   }
+
+  var loggedUser = Variable<User>(null);
 
   Service._internal();
 
@@ -40,6 +44,15 @@ class Service {
     //return responseBody;
   }
 
+  void login(String login, String password) {
+    this.loggedUser.value = null;
+  }
+
+  Variable <Month> getMonth(int month, int year) {
+    var month = Month.fromJson({});
+    return Variable(month); 
+  }
+
   void update() {
     new http.Client()
    .get(
@@ -56,9 +69,7 @@ class Service {
    .then((body) =>
       User.fromJson(JSON.decode(body))
    )
-   .then((user) =>
-     print(user)
-   )
+   .then((user) => this.loggedUser.value = user)
    ;
   }
 }
