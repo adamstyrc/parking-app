@@ -63,35 +63,12 @@ class _MyHomePageState extends State<MyHomePage> {
             new BottomNavigationBarItem(icon: new Icon(Icons.calendar_today), title: new Text('Planner')),
             new BottomNavigationBarItem(icon: new Icon(Icons.account_circle), title: new Text('Account')),
           ]),
-      body: new Container(
-        height: 200.0,
-    child: new Column(
-    children: <Widget>[
-    new Expanded(
-    child: new Calendarro()
-    )
-    ],
-    )
-
-
-//        child: new Column(
-//          mainAxisAlignment: MainAxisAlignment.center,
-//          children: <Widget>[
-//            new Calendar(
-//              showCalendarPickerIcon: false,
-//              showTodayAction: false,
-//              isExpandable: true
-//            ),
-//            new Text(
-//              'You have pushed the button this many times:',
-//            ),
-//            new Text(
-//              '$_counter',
-//              style: Theme.of(context).textTheme.display1,
-//            ),
-//          ],
-//        ),
+      body: new Column(
+        children: <Widget>[
+          new Material(child: new Calendarro(), elevation: 4.0, color: Colors.orange)
+        ]
       ),
+
       floatingActionButton: new FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',

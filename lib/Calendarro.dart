@@ -32,13 +32,13 @@ class CalendarroState extends State<Calendarro> {
   Widget build(BuildContext context) {
     int daysRange = endDate.difference(startDate).inDays;
     pagesCount = daysRange ~/ 7 + 1;
-    return new Container(
-        child: new PageView.builder(
-      itemBuilder: (context, position) => buildCalendarPage(position),
-      itemCount: pagesCount,
 
-        ),
-    );
+    return new Container(
+      height: 60.0,
+      child: new PageView.builder(
+        itemBuilder: (context, position) => buildCalendarPage(position),
+        itemCount: pagesCount,
+    ));
   }
 
   Widget buildCalendarPage(int position) {
@@ -82,6 +82,7 @@ class CalendarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Container(
         child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: buildRows()
         )
       );
@@ -94,16 +95,12 @@ class CalendarPage extends StatelessWidget {
     rows.add(
       new Row(children: buildCalendarItems())
     );
-//    DateTime currentDate = pageStartDate;
-//    while (currentDate.day != pageEndDate.day) {
-//      rows.add(buildCalendarRow(pageStartDate.add(new Duration(days: 7*i))));
-//    }
+
     return rows;
   }
 
   List<Widget> buildCalendarItems() {
     List<Widget> items = [];
-
 
     for (int i = 0; i < 7; i++) {
       if (i + 1 >= pageStartDate.weekday && i + 1 <= pageEndDate.weekday) {
