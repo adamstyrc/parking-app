@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 
 class Calendarro extends StatefulWidget {
@@ -130,18 +130,29 @@ class CalendarDayItem extends StatelessWidget {
     bool isWeekend = date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
     var textColor = isWeekend ? Colors.grey : Colors.black;
 
+    var today = DateTime.now();
+    bool isToday = today.day == date.day && today.month == date.month && today.year == date.year;
+    BoxDecoration boxDecoration;
+    if (isToday) {
+      boxDecoration = new BoxDecoration(border: new Border.all(
+        color: Colors.white,
+        width: 1.0,
+      ),
+          shape: BoxShape.circle);
+    } else if (date.day == 28){
+      boxDecoration = new BoxDecoration(color: Colors.white, shape: BoxShape.circle);
+    }
+
+
     return new Expanded(
           child: new Container(
-//          decoration: new BoxDecoration(
-//              shape: BoxShape.circle,
-//              color: const Color(0xff7c94b6)
-//          ),
             height: 40.0,
+            decoration: boxDecoration,
             child: new Center(
-    child: new Text("${date.day}",
-        textAlign: TextAlign.center,
-      style: new TextStyle(color: textColor),
-    )
+                child: new Text("${date.day}",
+                  textAlign: TextAlign.center,
+                  style: new TextStyle(color: textColor),
+                )
             )
           )
     );
