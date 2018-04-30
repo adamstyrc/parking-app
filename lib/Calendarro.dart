@@ -102,10 +102,12 @@ class CalendarPage extends StatelessWidget {
   List<Widget> buildCalendarItems() {
     List<Widget> items = [];
 
+    DateTime currentDate = pageStartDate;
     for (int i = 0; i < 7; i++) {
       if (i + 1 >= pageStartDate.weekday && i + 1 <= pageEndDate.weekday) {
-        DateTime dateTime = pageStartDate.add(new Duration(days: i));
-        items.add(CalendarDayItem(date: dateTime));
+
+        items.add(CalendarDayItem(date: currentDate));
+        currentDate = currentDate.add(new Duration(days: 1));
       } else {
         items.add(new Expanded(child: new Text(""),));
       }
