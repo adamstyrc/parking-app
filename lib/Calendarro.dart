@@ -4,13 +4,42 @@ import 'package:flutter/material.dart';
 
 class Calendarro extends StatefulWidget {
 
-  @override
-  CalendarroState createState() => new CalendarroState(
-      startDate: DateTime(2018, 4, 24),
-      endDate: DateTime(2018, 5, 22),
-    displayMode: DisplayMode.WEEKS
-  );
+  Calendarro({
+    Key key,
+    this.startDate,
+    this.endDate,
+    this.displayMode
+  });
 
+  DateTime startDate;
+  DateTime endDate;
+  DisplayMode displayMode;
+  CalendarroState state;
+
+  static CalendarroState of(BuildContext context) =>
+      context.ancestorStateOfType(const TypeMatcher<CalendarroState>());
+
+  @override
+  CalendarroState createState() {
+    state = new CalendarroState(
+        startDate: startDate,
+        endDate: endDate,
+        displayMode: displayMode
+    );
+    return state;
+  }
+
+//  @override
+//  CalendarroState createState() => new CalendarroState(
+//      startDate: startDate,
+//      endDate: endDate,
+//    displayMode: displayMode
+//  );
+
+
+  void setSelectedDate(DateTime date) {
+    state.setSelectedDate(date);
+  }
 }
 
 enum DisplayMode { MONTHS, WEEKS }
@@ -25,8 +54,15 @@ class CalendarroState extends State<Calendarro> {
   DateTime startDate;
   DateTime endDate;
   DisplayMode displayMode;
+  DateTime selectedDate = DateTime(2018, 5, 10);
 
   int pagesCount;
+
+  void setSelectedDate(DateTime date) {
+    setState(() {
+      selectedDate = date;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +76,7 @@ class CalendarroState extends State<Calendarro> {
         itemCount: pagesCount,
     ));
   }
+
 
   Widget buildCalendarPage(int position) {
     int startDayOffset = startDate.weekday - DateTime.monday;
@@ -80,7 +117,7 @@ class CalendarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return new  Container(
         child: Column(
             mainAxisSize: MainAxisSize.min,
             children: buildRows()
@@ -117,7 +154,7 @@ class CalendarPage extends StatelessWidget {
   }
 
   Widget buildCalendarItem(DateTime date) {
-    return new CalendarDayItem(date: date);
+    return new CalendarDayItem(date: date, );
   }
 }
 
@@ -134,15 +171,21 @@ class CalendarDayItem extends StatelessWidget {
 
     var today = DateTime.now();
     bool isToday = today.day == date.day && today.month == date.month && today.year == date.year;
+
+//    Calendarro calendarro = context.ancestorWidgetOfExactType(Calendarro);
+    CalendarroState calendarro = context.ancestorStateOfType(TypeMatcher<CalendarroState>());
+
+    bool isSelected = calendarro.selectedDate.day == date.day;
+
     BoxDecoration boxDecoration;
-    if (isToday) {
+    if (isSelected) {
+      boxDecoration = new BoxDecoration(color: Colors.white, shape: BoxShape.circle);
+    } else if (isToday) {
       boxDecoration = new BoxDecoration(border: new Border.all(
         color: Colors.white,
         width: 1.0,
       ),
           shape: BoxShape.circle);
-    } else if (date.day == 28){
-      boxDecoration = new BoxDecoration(color: Colors.white, shape: BoxShape.circle);
     }
 
 
