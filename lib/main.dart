@@ -3,6 +3,7 @@ import 'Service.dart';
 import 'package:flutter_calendar/flutter_calendar.dart';
 import 'Calendarro.dart';
 import 'DaysView.dart';
+import 'PlannerView.dart';
 
 
 void main() => runApp(new MyApp());
@@ -89,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           new Material(child: new Container(height: 56.0), elevation: 4.0, color: Colors.orange),
           new Stack(children: <Widget>[
             new Offstage(offstage: selectedTabIndex != 0, child: new DaysView()),
-            new Offstage(offstage: selectedTabIndex != 1, child: new Text("bbbb2")),
+            new Offstage(offstage: selectedTabIndex != 1, child: new PlannerView()),
             new Offstage(offstage: selectedTabIndex != 2, child: new Text("ccc2")),
           ])
         ]

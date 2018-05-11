@@ -20,9 +20,13 @@ class DaysView extends StatelessWidget {
         child: new PageView.builder(
           itemBuilder: (context, position) => buildDayView(position),
           itemCount: 15,
+          controller: new PageController(),
           onPageChanged: (position)  {
             var selectedDate = calendarro.startDate.add(new Duration(days: position));
             calendarro.setSelectedDate(selectedDate);
+            calendarro.setCurrentDate(selectedDate);
+//            calendarro.state.pageView.controller.nextPage(duration: new Duration(milliseconds: 400),
+//            curve: new ElasticInCurve());
           }
         )
     )

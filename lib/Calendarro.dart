@@ -29,16 +29,12 @@ class Calendarro extends StatefulWidget {
     return state;
   }
 
-//  @override
-//  CalendarroState createState() => new CalendarroState(
-//      startDate: startDate,
-//      endDate: endDate,
-//    displayMode: displayMode
-//  );
-
-
   void setSelectedDate(DateTime date) {
     state.setSelectedDate(date);
+  }
+
+  void setCurrentDate(DateTime date) {
+    state.setCurrentDate(date);
   }
 }
 
@@ -56,11 +52,21 @@ class CalendarroState extends State<Calendarro> {
   DisplayMode displayMode;
   DateTime selectedDate = DateTime(2018, 5, 10);
 
+  int startDayOffset;
   int pagesCount;
+  PageView pageView;
 
   void setSelectedDate(DateTime date) {
     setState(() {
       selectedDate = date;
+    });
+  }
+
+  void setCurrentDate(DateTime date) {
+    setState(() {
+      int daysDifference = date.difference(startDate).inDays ;
+      int pageForDate = (daysDifference + startDayOffset) ~/ 7;
+      pageView.controller.jumpToPage(pageForDate);
     });
   }
 
@@ -69,18 +75,21 @@ class CalendarroState extends State<Calendarro> {
     int daysRange = endDate.difference(startDate).inDays;
     pagesCount = daysRange ~/ 7 + 1;
 
-    return new Container(
-      height: 60.0,
-      child: new PageView.builder(
+    startDayOffset = startDate.weekday - DateTime.monday;
+
+    pageView = new PageView.builder(
         itemBuilder: (context, position) => buildCalendarPage(position),
         itemCount: pagesCount,
-    ));
+      controller: new PageController(),
+    );
+
+    return new Container(
+      height: 60.0,
+      child: pageView);
   }
 
 
   Widget buildCalendarPage(int position) {
-    int startDayOffset = startDate.weekday - DateTime.monday;
-
     DateTime pageStartDate;
     DateTime pageEndDate;
     if (position == 0) {
@@ -156,6 +165,9 @@ class CalendarPage extends StatelessWidget {
   Widget buildCalendarItem(DateTime date) {
     return new CalendarDayItem(date: date, );
   }
+
+  void handleTap() {
+  }
 }
 
 class CalendarDayItem extends StatelessWidget {
@@ -163,9 +175,11 @@ class CalendarDayItem extends StatelessWidget {
 
   DateTime date;
   int count = 0;
+  BuildContext context;
 
   @override
   Widget build(BuildContext context) {
+    context = context;
     bool isWeekend = date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
     var textColor = isWeekend ? Colors.grey : Colors.black;
 
@@ -202,6 +216,12 @@ class CalendarDayItem extends StatelessWidget {
           )
     );
   }
+
+  void handleTap() {
+    CalendarroState calendarro = context.ancestorStateOfType(TypeMatcher<CalendarroState>());
+    calendarro.setSelectedDate(date);
+  }
+
 }
 
 class CalendarDayLabelsView extends StatelessWidget {
