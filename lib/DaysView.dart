@@ -22,11 +22,15 @@ class DaysView extends StatelessWidget {
           itemCount: 15,
           controller: new PageController(),
           onPageChanged: (position)  {
-            var selectedDate = calendarro.startDate.add(new Duration(days: position));
+            var nextDay = (calendarro.startDate.weekday - 1 + position);
+            var nextDateWeekday = nextDay % 5;
+            var nextDateWeek = (nextDay / 5).floor();
+
+            var weekdayDifference = nextDateWeekday + 1 - calendarro.startDate.weekday;
+            var selectedDate = calendarro.startDate.add(new Duration(days: (nextDateWeek * 7 + weekdayDifference)));
+
             calendarro.setSelectedDate(selectedDate);
             calendarro.setCurrentDate(selectedDate);
-//            calendarro.state.pageView.controller.nextPage(duration: new Duration(milliseconds: 400),
-//            curve: new ElasticInCurve());
           }
         )
     )
