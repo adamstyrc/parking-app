@@ -44,17 +44,24 @@ class CalendarroState extends State<Calendarro> {
   CalendarroState({
     this.displayMode,
     this.startDate,
-    this.endDate
+    this.endDate,
   });
 
   DateTime startDate;
   DateTime endDate;
   DisplayMode displayMode;
-  DateTime selectedDate = DateTime(2018, 5, 10);
+  DateTime selectedDate;
 
   int startDayOffset;
   int pagesCount;
   PageView pageView;
+
+  @override
+  void initState() {
+    super.initState();
+
+    selectedDate = startDate;
+  }
 
   void setSelectedDate(DateTime date) {
     setState(() {

@@ -50,8 +50,6 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         .listen((data)=>print(data));
 
     });
-
-
   }
 
   @override
