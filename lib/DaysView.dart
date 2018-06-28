@@ -11,6 +11,7 @@ class DaysView extends StatelessWidget {
       startDate: DateTime.now(),
       endDate: DateTime.now().add(new Duration(days: 30)),
       displayMode: DisplayMode.WEEKS,
+      dayTileBuilder: DaysViewTileBuilder(),
     );
 
     return new Column(children: <Widget>[
@@ -52,4 +53,62 @@ class DaysView extends StatelessWidget {
   }
 
 
+}
+
+class DaysViewTileBuilder extends DayTileBuilder {
+
+  DateTime date;
+  CalendarroState calendarro;
+//  int count = 0;
+//  BuildContext context;
+
+  @override
+  Widget build(BuildContext context, DateTime date) {
+    this.date = date;
+    context = context;
+    bool isWeekend = date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
+    var textColor = isWeekend ? Colors.grey : Colors.black;
+
+    var today = DateTime.now();
+    bool isToday = today.day == date.day && today.month == date.month && today.year == date.year;
+
+//    Calendarro calendarro = context.ancestorWidgetOfExactType(Calendarro);
+//    CalendarroState calendarro = context.ancestorStateOfType(TypeMatcher<CalendarroState>());
+    calendarro = Calendarro.of(context) as CalendarroState;
+
+    bool isSelected = calendarro.selectedDate.day == date.day;
+
+    BoxDecoration boxDecoration;
+    if (isSelected) {
+      boxDecoration = new BoxDecoration(color: Colors.white, shape: BoxShape.circle);
+    } else if (isToday) {
+      boxDecoration = new BoxDecoration(border: new Border.all(
+        color: Colors.white,
+        width: 1.0,
+      ),
+          shape: BoxShape.circle);
+    }
+
+
+    return new Expanded(
+        child: new GestureDetector(
+          child: new Container(
+              height: 40.0,
+              decoration: boxDecoration,
+              child:
+              new Center(
+                  child: new Text("${date.day}",
+                    textAlign: TextAlign.center,
+                    style: new TextStyle(color: textColor),
+                  )
+              )
+          ), onTap: handleTap,
+        )
+    );
+  }
+
+  void handleTap() {
+    calendarro.setSelectedDate(date);
+    calendarro.setCurrentDate(date);
+  }
 }

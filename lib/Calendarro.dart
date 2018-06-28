@@ -2,19 +2,25 @@ import 'dart:async';
 import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 
+abstract class DayTileBuilder {
+  Widget build(BuildContext context, DateTime date);
+}
+
 class Calendarro extends StatefulWidget {
 
   Calendarro({
     Key key,
     this.startDate,
     this.endDate,
-    this.displayMode
+    this.displayMode,
+    this.dayTileBuilder
   });
 
   DateTime startDate;
   DateTime endDate;
   DisplayMode displayMode;
   CalendarroState state;
+  DayTileBuilder dayTileBuilder;
 
   static CalendarroState of(BuildContext context) =>
       context.ancestorStateOfType(const TypeMatcher<CalendarroState>());
@@ -24,7 +30,9 @@ class Calendarro extends StatefulWidget {
     state = new CalendarroState(
         startDate: startDate,
         endDate: endDate,
-        displayMode: displayMode
+        displayMode: displayMode,
+      dayBuilder: dayTileBuilder
+
     );
     return state;
   }
@@ -45,12 +53,14 @@ class CalendarroState extends State<Calendarro> {
     this.displayMode,
     this.startDate,
     this.endDate,
+    this.dayBuilder
   });
 
   DateTime startDate;
   DateTime endDate;
   DisplayMode displayMode;
   DateTime selectedDate;
+  DayTileBuilder dayBuilder;
 
   int startDayOffset;
   int pagesCount;
@@ -156,12 +166,12 @@ class CalendarPage extends StatelessWidget {
     return new  Container(
         child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: buildRows()
+            children: buildRows(context)
         )
       );
   }
 
-  List<Widget> buildRows() {
+  List<Widget> buildRows(BuildContext context) {
     List<Widget> rows = [];
     rows.add(new CalendarDayLabelsView());
 
@@ -171,7 +181,7 @@ class CalendarPage extends StatelessWidget {
 
     if (pageEndDate.isAfter(weekLastDayDate)) {
       rows.add(
-          new Row(children: buildCalendarRow(pageStartDate, weekLastDayDate))
+          new Row(children: buildCalendarRow(context, pageStartDate, weekLastDayDate))
       );
 
       for (var i = 1; i < 5; i++) {
@@ -190,26 +200,33 @@ class CalendarPage extends StatelessWidget {
 
         rows.add(
             new Row(children: buildCalendarRow(
-                nextWeekFirstDayDate, nextWeekLastDayDate))
+                context, nextWeekFirstDayDate, nextWeekLastDayDate))
         );
       }
 
     } else {
       rows.add(
-          new Row(children: buildCalendarRow(pageStartDate, weekLastDayDate))
+          new Row(children: buildCalendarRow(context, pageStartDate, weekLastDayDate))
       );
     }
 
     return rows;
   }
 
-  List<Widget> buildCalendarRow(DateTime rowStartDate, DateTime rowEndDate) {
+  List<Widget> buildCalendarRow(BuildContext context, DateTime rowStartDate, DateTime rowEndDate) {
     List<Widget> items = [];
 
     DateTime currentDate = rowStartDate;
     for (int i = 0; i < 7; i++) {
       if (i + 1 >= rowStartDate.weekday && i + 1 <= rowEndDate.weekday) {
-        items.add(CalendarDayItem(date: currentDate));
+//        items.add(CalendarDayItem(date: currentDate));
+        CalendarroState calendarro = Calendarro.of(context) as CalendarroState;
+        if (calendarro.dayBuilder != null) {
+          Widget dayTile = calendarro.dayBuilder.build(context, currentDate);
+          items.add(dayTile);
+        } else {
+          items.add(CalendarDayItem(date: currentDate));
+        }
         currentDate = currentDate.add(new Duration(days: 1));
       } else {
         items.add(new Expanded(child: new Text(""),));
