@@ -136,8 +136,7 @@ class CalendarroState extends State<Calendarro> {
 
     return new CalendarPage(
         pageStartDate: pageStartDate,
-        pageEndDate: pageEndDate,
-        startDayOffset: startDayOffset);
+        pageEndDate: pageEndDate);
 
 
   }
@@ -147,12 +146,10 @@ class CalendarPage extends StatelessWidget {
   CalendarPage({
     this.pageStartDate,
     this.pageEndDate,
-    this.startDayOffset
 });
 
   DateTime pageStartDate;
   DateTime pageEndDate;
-  int startDayOffset;
 
   @override
   Widget build(BuildContext context) {
@@ -169,23 +166,37 @@ class CalendarPage extends StatelessWidget {
     rows.add(new CalendarDayLabelsView());
 
 
-    rows.add(
-      new Row(children: buildCalendarRow(pageStartDate, pageStartDate.add(new Duration(days: 6 - startDayOffset))))
-    );
+    int startDayOffset = pageStartDate.weekday - DateTime.monday;
+    DateTime weekLastDayDate = pageStartDate.add(new Duration(days: 6 - startDayOffset));
 
-    for( var i = 1 ; i < 5; i++) {
-      DateTime nextWeekFirstDayDate = pageStartDate.add(new Duration(days: 7 * i - startDayOffset));
-
-      if (nextWeekFirstDayDate.isAfter(pageEndDate)) {
-        break;
-      }
-
-      DateTime nextWeekLastDayDate = pageStartDate.add(new Duration(days: 7 * i - startDayOffset + 6));
-      if (nextWeekLastDayDate.isAfter(pageEndDate)) {
-        nextWeekLastDayDate = pageEndDate;
-      }
+    if (pageEndDate.isAfter(weekLastDayDate)) {
       rows.add(
-          new Row(children: buildCalendarRow(nextWeekFirstDayDate, nextWeekLastDayDate))
+          new Row(children: buildCalendarRow(pageStartDate, weekLastDayDate))
+      );
+
+      for (var i = 1; i < 5; i++) {
+        DateTime nextWeekFirstDayDate = pageStartDate.add(
+            new Duration(days: 7 * i - startDayOffset));
+
+        if (nextWeekFirstDayDate.isAfter(pageEndDate)) {
+          break;
+        }
+
+        DateTime nextWeekLastDayDate = pageStartDate.add(
+            new Duration(days: 7 * i - startDayOffset + 6));
+        if (nextWeekLastDayDate.isAfter(pageEndDate)) {
+          nextWeekLastDayDate = pageEndDate;
+        }
+
+        rows.add(
+            new Row(children: buildCalendarRow(
+                nextWeekFirstDayDate, nextWeekLastDayDate))
+        );
+      }
+
+    } else {
+      rows.add(
+          new Row(children: buildCalendarRow(pageStartDate, weekLastDayDate))
       );
     }
 
