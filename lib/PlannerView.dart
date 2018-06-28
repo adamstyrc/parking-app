@@ -1,28 +1,28 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'Calendarro.dart';
+
 
 class PlannerView extends StatelessWidget {
 
-  PageView pageView;
+  Calendarro calendarro;
 
   @override
   Widget build(BuildContext context) {
-    pageView = new PageView.builder(
-          itemBuilder: (context, position) => buildDayView(position),
-          itemCount: 10,
-        );
-    return new Container(
-      height: 360.0,
-        child: pageView);
+    var dateTimeNow = DateTime.now();
+    var firstDayDate = DateTime(dateTimeNow.year, dateTimeNow.month, 1);
+    var firstDayNextMonthDate = DateTime(dateTimeNow.year, dateTimeNow.month + 1, 1);
+    var lastDayDate = firstDayNextMonthDate.subtract(new Duration(days: 1));
+
+    calendarro = new Calendarro(
+      startDate: firstDayDate,
+      endDate: lastDayDate,
+      displayMode: DisplayMode.MONTHS,
+    );
+
+    return new Column(children: <Widget>[
+    new Material(child: calendarro, elevation: 4.0, color: Colors.white),
+    ]);
   }
 
-  Widget buildDayView(int position) {
-
-    return new GestureDetector(
-        child: new Text("lalala"),
-        onTap: buildNextPage);
-//    return new Text("lalala", );
-  }
-
-  Future<dynamic> buildNextPage() => pageView.controller.nextPage(duration: new Duration(milliseconds: 400), curve: new ElasticInCurve());
 }

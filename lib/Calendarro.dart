@@ -80,7 +80,11 @@ class CalendarroState extends State<Calendarro> {
   @override
   Widget build(BuildContext context) {
     int daysRange = endDate.difference(startDate).inDays;
-    pagesCount = daysRange ~/ 7 + 1;
+    if (displayMode == DisplayMode.WEEKS) {
+      pagesCount = daysRange ~/ 7 + 1;
+    } else {
+      pagesCount = endDate.month - startDate.month + 1;
+    }
 
     startDayOffset = startDate.weekday - DateTime.monday;
 
@@ -91,7 +95,7 @@ class CalendarroState extends State<Calendarro> {
     );
 
     return new Container(
-      height: 60.0,
+      height: displayMode == DisplayMode.WEEKS ? 60.0 : 320.0,
       child: pageView);
   }
 
@@ -99,15 +103,34 @@ class CalendarroState extends State<Calendarro> {
   Widget buildCalendarPage(int position) {
     DateTime pageStartDate;
     DateTime pageEndDate;
-    if (position == 0) {
-      pageStartDate = startDate;
-      pageEndDate = startDate.add(new Duration(days: 6 - startDayOffset));
-    } else if (position == pagesCount - 1) {
-      pageStartDate = startDate.add(new Duration(days: 7 * position - startDayOffset));
-      pageEndDate = endDate;
+
+    if (displayMode == DisplayMode.WEEKS) {
+      if (position == 0) {
+        pageStartDate = startDate;
+        pageEndDate = startDate.add(new Duration(days: 6 - startDayOffset));
+      } else if (position == pagesCount - 1) {
+        pageStartDate =
+            startDate.add(new Duration(days: 7 * position - startDayOffset));
+        pageEndDate = endDate;
+      } else {
+        pageStartDate =
+            startDate.add(new Duration(days: 7 * position - startDayOffset));
+        pageEndDate = startDate.add(
+            new Duration(days: 7 * position + 6 - startDayOffset));
+      }
     } else {
-      pageStartDate = startDate.add(new Duration(days: 7 * position - startDayOffset));
-      pageEndDate = startDate.add(new Duration(days: 7 * position + 6 - startDayOffset));
+      if (position == 0) {
+        pageStartDate = startDate;
+        DateTime nextMonthFirstDate = new DateTime(startDate.year, startDate.month + 1, 1);
+        pageEndDate = nextMonthFirstDate.subtract(new Duration(days: 1));
+      } else if (position == pagesCount - 1) {
+        pageEndDate = endDate;
+        pageStartDate = new DateTime(endDate.year, endDate.month, 1);
+      } else {
+        pageStartDate = new DateTime(startDate.year, startDate.month + position, 1);
+        DateTime nextMonthFirstDate = new DateTime(startDate.year, startDate.month + position + 1, 1);
+        pageEndDate = nextMonthFirstDate.subtract(new Duration(days: 1));
+      }
     }
     //DisplayMode == WEEKS
 
@@ -145,20 +168,36 @@ class CalendarPage extends StatelessWidget {
     List<Widget> rows = [];
     rows.add(new CalendarDayLabelsView());
 
+
     rows.add(
-      new Row(children: buildCalendarItems())
+      new Row(children: buildCalendarRow(pageStartDate, pageStartDate.add(new Duration(days: 6 - startDayOffset))))
     );
+
+    for( var i = 1 ; i < 5; i++) {
+      DateTime nextWeekFirstDayDate = pageStartDate.add(new Duration(days: 7 * i - startDayOffset));
+
+      if (nextWeekFirstDayDate.isAfter(pageEndDate)) {
+        break;
+      }
+
+      DateTime nextWeekLastDayDate = pageStartDate.add(new Duration(days: 7 * i - startDayOffset + 6));
+      if (nextWeekLastDayDate.isAfter(pageEndDate)) {
+        nextWeekLastDayDate = pageEndDate;
+      }
+      rows.add(
+          new Row(children: buildCalendarRow(nextWeekFirstDayDate, nextWeekLastDayDate))
+      );
+    }
 
     return rows;
   }
 
-  List<Widget> buildCalendarItems() {
+  List<Widget> buildCalendarRow(DateTime rowStartDate, DateTime rowEndDate) {
     List<Widget> items = [];
 
-    DateTime currentDate = pageStartDate;
+    DateTime currentDate = rowStartDate;
     for (int i = 0; i < 7; i++) {
-      if (i + 1 >= pageStartDate.weekday && i + 1 <= pageEndDate.weekday) {
-
+      if (i + 1 >= rowStartDate.weekday && i + 1 <= rowEndDate.weekday) {
         items.add(CalendarDayItem(date: currentDate));
         currentDate = currentDate.add(new Duration(days: 1));
       } else {
@@ -172,15 +211,13 @@ class CalendarPage extends StatelessWidget {
   Widget buildCalendarItem(DateTime date) {
     return new CalendarDayItem(date: date, );
   }
-
-  void handleTap() {
-  }
 }
 
 class CalendarDayItem extends StatelessWidget {
-  CalendarDayItem({this.date});
+  CalendarDayItem({this.date, this.calendarro});
 
   DateTime date;
+  CalendarroState calendarro;
   int count = 0;
   BuildContext context;
 
@@ -194,7 +231,8 @@ class CalendarDayItem extends StatelessWidget {
     bool isToday = today.day == date.day && today.month == date.month && today.year == date.year;
 
 //    Calendarro calendarro = context.ancestorWidgetOfExactType(Calendarro);
-    CalendarroState calendarro = context.ancestorStateOfType(TypeMatcher<CalendarroState>());
+//    CalendarroState calendarro = context.ancestorStateOfType(TypeMatcher<CalendarroState>());
+    calendarro = Calendarro.of(context) as CalendarroState;
 
     bool isSelected = calendarro.selectedDate.day == date.day;
 
@@ -211,22 +249,25 @@ class CalendarDayItem extends StatelessWidget {
 
 
     return new Expanded(
-          child: new Container(
+          child: new GestureDetector(
+              child: new Container(
             height: 40.0,
             decoration: boxDecoration,
-            child: new Center(
+            child:
+        new Center(
                 child: new Text("${date.day}",
                   textAlign: TextAlign.center,
                   style: new TextStyle(color: textColor),
                 )
             )
+            ), onTap: handleTap,
           )
     );
   }
 
   void handleTap() {
-    CalendarroState calendarro = context.ancestorStateOfType(TypeMatcher<CalendarroState>());
     calendarro.setSelectedDate(date);
+    calendarro.setCurrentDate(date);
   }
 
 }
