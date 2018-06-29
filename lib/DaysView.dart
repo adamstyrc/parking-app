@@ -57,26 +57,21 @@ class DaysView extends StatelessWidget {
 
 class DaysViewTileBuilder extends DayTileBuilder {
 
-  DateTime date;
+  DateTime tileDate;
   CalendarroState calendarro;
-//  int count = 0;
-//  BuildContext context;
 
   @override
-  Widget build(BuildContext context, DateTime date) {
-    this.date = date;
-    context = context;
-    bool isWeekend = date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
+  Widget build(BuildContext context, DateTime tileDate) {
+    this.tileDate = tileDate;
+    bool isWeekend = tileDate.weekday == DateTime.saturday || tileDate.weekday == DateTime.sunday;
     var textColor = isWeekend ? Colors.grey : Colors.black;
 
     var today = DateTime.now();
-    bool isToday = today.day == date.day && today.month == date.month && today.year == date.year;
+    bool isToday = today.day == tileDate.day && today.month == tileDate.month && today.year == tileDate.year;
 
-//    Calendarro calendarro = context.ancestorWidgetOfExactType(Calendarro);
-//    CalendarroState calendarro = context.ancestorStateOfType(TypeMatcher<CalendarroState>());
-    calendarro = Calendarro.of(context) as CalendarroState;
+    calendarro = Calendarro.of(context);
 
-    bool isSelected = calendarro.selectedDate.day == date.day;
+    bool isSelected = calendarro.selectedDate.day == tileDate.day;
 
     BoxDecoration boxDecoration;
     if (isSelected) {
@@ -96,19 +91,29 @@ class DaysViewTileBuilder extends DayTileBuilder {
               height: 40.0,
               decoration: boxDecoration,
               child:
+                  new Stack(
+        children: <Widget>[
               new Center(
-                  child: new Text("${date.day}",
+                  child: new Text("${tileDate.day}",
                     textAlign: TextAlign.center,
                     style: new TextStyle(color: textColor),
                   )
-              )
+              ),
+          new Container(
+          child: new Text("aa"),
+            alignment: Alignment.topCenter,
+            padding: new EdgeInsets.only(
+//                top: MediaQuery.of(context).size.height * .58,
+                top: 40 * .58,),
+          )
+              ])
           ), onTap: handleTap,
         )
     );
   }
 
   void handleTap() {
-    calendarro.setSelectedDate(date);
-    calendarro.setCurrentDate(date);
+    calendarro.setSelectedDate(tileDate);
+    calendarro.setCurrentDate(tileDate);
   }
 }
