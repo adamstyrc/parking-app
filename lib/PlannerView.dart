@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'Calendarro.dart';
+import 'ui/DayTileView.dart';
 
 
 class PlannerView extends StatelessWidget {
@@ -18,6 +19,7 @@ class PlannerView extends StatelessWidget {
       startDate: firstDayDate,
       endDate: lastDayDate,
       displayMode: DisplayMode.MONTHS,
+      dayTileBuilder: new DaysViewTileBuilder(),
     );
 
     return new Column(children: <Widget>[
@@ -25,4 +27,16 @@ class PlannerView extends StatelessWidget {
     ]);
   }
 
+
+}
+
+class DaysViewTileBuilder extends DayTileBuilder {
+
+  DateTime tileDate;
+  CalendarroState calendarro;
+
+  @override
+  Widget build(BuildContext context, DateTime tileDate) {
+    return new DayTileView(date: tileDate);
+  }
 }
