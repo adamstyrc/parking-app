@@ -62,6 +62,7 @@ class DaysViewTileBuilder extends DayTileBuilder {
 
   @override
   Widget build(BuildContext context, DateTime tileDate) {
-    return new DayTileView(date: tileDate);
+    calendarro = Calendarro.of(context);
+    return new DayTileView(date: tileDate, calendarro: calendarro);
   }
 }

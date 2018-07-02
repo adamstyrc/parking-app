@@ -2,25 +2,32 @@ import 'package:flutter/material.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
 
-class DayTileView extends StatefulWidget {
+class PlannerDayTileView extends StatefulWidget {
   DateTime date;
   CalendarroState calendarro;
-  DayTileView({this.date, this.calendarro});
+
+
+
+  PlannerDayTileView({this.date, this.calendarro});
 
   @override
-  State<DayTileView> createState() {
-    return new DayTileState(date: date);
+  State<PlannerDayTileView> createState() {
+    return new PlannerDayTileState(date: date);
   }
 }
 
-class DayTileState extends State<DayTileView> {
+class PlannerDayTileState extends State<PlannerDayTileView> {
   DateTime date;
   CalendarroState calendarro;
 
-  DayTileState({
+  PlannerDayTileState({
     this.date,
-    this.calendarro
+    this.calendarro,
   });
+
+  @override
+  void initState() {
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +41,13 @@ class DayTileState extends State<DayTileView> {
         today.year == date.year;
 
     calendarro = Calendarro.of(context);
-    bool isSelected = calendarro.selectedDate.day == date.day;
+//    bool isSelected = calendarro.selectedDate.day == date.day;
+    bool isSelected = date.day % 5 > 1 && !isWeekend;
 
     BoxDecoration boxDecoration;
     if (isSelected) {
       boxDecoration =
-          new BoxDecoration(color: Colors.white, shape: BoxShape.circle);
+          new BoxDecoration(color: Colors.blue, shape: BoxShape.circle);
     } else if (isToday) {
       boxDecoration = new BoxDecoration(
           border: new Border.all(
@@ -76,13 +84,6 @@ class DayTileState extends State<DayTileView> {
 
     if (occupied) {
       rowChildren.add(new CircleView(color: Colors.red, radius: 2.0));
-    }
-
-    if (reservedByMe) {
-      if (rowChildren.isNotEmpty) {
-        rowChildren.add(new Container(width: 1.0, height: 2.0));
-      }
-      rowChildren.add(new CircleView(color: Colors.blue, radius: 2.0));
     }
     return new Container(
       child: new Row(
