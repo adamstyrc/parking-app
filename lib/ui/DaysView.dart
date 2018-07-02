@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'Calendarro.dart';
-import 'CircleView.dart';
-import 'ui/DayTileView.dart';
+import '../Calendarro.dart';
+import 'package:mobileoffice/ui/CircleView.dart';
+import 'DayTileView.dart';
 
 class DaysView extends StatelessWidget {
 

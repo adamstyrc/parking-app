@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'Calendarro.dart';
-import 'ui/DayTileView.dart';
+import '../Calendarro.dart';
+import 'DayTileView.dart';
 
 
 class PlannerView extends StatelessWidget {

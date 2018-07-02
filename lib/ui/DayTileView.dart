@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Calendarro.dart';
-import '../CircleView.dart';
+import 'package:mobileoffice/ui/CircleView.dart';
 
 class DayTileView extends StatefulWidget {
   DateTime date;

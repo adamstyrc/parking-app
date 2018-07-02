@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'Service.dart';
 import 'package:flutter_calendar/flutter_calendar.dart';
 import 'Calendarro.dart';
-import 'DaysView.dart';
-import 'PlannerView.dart';
+import 'package:mobileoffice/ui/DaysView.dart';
+import 'package:mobileoffice/ui/PlannerView.dart';
 
 
 void main() => runApp(new MyApp());
