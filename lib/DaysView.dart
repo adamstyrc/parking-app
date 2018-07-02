@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'Calendarro.dart';
+import 'CircleView.dart';
+import 'ui/DayTileView.dart';
 
 class DaysView extends StatelessWidget {
 
@@ -48,8 +50,6 @@ class DaysView extends StatelessWidget {
         Image(image: new AssetImage("img/parking_full.png"), width: 180.0,)
       ],
     );
-
-    return new Text("lalala");
   }
 
 
@@ -62,6 +62,7 @@ class DaysViewTileBuilder extends DayTileBuilder {
 
   @override
   Widget build(BuildContext context, DateTime tileDate) {
+    return new DayTileView(date: tileDate);
     this.tileDate = tileDate;
     bool isWeekend = tileDate.weekday == DateTime.saturday || tileDate.weekday == DateTime.sunday;
     var textColor = isWeekend ? Colors.grey : Colors.black;
@@ -84,32 +85,51 @@ class DaysViewTileBuilder extends DayTileBuilder {
           shape: BoxShape.circle);
     }
 
+    var stackChildren = <Widget>[];
+    stackChildren.add(new Center(
+        child: new Text("${tileDate.day}",
+          textAlign: TextAlign.center,
+          style: new TextStyle(color: textColor),
+        )
+    ));
+
+    if (!isWeekend) {
+      stackChildren.add(buildSignaturesRow(true, true));
+    }
 
     return new Expanded(
         child: new GestureDetector(
           child: new Container(
               height: 40.0,
               decoration: boxDecoration,
-              child:
-                  new Stack(
-        children: <Widget>[
-              new Center(
-                  child: new Text("${tileDate.day}",
-                    textAlign: TextAlign.center,
-                    style: new TextStyle(color: textColor),
-                  )
-              ),
-          new Container(
-          child: new Text("aa"),
-            alignment: Alignment.topCenter,
-            padding: new EdgeInsets.only(
-//                top: MediaQuery.of(context).size.height * .58,
-                top: 40 * .58,),
-          )
-              ])
-          ), onTap: handleTap,
+              child: new Stack(children: stackChildren)),
+          onTap: handleTap,
         )
     );
+  }
+
+  Container buildSignaturesRow(bool occupied, bool reservedByMe) {
+    var rowChildren = <Widget>[];
+
+    if (occupied) {
+      rowChildren.add(new CircleView(color: Colors.red, radius: 2.0));
+    }
+
+    if (reservedByMe) {
+      if (rowChildren.isNotEmpty) {
+        rowChildren.add(new Container(width: 1.0, height: 2.0));
+      }
+      rowChildren.add(new CircleView(color: Colors.blue, radius: 2.0));
+    }
+      return new Container(
+        child: new Row(children: rowChildren,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,),
+        alignment: Alignment.topCenter,
+        padding: new EdgeInsets.only(
+          top: 40 * .70,
+        ),
+      );
   }
 
   void handleTap() {
