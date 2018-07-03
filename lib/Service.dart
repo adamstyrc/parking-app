@@ -72,4 +72,6 @@ class Service {
    .then((user) => this.loggedUser.value = user)
    ;
   }
+
+  
 }

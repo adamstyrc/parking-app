@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
+import 'package:mobileoffice/WebService.dart';
+import 'package:mobileoffice/Models/MonthReservations.dart';
+import 'package:http/http.dart' as http;
 
 class DayTileView extends StatefulWidget {
   DateTime date;
@@ -100,5 +103,15 @@ class DayTileState extends State<DayTileView> {
   void handleTap() {
     calendarro.setSelectedDate(date);
     calendarro.setCurrentDate(date);
+
+    var webService = WebService();
+    webService.getParkingMonth().then((MonthReservations monthReservations) {
+      print(monthReservations.users);
+    });
+
+    webService.fetchPost().then((http.Response response) {
+      response.body;
+    });
+
   }
 }
