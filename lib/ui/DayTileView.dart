@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
 import 'package:mobileoffice/WebService.dart';
+import 'package:mobileoffice/ReservationsController.dart';
 import 'package:mobileoffice/Models/MonthReservations.dart';
 import 'package:http/http.dart' as http;
 
@@ -104,12 +105,16 @@ class DayTileState extends State<DayTileView> {
     calendarro.setSelectedDate(date);
     calendarro.setCurrentDate(date);
 
-    var webService = WebService();
-    webService.getParkingMonth().then((MonthReservations monthReservations) {
-      print(monthReservations.users);
+//    var webService = WebService();
+//    webService.getParkingMonth().then((MonthReservations monthReservations) {
+//      print(monthReservations.users);
+//    });
+
+    ReservationsController().updateReservations().then((monthReservations) {
+      monthReservations.toString();
     });
 
-    webService.fetchPost().then((http.Response response) {
+    WebService().fetchPost().then((http.Response response) {
       response.body;
     });
 

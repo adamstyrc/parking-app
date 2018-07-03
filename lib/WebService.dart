@@ -7,9 +7,9 @@ import 'package:mobileoffice/Models/MonthReservations.dart';
 
 class WebService {
 
-  Future<MonthReservations> getParkingMonth() async {
+  Future<MonthReservations> getParkingMonth(String yearMonth) async {
     final response =
-        await http.get('https://office.freeworld.cloud/api/parking/2018-07', headers: { "Accept": "application/json", "X-Access-Token": "ja" });
+        await http.get('http://office.freeworld.cloud/api/parking/' + yearMonth, headers: { "Accept": "application/json", "X-Access-Token": "ja" });
 
     if (response.statusCode == 200) {
       return MonthReservations.fromJson(json.decode(response.body));
