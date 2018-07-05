@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
+import 'package:mobileoffice/ReservationsController.dart';
 
 class PlannerDayTileView extends StatefulWidget {
   DateTime date;
   CalendarroState calendarro;
-
-
 
   PlannerDayTileView({this.date, this.calendarro});
 
@@ -19,6 +18,7 @@ class PlannerDayTileView extends StatefulWidget {
 class PlannerDayTileState extends State<PlannerDayTileView> {
   DateTime date;
   CalendarroState calendarro;
+  ReservationsController reservationsController = ReservationsController.get();
 
   PlannerDayTileState({
     this.date,
@@ -42,10 +42,12 @@ class PlannerDayTileState extends State<PlannerDayTileView> {
 
     calendarro = Calendarro.of(context);
 //    bool isSelected = calendarro.selectedDate.day == date.day;
-    bool isSelected = date.day % 5 > 1 && !isWeekend;
+    var reservationsForDay = reservationsController.getReservationsForDay(date.day);
+    var reservedByMe = reservationsForDay != null && reservationsForDay.isNotEmpty;
+//    bool isSelected = date.day % 5 > 1 && !isWeekend;
 
     BoxDecoration boxDecoration;
-    if (isSelected) {
+    if (reservedByMe && !isWeekend) {
       boxDecoration =
           new BoxDecoration(color: Colors.blue, shape: BoxShape.circle);
     } else if (isToday) {
@@ -66,7 +68,8 @@ class PlannerDayTileState extends State<PlannerDayTileView> {
     )));
 
     if (!isWeekend) {
-      stackChildren.add(buildSignaturesRow(true, true));
+      var fullyReserved = reservationsController.isDayFullyReserved(date.day);
+      stackChildren.add(buildSignaturesRow(fullyReserved));
     }
 
     return new Expanded(
@@ -79,7 +82,7 @@ class PlannerDayTileState extends State<PlannerDayTileView> {
     ));
   }
 
-  Container buildSignaturesRow(bool occupied, bool reservedByMe) {
+  Container buildSignaturesRow(bool occupied) {
     var rowChildren = <Widget>[];
 
     if (occupied) {
