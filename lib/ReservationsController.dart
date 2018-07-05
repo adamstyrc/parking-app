@@ -26,6 +26,10 @@ class ReservationsController {
     return currentMonthReservations;
   }
 
+  Future<MonthReservations> makeReservation() async {
+
+  }
+
   List<String> getReservationsForDay(int day) {
     for (var reservation in currentMonthReservations.reservations) {
       if (reservation.day == day) {
@@ -58,4 +62,6 @@ class ReservationsController {
       return now.year.toString() + "-0" + now.month.toString();
     }
   }
+
+
 }
