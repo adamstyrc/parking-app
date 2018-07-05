@@ -11,8 +11,10 @@ class DaysView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var startDate2 = DateTime.now();
+    startDate2 = startDate2.subtract(Duration(days: startDate2.day - 1));
     calendarro = new Calendarro(
-      startDate: DateTime.now(),
+      startDate: startDate2,
       endDate: DateTime.now().add(new Duration(days: 30)),
       displayMode: DisplayMode.WEEKS,
       dayTileBuilder: DaysViewTileBuilder(),

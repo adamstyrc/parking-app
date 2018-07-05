@@ -62,7 +62,11 @@ class DayTileState extends State<DayTileView> {
     )));
 
     if (!isWeekend) {
-      stackChildren.add(buildSignaturesRow(true, true));
+      var reservationsController = ReservationsController.get();
+      var fullyReserved = reservationsController.isDayFullyReserved(date.day);
+      var reservationsForDay = reservationsController.getReservationsForDay(date.day);
+      var reservedByMe = reservationsForDay != null && reservationsForDay.isNotEmpty;
+      stackChildren.add(buildSignaturesRow(fullyReserved, reservedByMe));
     }
 
     return new Expanded(

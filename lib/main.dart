@@ -4,26 +4,35 @@ import 'package:flutter_calendar/flutter_calendar.dart';
 import 'Calendarro.dart';
 import 'package:mobileoffice/ui/DaysView.dart';
 import 'package:mobileoffice/ui/PlannerView.dart';
+import 'package:mobileoffice/ui/Splash.dart';
 
 
-void main() => runApp(new MyApp());
+void main() => runApp(MaterialApp(
+  title: 'Flutter Demo',
+  theme: new ThemeData(
+    primaryColor: Colors.orange,
+    accentColor: Colors.cyan[600],
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Demo',
-      theme: new ThemeData(
-        primaryColor: Colors.orange,
-        accentColor: Colors.cyan[600],
-//        primarySwatch: Colors.orange,
+  ),
+  home: new Splash(),
+));
 
-      ),
-      home: new MyHomePage(title: 'Vattenfall Parking'),
-    );
-  }
-}
+
+//class DashboardView extends StatelessWidget {
+//  // This widget is the root of your application.
+//  @override
+//  Widget build(BuildContext context) {
+//    return new MaterialApp(
+//      title: 'Flutter Demo',
+//      theme: new ThemeData(
+//        primaryColor: Colors.orange,
+//        accentColor: Colors.cyan[600],
+//
+//      ),
+//      home: new MyHomePage(title: 'Vattenfall Parking'),
+//    );
+//  }
+//}
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
