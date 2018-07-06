@@ -1,4 +1,5 @@
 import 'package:mobileoffice/Models/MonthReservations.dart';
+import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/WebService.dart';
 import 'dart:async';
 
@@ -26,8 +27,10 @@ class ReservationsController {
     return currentMonthReservations;
   }
 
-  Future<MonthReservations> makeReservation() async {
-
+  Future<MonthReservations> makeReservation(DateTime date) async {
+    String serverDate = DatePrinter.printServerDate(date);
+    await webService.putParking(serverDate);
+    return await updateReservations();
   }
 
   List<String> getReservationsForDay(int day) {
@@ -56,12 +59,6 @@ class ReservationsController {
 
   String getCurrentYearMonth() {
     var now = DateTime.now();
-    if (now.month >= 10) {
-      return now.year.toString() + "-" + now.month.toString();
-    } else {
-      return now.year.toString() + "-0" + now.month.toString();
-    }
+    return DatePrinter.printServerYearMonth(now);
   }
-
-
 }

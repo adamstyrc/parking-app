@@ -1,5 +1,4 @@
 import 'User2.dart';
-import 'dart:collection';
 
 class MonthReservations {
 
@@ -12,22 +11,14 @@ class MonthReservations {
   factory MonthReservations.fromJson(Map<String, dynamic> json) {
     var users = json['users'] as List<dynamic>;
 
-
-    var reservations2 = json['reservations'] as List<dynamic>;
-    var list = reservations2;
-    var r4 = list.map((entry) {
+    var reservationsMap = json['reservations'] as List<dynamic>;
+    var reservations = reservationsMap.map((entry) {
       return Reservation.fromJson(entry);
     });
 
-    var reservations = List<Reservation>();
-    var reservationReservations = List<String>();
-    reservationReservations.add("aa");
-    reservations.add(Reservation(day: 1, reservations: reservationReservations));
     return MonthReservations(
         users: users.cast<User>(),
-//        reservations: reservations.map((json) => Reservation.fromJson(json)),
-        reservations: r4.toList(),
-//        reservations: reservations.map((json) => Reservation(json['day'], json['reservations'])),
+        reservations: reservations.toList(),
         spots: 2);
   }
 }

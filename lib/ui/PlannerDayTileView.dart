@@ -26,8 +26,7 @@ class PlannerDayTileState extends State<PlannerDayTileView> {
   });
 
   @override
-  void initState() {
-  }
+  void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +41,10 @@ class PlannerDayTileState extends State<PlannerDayTileView> {
 
     calendarro = Calendarro.of(context);
 //    bool isSelected = calendarro.selectedDate.day == date.day;
-    var reservationsForDay = reservationsController.getReservationsForDay(date.day);
-    var reservedByMe = reservationsForDay != null && reservationsForDay.isNotEmpty;
+    var reservationsForDay =
+        reservationsController.getReservationsForDay(date.day);
+    var reservedByMe =
+        reservationsForDay != null && reservationsForDay.isNotEmpty;
 //    bool isSelected = date.day % 5 > 1 && !isWeekend;
 
     BoxDecoration boxDecoration;
@@ -102,7 +103,37 @@ class PlannerDayTileState extends State<PlannerDayTileView> {
   }
 
   void handleTap() {
-    calendarro.setSelectedDate(date);
-    calendarro.setCurrentDate(date);
+    print("tap: " + date.toString());
+
+    showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+              title: new Text("Make a reservation"),
+              content: new Text("Would you like to make a reservation for " +
+                  date.toString()),
+              actions: <Widget>[
+                new FlatButton(
+                  child: new Text("OK"),
+                  onPressed: () {
+                    ReservationsController
+                        .get()
+                        .makeReservation(date)
+                        .then((_) {
+                      Navigator.of(context).pop();
+                    }).catchError(() {
+                      Navigator.of(context).pop();
+                    });
+                  },
+                ),
+                new FlatButton(
+                  child: new Text("Cancel"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ));
+//    calendarro.setSelectedDate(date);
+//    calendarro.setCurrentDate(date);
   }
 }

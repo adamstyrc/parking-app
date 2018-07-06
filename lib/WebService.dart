@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:mobileoffice/Logger.dart';
 import 'package:mobileoffice/Models/MonthReservations.dart';
 
 class WebService {
@@ -18,11 +16,19 @@ class WebService {
 
     if (response.statusCode == 200) {
       var body = response.body;
-      var endIndex = (body.length / 2).toInt();
-      var substring = body.substring(0, endIndex);
-      var substring2 = body.substring(endIndex, body.length);
-      print("BODY:" + substring);
-      print(substring2);
+      Logger.log("BODY: " + body);
+      return MonthReservations.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
+  Future<void> putParking(String date) async {
+    final response =
+        await http.put(API_ADDRESS + '/parking/' + date, headers: HEADERS);
+
+    if (response.statusCode == 200) {
+      Logger.log("BODY: " + response.body);
       return MonthReservations.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load post');
