@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobileoffice/ReservationsController.dart';
 import 'package:mobileoffice/UserController.dart';
 import 'package:mobileoffice/main.dart';
+import 'package:mobileoffice/ui/Dashboard.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -58,9 +59,9 @@ class LoginViewState extends State<LoginView> {
 
                           UserController.get().login(email, password).then((_) {
                             ReservationsController.get().updateReservations().then((_) {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
                             }).catchError((Exception e) {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
                             });
                           }).catchError(() {
 

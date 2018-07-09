@@ -5,7 +5,7 @@ import 'package:mobileoffice/Config.dart';
 import 'package:mobileoffice/Logger.dart';
 import 'package:mobileoffice/ReservationsController.dart';
 import 'package:mobileoffice/UserController.dart';
-import 'package:mobileoffice/main.dart';
+import 'package:mobileoffice/ui/Dashboard.dart';
 
 import 'package:mobileoffice/ui/LoginView.dart';
 
@@ -25,7 +25,7 @@ class Splash extends StatelessWidget {
           ReservationsController.get().updateReservations().then((_) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => MyHomePage()),
+              MaterialPageRoute(builder: (context) => Dashboard()),
             );
           }).catchError((error) {
             Logger.log(error);
