@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/UserController.dart';
 import 'package:mobileoffice/main.dart';
 
 import 'package:mobileoffice/ReservationsController.dart';
@@ -11,10 +12,9 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
 //    ReservationsController.get().updateReservations().then((monthReservations) {
 
-
     Timer(Duration(milliseconds: 1500), () {
-      var nextScreen = LoginView();
-//      var nextScreen = MyHomePage();
+      var nextScreen = UserController.get().accessToken == null ? LoginView() : MyHomePage();
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => nextScreen),

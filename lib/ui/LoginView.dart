@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/ReservationsController.dart';
+import 'package:mobileoffice/UserController.dart';
+import 'package:mobileoffice/main.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -8,6 +11,10 @@ class LoginView extends StatefulWidget {
 }
 
 class LoginViewState extends State<LoginView> {
+
+  final loginTFController = TextEditingController(text: "adam.styrc@vattenfall.com");
+  final passwordTFController = TextEditingController(text: "password");
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -23,6 +30,8 @@ class LoginViewState extends State<LoginView> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       TextField(
+                        controller: loginTFController,
+                    keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           hintText: 'email',
                           contentPadding:
@@ -30,6 +39,9 @@ class LoginViewState extends State<LoginView> {
                         ),
                       ),
                       TextField(
+                        controller: passwordTFController,
+                        obscureText: true,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           hintText: 'password',
                           contentPadding:
@@ -38,7 +50,22 @@ class LoginViewState extends State<LoginView> {
                       ),
                       Container(height: 16.0),
                       RaisedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          var email = loginTFController.text.trim();
+                          var password = passwordTFController.text.trim();
+
+                          print("login: $email");
+
+                          UserController.get().login(email, password).then((_) {
+                            ReservationsController.get().updateReservations().then((_) {
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+                            }).catchError((Exception e) {
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+                            });
+                          }).catchError(() {
+
+                          });
+                        },
                         color: Colors.blue,
                         child: Text("LOGIN"),
                         textColor: Colors.white,
@@ -52,5 +79,12 @@ class LoginViewState extends State<LoginView> {
             ],
           )),
     );
+  }
+
+  @override
+  void dispose() {
+    loginTFController.dispose();
+    passwordTFController.dispose();
+    super.dispose();
   }
 }
