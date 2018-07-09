@@ -1,24 +1,37 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/Config.dart';
+import 'package:mobileoffice/Logger.dart';
+import 'package:mobileoffice/ReservationsController.dart';
 import 'package:mobileoffice/UserController.dart';
 import 'package:mobileoffice/main.dart';
 
-import 'package:mobileoffice/ReservationsController.dart';
 import 'package:mobileoffice/ui/LoginView.dart';
-class Splash extends StatelessWidget {
 
+class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 //    ReservationsController.get().updateReservations().then((monthReservations) {
 
     Timer(Duration(milliseconds: 1500), () {
-      var nextScreen = UserController.get().accessToken == null ? LoginView() : MyHomePage();
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => nextScreen),
-      );
+      UserController.get().getAccessToken().then((accessToken) {
+        if (accessToken == null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginView()),
+          );
+        } else {
+          ReservationsController.get().updateReservations().then((_) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => MyHomePage()),
+            );
+          }).catchError((error) {
+            Logger.log(error);
+          });
+        }
+      });
     });
 
 //    });

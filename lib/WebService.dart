@@ -15,7 +15,7 @@ class WebService {
 
   Future<MonthReservations> getParkingMonth(String yearMonth) async {
     final response =
-        await http.get(API_ADDRESS + '/calendar/' + yearMonth, headers: prepareHeaders());
+        await http.get(API_ADDRESS + '/calendar/' + yearMonth, headers: await prepareHeaders());
 
     if (response.statusCode == 200) {
       var body = response.body;
@@ -26,18 +26,19 @@ class WebService {
     }
   }
 
-  Map<String, String> prepareHeaders() {
+  Future<Map<String, String>> prepareHeaders() async {
     var headers = Map.of(STATIC_HEADERS);
-    var accessToken = UserController.get().accessToken;
+    var accessToken = await UserController.get().getAccessToken();
     if (accessToken != null) {
       headers["X-Access-Token"] =  accessToken;
     }
+
     return headers;
   }
 
   Future<void> putParking(String date) async {
     final response =
-        await http.put(API_ADDRESS + '/parking/' + date, headers: prepareHeaders());
+        await http.put(API_ADDRESS + '/parking/' + date, headers: await prepareHeaders());
 
     if (response.statusCode == 200) {
       Logger.log("BODY: " + response.body);
@@ -58,7 +59,7 @@ class WebService {
     };
 
     final response =
-      await http.post(API_ADDRESS + '/auth', headers: prepareHeaders(), body: json.encode(bodyMap));
+      await http.post(API_ADDRESS + '/auth', headers: await prepareHeaders(), body: json.encode(bodyMap));
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       Logger.log(response.body);

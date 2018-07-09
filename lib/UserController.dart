@@ -1,8 +1,10 @@
 
 import 'dart:async';
 
+import 'package:mobileoffice/Config.dart';
 import 'package:mobileoffice/Models/AccessToken.dart';
 import 'package:mobileoffice/WebService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController {
 
@@ -25,6 +27,15 @@ class UserController {
 
   Future<void> login(String email, String password) async {
     AccessToken accessToken = await webService.postAuth(email, password);
-    this.accessToken = accessToken.access_token;
+
+    Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken.access_token).then((_) {});
+  }
+
+  Future<String> getAccessToken() {
+    return Config.getString(ConfigKeys.ACCESS_TOKEN);
+  }
+
+  Future<bool> setAccessToken(String accessToken) {
+    return Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken);
   }
 }
