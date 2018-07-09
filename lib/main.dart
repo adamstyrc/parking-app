@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/ui/AccountView.dart';
 import 'Service.dart';
 import 'package:flutter_calendar/flutter_calendar.dart';
 import 'Calendarro.dart';
@@ -96,9 +97,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         children: <Widget>[
           new Material(child: new Container(height: 56.0), elevation: 4.0, color: Colors.orange),
           new Stack(children: <Widget>[
-            new Offstage(offstage: selectedTabIndex != 0, child: new DaysView()),
-            new Offstage(offstage: selectedTabIndex != 1, child: new PlannerView()),
-            new Offstage(offstage: selectedTabIndex != 2, child: new Text("ccc2")),
+            new Offstage(offstage: selectedTabIndex != 0, child: DaysView()),
+            new Offstage(offstage: selectedTabIndex != 1, child: PlannerView()),
+            new Offstage(offstage: selectedTabIndex != 2, child: AccountView()),
           ])
         ]
       ),

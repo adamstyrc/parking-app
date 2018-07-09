@@ -35,6 +35,11 @@ class UserController {
     return Config.getString(ConfigKeys.ACCESS_TOKEN);
   }
 
+  Future<bool> isUserLogged() async {
+    var accessToken = await Config.getString(ConfigKeys.ACCESS_TOKEN);
+    return accessToken != null && accessToken.length > 0;
+  }
+
   Future<bool> setAccessToken(String accessToken) {
     return Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken);
   }

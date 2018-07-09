@@ -15,8 +15,8 @@ class Splash extends StatelessWidget {
 //    ReservationsController.get().updateReservations().then((monthReservations) {
 
     Timer(Duration(milliseconds: 1500), () {
-      UserController.get().getAccessToken().then((accessToken) {
-        if (accessToken == null) {
+      UserController.get().isUserLogged().then((userLogged) {
+        if (!userLogged) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => LoginView()),
