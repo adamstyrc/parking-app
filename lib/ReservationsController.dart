@@ -70,6 +70,10 @@ class ReservationsController {
     return false;
   }
 
+  bool isMineReservationInDay(int day) {
+    return isEmailReservationInDay(day, UserController.get().userEmail);
+  }
+
   int getCurrentMonth() {
     return DateTime.now().month;
   }

@@ -45,10 +45,8 @@ class PlannerDayTileState extends State<PlannerDayTileView> {
 
     calendarro = Calendarro.of(context);
 //    bool isSelected = calendarro.selectedDate.day == date.day;
-    var reservationsForDay =
-        reservationsController.getReservationsForDay(date.day);
     var reservedByMe =
-        reservationsForDay != null && reservationsForDay.isNotEmpty;
+        reservationsController.isMineReservationInDay(date.day);
 //    bool isSelected = date.day % 5 > 1 && !isWeekend;
 
     BoxDecoration boxDecoration;
@@ -109,12 +107,12 @@ class PlannerDayTileState extends State<PlannerDayTileView> {
   void handleTap() async {
     print("tap: " + date.toString());
 
-    var dialog = await prepareReservationChangeDialog();
+    var dialog = prepareReservationChangeDialog();
     showDialog(context: context, builder: (_) => dialog);
   }
 
-  Future<AlertDialog> prepareReservationChangeDialog() async {
-    var email = await UserController.get().getUserEmail();
+  AlertDialog prepareReservationChangeDialog()  {
+    var email = UserController.get().userEmail;
     var isMineReservationInDay =
         reservationsController.isEmailReservationInDay(date.day, email);
     if (isMineReservationInDay) {

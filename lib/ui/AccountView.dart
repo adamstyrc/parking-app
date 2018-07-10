@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Config.dart';
+import 'package:mobileoffice/UserController.dart';
 import 'package:mobileoffice/ui/LoginView.dart';
 
 class AccountView extends StatelessWidget {
@@ -10,10 +11,14 @@ class AccountView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       FlatButton(onPressed: () {
-        Config.setString(ConfigKeys.ACCESS_TOKEN, "").then((success) {
-          Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => LoginView()));
-        });
+        logout(context);
       }, child: Text("LOGOUT"))
     ]);
+  }
+
+  void logout(BuildContext context) async {
+    UserController.get().logout().then((success) {
+      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => LoginView()));
+    });
   }
 }

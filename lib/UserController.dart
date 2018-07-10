@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController {
 
-  String accessToken;
+  String userEmail;
   WebService webService = WebService();
 
   //SINGLETON
@@ -28,26 +28,28 @@ class UserController {
   Future<void> login(String email, String password) async {
     AccessToken accessToken = await webService.postAuth(email, password);
 
-    Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken.access_token).then((_) {
-      Config.setString(ConfigKeys.USER_EMAIL, email).then((_) {});
-    });
-
+    userEmail = email;
+    await Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken.access_token);
+    await Config.setString(ConfigKeys.USER_EMAIL, email);
   }
 
   Future<String> getAccessToken() {
     return Config.getString(ConfigKeys.ACCESS_TOKEN);
   }
 
-  Future<String> getUserEmail() {
-    return Config.getString(ConfigKeys.USER_EMAIL);
-  }
-
   Future<bool> isUserLogged() async {
     var accessToken = await Config.getString(ConfigKeys.ACCESS_TOKEN);
+    userEmail = await Config.getString(ConfigKeys.USER_EMAIL);
     return accessToken != null && accessToken.length > 0;
   }
 
   Future<bool> setAccessToken(String accessToken) {
     return Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken);
+  }
+
+  Future<bool> logout() async {
+    var tokenCleared = await Config.setString(ConfigKeys.ACCESS_TOKEN, "");
+    var userCleared = await Config.setString(ConfigKeys.USER_EMAIL, "");
+    return tokenCleared && userCleared;
   }
 }
