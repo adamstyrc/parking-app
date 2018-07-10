@@ -28,11 +28,18 @@ class UserController {
   Future<void> login(String email, String password) async {
     AccessToken accessToken = await webService.postAuth(email, password);
 
-    Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken.access_token).then((_) {});
+    Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken.access_token).then((_) {
+      Config.setString(ConfigKeys.USER_EMAIL, email).then((_) {});
+    });
+
   }
 
   Future<String> getAccessToken() {
     return Config.getString(ConfigKeys.ACCESS_TOKEN);
+  }
+
+  Future<String> getUserEmail() {
+    return Config.getString(ConfigKeys.USER_EMAIL);
   }
 
   Future<bool> isUserLogged() async {

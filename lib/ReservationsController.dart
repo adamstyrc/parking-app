@@ -1,4 +1,5 @@
 import 'package:mobileoffice/Models/MonthReservations.dart';
+import 'package:mobileoffice/UserController.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/WebService.dart';
 import 'dart:async';
@@ -29,7 +30,13 @@ class ReservationsController {
 
   Future<MonthReservations> makeReservation(DateTime date) async {
     String serverDate = DatePrinter.printServerDate(date);
-    await webService.putParking(serverDate);
+    await webService.postParking(serverDate);
+    return await updateReservations();
+  }
+
+  Future<MonthReservations> dropReservation(DateTime date) async {
+    String serverDate = DatePrinter.printServerDate(date);
+    await webService.deleteParking(serverDate);
     return await updateReservations();
   }
 
@@ -47,6 +54,16 @@ class ReservationsController {
     for (var reservation  in currentMonthReservations.reservations) {
       if (reservation.day == day) {
         return reservation.reservations.length >= currentMonthReservations.spots;
+      }
+    }
+
+    return false;
+  }
+
+  bool isEmailReservationInDay(int day, String email) {
+    for (var reservation  in currentMonthReservations.reservations) {
+      if (reservation.day == day) {
+        return reservation.reservations.contains(email);
       }
     }
 

@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/UserController.dart';
+import 'package:mobileoffice/Utils/DatePrinter.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
 import 'package:mobileoffice/ReservationsController.dart';
@@ -102,38 +106,76 @@ class PlannerDayTileState extends State<PlannerDayTileView> {
     );
   }
 
-  void handleTap() {
+  void handleTap() async {
     print("tap: " + date.toString());
 
-    showDialog(
-        context: context,
-        builder: (_) => new AlertDialog(
-              title: new Text("Make a reservation"),
-              content: new Text("Would you like to make a reservation for " +
-                  date.toString()),
-              actions: <Widget>[
-                new FlatButton(
-                  child: new Text("OK"),
-                  onPressed: () {
-                    ReservationsController
-                        .get()
-                        .makeReservation(date)
-                        .then((_) {
-                      Navigator.of(context).pop();
-                    }).catchError(() {
-                      Navigator.of(context).pop();
-                    });
-                  },
-                ),
-                new FlatButton(
-                  child: new Text("Cancel"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ));
-//    calendarro.setSelectedDate(date);
-//    calendarro.setCurrentDate(date);
+    var dialog = await prepareReservationChangeDialog();
+    showDialog(context: context, builder: (_) => dialog);
+  }
+
+  Future<AlertDialog> prepareReservationChangeDialog() async {
+    var email = await UserController.get().getUserEmail();
+    var isMineReservationInDay =
+        reservationsController.isEmailReservationInDay(date.day, email);
+    if (isMineReservationInDay) {
+      return AlertDialog(
+        title: new Text("Drop the reservation"),
+        content: new Text(
+            "Would you like to drop the reservation for ${DatePrinter.printPrettyDate(date)}"),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          new FlatButton(
+            child: new Text("OK"),
+            onPressed: () {
+              onDropReservationPressed(date);
+            },
+          ),
+        ],
+      );
+    } else {
+      return AlertDialog(
+        title: new Text("Make a reservation"),
+        content: new Text(
+            "Would you like to make a reservation for ${DatePrinter.printPrettyDate(date)}"),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          new FlatButton(
+            child: new Text("OK"),
+            onPressed: () {
+              onMakeReservationPressed(date);
+            },
+          ),
+        ],
+      );
+    }
+  }
+
+  void onMakeReservationPressed(DateTime date) {
+    var reservationsController = ReservationsController.get();
+    reservationsController.makeReservation(date).then((_) {
+      Navigator.of(context).pop();
+      setState(() {});
+    }).catchError(() {
+      Navigator.of(context).pop();
+    });
+  }
+
+  void onDropReservationPressed(DateTime date) async {
+    reservationsController.dropReservation(date).then((_) {
+      Navigator.of(context).pop();
+      setState(() {});
+    }).catchError(() {
+      Navigator.of(context).pop();
+    });
   }
 }

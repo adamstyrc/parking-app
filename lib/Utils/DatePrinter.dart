@@ -9,6 +9,10 @@ class DatePrinter {
     return "${date.year}-${print2Digits(date.month)}";
   }
 
+  static String printPrettyDate(DateTime date) {
+    return "${print2Digits(date.day)}-${print2Digits(date.month)}-${date.year}";
+  }
+
   static String print2Digits(int number) {
     if (number >= 10) {
       return number.toString();

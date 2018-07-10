@@ -62,9 +62,6 @@ class DaysViewState extends State<DaysView> {
           var selectedDate = calendarro.startDate
               .add(new Duration(days: (nextDateWeek * 7 + weekdayDifference)));
 
-//          var calendarroState = Calendarro.of(context);
-
-
           calendarroStateKey.currentState.setSelectedDate(selectedDate);
           calendarroStateKey.currentState.setCurrentDate(selectedDate);
         });

@@ -36,5 +36,6 @@ class Config {
 }
 
 enum ConfigKeys {
-  ACCESS_TOKEN
+  ACCESS_TOKEN,
+  USER_EMAIL
 }

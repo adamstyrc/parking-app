@@ -36,15 +36,27 @@ class WebService {
     return headers;
   }
 
-  Future<void> putParking(String date) async {
+  Future<void> postParking(String date) async {
     final response =
-        await http.put(API_ADDRESS + '/parking/' + date, headers: await prepareHeaders());
+        await http.post(API_ADDRESS + '/calendar/$date/reservation', headers: await prepareHeaders());
 
-    if (response.statusCode == 200) {
+    if (isResponseSuccessful(response)) {
       Logger.log("BODY: " + response.body);
-      return MonthReservations.fromJson(json.decode(response.body));
+      return response;
     } else {
-      throw Exception('Failed to load post');
+      throw Exception('Failed request');
+    }
+  }
+
+  Future<void> deleteParking(String date) async {
+    final response =
+    await http.delete(API_ADDRESS + '/calendar/$date/reservation', headers: await prepareHeaders());
+
+    if (isResponseSuccessful(response)) {
+      Logger.log("BODY: " + response.body);
+      return response;
+    } else {
+      throw Exception('Failed request');
     }
   }
 
@@ -68,5 +80,9 @@ class WebService {
     } else {
       throw Exception('failure');
     }
+  }
+
+  bool isResponseSuccessful(http.Response response) {
+    return response.statusCode >= 200 && response.statusCode < 300;
   }
 }
