@@ -1,4 +1,7 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/Utils/DateUtils.dart';
+import 'package:mobileoffice/events.dart';
 
 abstract class DayTileBuilder {
   Widget build(BuildContext context, DateTime date);
@@ -12,7 +15,7 @@ class Calendarro extends StatefulWidget {
     this.endDate,
     this.displayMode,
     this.dayTileBuilder
-  });
+  }) : super(key: key);
 
   DateTime startDate;
   DateTime endDate;
@@ -30,7 +33,6 @@ class Calendarro extends StatefulWidget {
         endDate: endDate,
         displayMode: displayMode,
       dayBuilder: dayTileBuilder
-
     );
     return state;
   }
@@ -41,6 +43,14 @@ class Calendarro extends StatefulWidget {
 
   void setCurrentDate(DateTime date) {
     state.setCurrentDate(date);
+  }
+
+  int getPositionOfDate(DateTime date) {
+    int daysDifference = date.difference(DateUtils.toMidnight(startDate)).inDays;
+    int weekendsDifference = ((daysDifference + startDate.weekday) / 7).toInt();
+    var position = daysDifference - weekendsDifference * 2;
+    print("position: $position");
+    return position;
   }
 }
 
@@ -80,8 +90,8 @@ class CalendarroState extends State<Calendarro> {
   void setCurrentDate(DateTime date) {
     setState(() {
       int daysDifference = date.difference(startDate).inDays ;
-      int pageForDate = (daysDifference + startDayOffset) ~/ 7;
-      pageView.controller.jumpToPage(pageForDate);
+      int page = (daysDifference + startDayOffset) ~/ 7;
+      pageView.controller.jumpToPage(page);
     });
   }
 

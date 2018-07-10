@@ -20,6 +20,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^0.7.6
   json_serializable: ^0.3.2
+  event_bus: ^1.0.1
 
 flutter:
 

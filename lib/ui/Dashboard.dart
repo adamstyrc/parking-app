@@ -9,13 +9,11 @@ class Dashboard extends StatefulWidget {
 
   final String title;
 
-
-
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  DashboardState createState() => new DashboardState();
 }
 
-class _MyHomePageState extends State<Dashboard> with SingleTickerProviderStateMixin<Dashboard> {
+class DashboardState extends State<Dashboard> with SingleTickerProviderStateMixin<Dashboard> {
   int selectedTabIndex = 0;
   Widget displayedTabWidget = null;
   TabController tabController;

@@ -1,4 +1,6 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/events.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
 import 'package:mobileoffice/WebService.dart';
@@ -108,6 +110,8 @@ class DayTileState extends State<DayTileView> {
   void handleTap() {
     calendarro.setSelectedDate(date);
     calendarro.setCurrentDate(date);
+
+    eventBus.fire(DayClickedEvent(date: date));
 
 //    var webService = WebService();
 //    webService.getParkingMonth().then((MonthReservations monthReservations) {
