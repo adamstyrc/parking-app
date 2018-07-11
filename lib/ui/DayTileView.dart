@@ -1,5 +1,6 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
@@ -30,8 +31,7 @@ class DayTileState extends State<DayTileView> {
 
   @override
   Widget build(BuildContext context) {
-    bool isWeekend =
-        date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
+    bool isWeekend = DateUtils.isWeekend(date);
     var textColor = isWeekend ? Colors.grey : Colors.black;
 
     var today = DateTime.now();

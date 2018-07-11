@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/UserController.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
+import 'package:mobileoffice/Utils/DateUtils.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
 import 'package:mobileoffice/ReservationsController.dart';
@@ -17,6 +18,7 @@ class PlannerDayTileView extends StatefulWidget {
   State<PlannerDayTileView> createState() {
     return new PlannerDayTileState(date: date);
   }
+
 }
 
 class PlannerDayTileState extends State<PlannerDayTileView> {
@@ -34,8 +36,7 @@ class PlannerDayTileState extends State<PlannerDayTileView> {
 
   @override
   Widget build(BuildContext context) {
-    bool isWeekend =
-        date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
+    bool isWeekend = DateUtils.isWeekend(date);
     var textColor = isWeekend ? Colors.grey : Colors.black;
 
     var today = DateTime.now();

@@ -260,7 +260,7 @@ class CalendarDayItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context = context;
-    bool isWeekend = date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
+    bool isWeekend = DateUtils.isWeekend(date);
     var textColor = isWeekend ? Colors.grey : Colors.black;
 
     var today = DateTime.now();
