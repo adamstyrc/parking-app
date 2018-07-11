@@ -50,9 +50,10 @@ class DaysViewState extends State<DaysView> {
       dayTileBuilder: DaysViewTileBuilder(),
     );
 
+    var lastPosition = calendarro.getPositionOfDate(endDate);
     pageView = new PageView.builder(
         itemBuilder: (context, position) => buildDayView(position),
-        itemCount: 15,
+        itemCount: lastPosition + 1,
         controller: new PageController(),
         onPageChanged: (position) {
           var nextDay = (calendarro.startDate.weekday - 1 + position);
