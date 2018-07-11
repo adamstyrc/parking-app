@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
 
 import '../Calendarro.dart';
@@ -35,15 +36,16 @@ class DaysViewState extends State<DaysView> {
   }
   @override
   Widget build(BuildContext context) {
-    var startDate2 = DateTime.now();
-    startDate2 = startDate2.subtract(Duration(days: startDate2.day - 1 ));
-    if (startDate2.weekday > 5) {
-      startDate2 = startDate2.add(Duration(days: 8 - startDate2.weekday));
+    DateTime startDate = DateUtils.getFirstDayOfCurrentMonth();
+    DateTime endDate = DateUtils.getLastDayOfCurrentMonth();
+
+    if (startDate.weekday > 5) {
+      startDate = startDate.add(Duration(days: 8 - startDate.weekday));
     }
     calendarro = Calendarro(
       key: calendarroStateKey,
-      startDate: startDate2,
-      endDate: DateTime.now().add(new Duration(days: 30)),
+      startDate: startDate,
+      endDate: endDate,
       displayMode: DisplayMode.WEEKS,
       dayTileBuilder: DaysViewTileBuilder(),
     );
@@ -69,6 +71,22 @@ class DaysViewState extends State<DaysView> {
       new Material(child: calendarro, elevation: 4.0, color: Colors.orange),
       new Container(height: 360.0, child: pageView)
     ]);
+  }
+
+  DateTime establishStartDate() {
+    var startDate = DateTime.now();
+    startDate = startDate.subtract(Duration(days: startDate.day - 1 ));
+    if (startDate.weekday > 5) {
+      startDate = startDate.add(Duration(days: 8 - startDate.weekday));
+    }
+    return startDate;
+  }
+
+  DateTime establishEndDate() {
+    var endDate = DateTime.now();
+    endDate = DateTime(endDate.year, endDate.month + 1, 1);
+    endDate.subtract(Duration(days: 1));
+    return endDate;
   }
 
   Widget buildDayView(int position) {

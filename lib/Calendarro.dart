@@ -192,7 +192,7 @@ class CalendarPage extends StatelessWidget {
           new Row(children: buildCalendarRow(context, pageStartDate, weekLastDayDate))
       );
 
-      for (var i = 1; i < 5; i++) {
+      for (var i = 1; i < 6; i++) {
         DateTime nextWeekFirstDayDate = pageStartDate.add(
             new Duration(days: 7 * i - startDayOffset));
 
@@ -305,7 +305,6 @@ class CalendarDayItem extends StatelessWidget {
     calendarro.setSelectedDate(date);
     calendarro.setCurrentDate(date);
   }
-
 }
 
 class CalendarDayLabelsView extends StatelessWidget {
