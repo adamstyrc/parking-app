@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import '../Calendarro.dart';
-import 'DayTileView.dart';
-import 'PlannerDayTileView.dart';
+import 'DateTileView.dart';
+import 'PlannerDateTileView.dart';
 
 
 class PlannerView extends StatelessWidget {
@@ -37,6 +37,6 @@ class DaysViewTileBuilder extends DayTileBuilder {
 
   @override
   Widget build(BuildContext context, DateTime tileDate) {
-    return new PlannerDayTileView(date: tileDate, calendarro: calendarro);
+    return new PlannerDateTileView(date: tileDate, calendarro: calendarro);
   }
 }

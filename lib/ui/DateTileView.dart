@@ -11,23 +11,23 @@ import 'package:mobileoffice/ReservationsController.dart';
 import 'package:mobileoffice/Models/MonthReservations.dart';
 import 'package:http/http.dart' as http;
 
-class DayTileView extends StatefulWidget {
+class DateTileView extends StatefulWidget {
   DateTime date;
   CalendarroState calendarro;
-  DayTileView({this.date, this.calendarro});
+  DateTileView({this.date, this.calendarro});
 
   @override
-  State<DayTileView> createState() {
-    return new DayTileState(date: date);
+  State<DateTileView> createState() {
+    return new DateTileState(date: date);
   }
 }
 
-class DayTileState extends State<DayTileView> {
+class DateTileState extends State<DateTileView> {
   DateTime date;
   CalendarroState calendarro;
   StreamSubscription reservationsUpdatedEventSubscription;
 
-  DayTileState({
+  DateTileState({
     this.date,
     this.calendarro
   });

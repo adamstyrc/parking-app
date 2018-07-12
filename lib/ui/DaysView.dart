@@ -7,7 +7,7 @@ import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/ui/DayView.dart';
 
 import '../Calendarro.dart';
-import 'DayTileView.dart';
+import 'DateTileView.dart';
 
 class DaysView extends StatefulWidget {
   @override
@@ -98,6 +98,6 @@ class DaysViewTileBuilder extends DayTileBuilder {
   @override
   Widget build(BuildContext context, DateTime tileDate) {
     calendarro = Calendarro.of(context);
-    return new DayTileView(date: tileDate, calendarro: calendarro);
+    return new DateTileView(date: tileDate, calendarro: calendarro);
   }
 }

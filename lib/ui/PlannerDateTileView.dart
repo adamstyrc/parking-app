@@ -8,25 +8,25 @@ import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
 import 'package:mobileoffice/ReservationsController.dart';
 
-class PlannerDayTileView extends StatefulWidget {
+class PlannerDateTileView extends StatefulWidget {
   DateTime date;
   CalendarroState calendarro;
 
-  PlannerDayTileView({this.date, this.calendarro});
+  PlannerDateTileView({this.date, this.calendarro});
 
   @override
-  State<PlannerDayTileView> createState() {
-    return new PlannerDayTileState(date: date);
+  State<PlannerDateTileView> createState() {
+    return new PlannerDateTileState(date: date);
   }
 
 }
 
-class PlannerDayTileState extends State<PlannerDayTileView> {
+class PlannerDateTileState extends State<PlannerDateTileView> {
   DateTime date;
   CalendarroState calendarro;
   ReservationsController reservationsController = ReservationsController.get();
 
-  PlannerDayTileState({
+  PlannerDateTileState({
     this.date,
     this.calendarro,
   });
