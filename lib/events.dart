@@ -9,3 +9,5 @@ class DayClickedEvent {
 
   DayClickedEvent({this.date, this.pageIndex});
 }
+
+class ReservationsUpdatedEvent {}

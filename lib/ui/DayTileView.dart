@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
@@ -23,11 +25,25 @@ class DayTileView extends StatefulWidget {
 class DayTileState extends State<DayTileView> {
   DateTime date;
   CalendarroState calendarro;
+  StreamSubscription reservationsUpdatedEventSubscription;
 
   DayTileState({
     this.date,
     this.calendarro
   });
+
+  @override
+  void initState() {
+    reservationsUpdatedEventSubscription = eventBus.on<ReservationsUpdatedEvent>().listen((event) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    reservationsUpdatedEventSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +121,8 @@ class DayTileState extends State<DayTileView> {
       ),
     );
   }
+
+
 
   void handleTap() {
     calendarro.setSelectedDate(date);

@@ -1,23 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/ReservationsController.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
+import 'package:mobileoffice/ui/DayView.dart';
 
 import '../Calendarro.dart';
 import 'DayTileView.dart';
 
 class DaysView extends StatefulWidget {
-
   @override
   State createState() {
     return DaysViewState();
   }
-
 }
 
 class DaysViewState extends State<DaysView> {
-
   final calendarroStateKey = GlobalKey<CalendarroState>();
 
   Calendarro calendarro;
@@ -26,7 +25,8 @@ class DaysViewState extends State<DaysView> {
 
   @override
   void initState() {
-    dayClickedEventSubscription = eventBus.on().listen((event) {
+    dayClickedEventSubscription =
+        eventBus.on<DayClickedEvent>().listen((event) {
       setState(() {
         var page = calendarro.getPositionOfDate(event.date);
         pageView.controller.jumpToPage(page);
@@ -34,6 +34,7 @@ class DaysViewState extends State<DaysView> {
       print(event.date);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     DateTime startDate = DateUtils.getFirstDayOfCurrentMonth();
@@ -56,14 +57,7 @@ class DaysViewState extends State<DaysView> {
         itemCount: lastPosition + 1,
         controller: new PageController(),
         onPageChanged: (position) {
-          var nextDay = (calendarro.startDate.weekday - 1 + position);
-          var nextDateWeekday = nextDay % 5;
-          var nextDateWeek = (nextDay / 5).floor();
-
-          var weekdayDifference =
-              nextDateWeekday + 1 - calendarro.startDate.weekday;
-          var selectedDate = calendarro.startDate
-              .add(new Duration(days: (nextDateWeek * 7 + weekdayDifference)));
+          DateTime selectedDate = getDateFromPosition(position);
 
           calendarroStateKey.currentState.setSelectedDate(selectedDate);
           calendarroStateKey.currentState.setCurrentDate(selectedDate);
@@ -74,34 +68,20 @@ class DaysViewState extends State<DaysView> {
     ]);
   }
 
-  DateTime establishStartDate() {
-    var startDate = DateTime.now();
-    startDate = startDate.subtract(Duration(days: startDate.day - 1 ));
-    if (startDate.weekday > 5) {
-      startDate = startDate.add(Duration(days: 8 - startDate.weekday));
-    }
-    return startDate;
-  }
+  DateTime getDateFromPosition(int position) {
+    var nextDay = (calendarro.startDate.weekday - 1 + position);
+    var nextDateWeekday = nextDay % 5;
+    var nextDateWeek = (nextDay / 5).floor();
 
-  DateTime establishEndDate() {
-    var endDate = DateTime.now();
-    endDate = DateTime(endDate.year, endDate.month + 1, 1);
-    endDate.subtract(Duration(days: 1));
-    return endDate;
+    var weekdayDifference = nextDateWeekday + 1 - calendarro.startDate.weekday;
+    var selectedDate = calendarro.startDate
+        .add(new Duration(days: (nextDateWeek * 7 + weekdayDifference)));
+    return selectedDate;
   }
 
   Widget buildDayView(int position) {
-    return new Column(
-      children: <Widget>[
-        new Padding(
-            padding: EdgeInsets.all(18.0),
-            child: new Text("We are fully booked, sir, sorry. $position")),
-        Image(
-          image: new AssetImage("img/parking_full.png"),
-          width: 180.0,
-        )
-      ],
-    );
+    DateTime currentSelectedDate = getDateFromPosition(position);
+    return DayView(date: currentSelectedDate);
   }
 
   @override

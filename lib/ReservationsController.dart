@@ -4,6 +4,8 @@ import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/WebService.dart';
 import 'dart:async';
 
+import 'package:mobileoffice/events.dart';
+
 class ReservationsController {
 
   MonthReservations currentMonthReservations;
@@ -25,6 +27,7 @@ class ReservationsController {
 
   Future<MonthReservations> updateReservations() async {
     currentMonthReservations = await webService.getParkingMonth(getCurrentYearMonth());
+    eventBus.fire(ReservationsUpdatedEvent());
     return currentMonthReservations;
   }
 
