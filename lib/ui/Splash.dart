@@ -38,12 +38,19 @@ class Splash extends StatelessWidget {
               image: AssetImage("img/splash_background.jpg"),
               fit: BoxFit.cover),
         ),
-        child: Align(
-            child: Theme(
-              child: CircularProgressIndicator(),
-              data:
-                  Theme.of(context).copyWith(accentColor: Colors.orangeAccent),
-            ),
-            alignment: Alignment(0.0, 0.9)));
+        child: Stack(children: <Widget>[
+          Align(
+              child: Theme(
+                child: CircularProgressIndicator(),
+                data: Theme
+                    .of(context)
+                    .copyWith(accentColor: Colors.orangeAccent),
+              ),
+              alignment: Alignment(0.0, 0.9)),
+          Align(
+            child: Text("Parking App", style: TextStyle(color: Colors.orangeAccent)),
+            alignment: Alignment(0.0, 0.65),
+          )
+        ]));
   }
 }

@@ -26,6 +26,7 @@ flutter:
 
   uses-material-design: true
   assets:
+    - img/logo.png
     - img/parking_full.png
     - img/parking_reserved.jpg
     - img/splash_background.jpg
