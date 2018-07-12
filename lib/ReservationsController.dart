@@ -53,6 +53,10 @@ class ReservationsController {
     return null;
   }
 
+  int getFreeSpacesCountForDay(int day) {
+    return currentMonthReservations.spots - getReservationsForDay(day).length;
+  }
+
   bool isDayFullyReserved(int day) {
     for (var reservation  in currentMonthReservations.reservations) {
       if (reservation.day == day) {

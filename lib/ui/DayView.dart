@@ -62,6 +62,8 @@ class DayViewState extends State<DayView> {
         );
       } else {
         var radius = Radius.circular(8.0);
+        var freeSpacesCount = reservationsController.getFreeSpacesCountForDay(date.day);
+
         return Column(
           children: <Widget>[
             Padding(
@@ -85,7 +87,7 @@ class DayViewState extends State<DayView> {
                   Align(
                     alignment: FractionalOffset(0.85, 0.9),
                     child: Row(children: <Widget>[
-                      Text("5", style: TextStyle(color: Colors.green, fontSize: 100.0, fontWeight: FontWeight.bold)),
+                      Text("$freeSpacesCount", style: TextStyle(color: Colors.green, fontSize: 100.0, fontWeight: FontWeight.bold)),
                       Text("FREE", style: TextStyle(color: Colors.green, fontSize: 27.0))
                     ], mainAxisSize: MainAxisSize.min),
                   )
