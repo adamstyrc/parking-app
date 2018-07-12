@@ -21,6 +21,7 @@ class PlannerView extends StatelessWidget {
 
 
     return new Column(children: <Widget>[
+      Container(height: 12.0,),
     new Material(child: calendarro, elevation: 4.0, color: Colors.white),
     ]);
   }
