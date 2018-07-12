@@ -12,8 +12,6 @@ import 'package:mobileoffice/ui/LoginView.dart';
 class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-//    ReservationsController.get().updateReservations().then((monthReservations) {
-
     Timer(Duration(milliseconds: 1500), () {
       UserController.get().isUserLogged().then((userLogged) {
         if (!userLogged) {
@@ -28,20 +26,24 @@ class Splash extends StatelessWidget {
               MaterialPageRoute(builder: (context) => Dashboard()),
             );
           }).catchError((error) {
-            Logger.log(error);
+            Logger.log(error.toString());
           });
         }
       });
     });
 
-//    });
-
     return Container(
-      width: 100.0,
-      height: 100.0,
-      child: new Center(
-        child: Text("Mobile Office"),
-      ),
-    );
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("img/splash_background.jpg"),
+              fit: BoxFit.cover),
+        ),
+        child: Align(
+            child: Theme(
+              child: CircularProgressIndicator(),
+              data:
+                  Theme.of(context).copyWith(accentColor: Colors.orangeAccent),
+            ),
+            alignment: Alignment(0.0, 0.9)));
   }
 }

@@ -26,6 +26,9 @@ class DashboardState extends State<Dashboard> with SingleTickerProviderStateMixi
 //        title: new Text(widget.title),
 //
 //      ),
+    appBar: AppBar(
+      title: Text("Parking"),
+    ),
       bottomNavigationBar: new BottomNavigationBar(
           currentIndex: selectedTabIndex,
           onTap: (int index) {

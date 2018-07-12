@@ -10,6 +10,8 @@ class AccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
+      Text("Account:"),
+      Text("${UserController.get().userEmail}"),
       FlatButton(onPressed: () {
         logout(context);
       }, child: Text("LOGOUT"))
