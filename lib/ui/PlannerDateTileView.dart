@@ -50,16 +50,17 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
         reservationsController.isMineReservationInDay(date.day);
 //    bool isSelected = date.day % 5 > 1 && !isWeekend;
 
+    var todayBorder = Border.all(
+      color: Colors.orange,
+      width: 1.0,
+    );
     BoxDecoration boxDecoration;
     if (reservedByMe && !isWeekend) {
-      boxDecoration =
-          new BoxDecoration(color: Colors.blue, shape: BoxShape.circle);
+        boxDecoration =
+        new BoxDecoration(color: Colors.blue, shape: BoxShape.circle, border: isToday ? todayBorder : null);
     } else if (isToday) {
       boxDecoration = new BoxDecoration(
-          border: new Border.all(
-            color: Colors.white,
-            width: 1.0,
-          ),
+          border: todayBorder,
           shape: BoxShape.circle);
     }
 

@@ -28,7 +28,6 @@ flutter:
   assets:
     - img/logo.png
     - img/car_white.png
-    - img/car_white2.png
     - img/parking_full.png
     - img/parking_reserved.jpg
     - img/splash_background.jpg
