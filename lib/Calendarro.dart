@@ -93,6 +93,9 @@ class CalendarroState extends State<Calendarro> {
     if (selectedDate == null) {
       selectedDate = startDate;
     }
+
+    startDate = DateUtils.toMidnight(startDate);
+    endDate = DateUtils.toMidnight(endDate);
   }
 
   void setSelectedDate(DateTime date) {
@@ -202,7 +205,7 @@ class CalendarPage extends StatelessWidget {
 
     if (pageEndDate.isAfter(weekLastDayDate)) {
       rows.add(
-          new Row(children: buildCalendarRow(context, pageStartDate, weekLastDayDate))
+          new Row(children: buildCalendarRow(context, pageStartDate, pageEndDate))
       );
 
       for (var i = 1; i < 6; i++) {
@@ -227,7 +230,7 @@ class CalendarPage extends StatelessWidget {
 
     } else {
       rows.add(
-          new Row(children: buildCalendarRow(context, pageStartDate, weekLastDayDate))
+          new Row(children: buildCalendarRow(context, pageStartDate, pageEndDate))
       );
     }
 
@@ -240,7 +243,6 @@ class CalendarPage extends StatelessWidget {
     DateTime currentDate = rowStartDate;
     for (int i = 0; i < 7; i++) {
       if (i + 1 >= rowStartDate.weekday && i + 1 <= rowEndDate.weekday) {
-//        items.add(CalendarDayItem(date: currentDate));
         CalendarroState calendarro = Calendarro.of(context) as CalendarroState;
         if (calendarro.dayBuilder != null) {
           Widget dayTile = calendarro.dayBuilder.build(context, currentDate);
