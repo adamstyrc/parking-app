@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Config.dart';
 import 'package:mobileoffice/Logger.dart';
@@ -10,6 +11,27 @@ import 'package:mobileoffice/ui/Dashboard.dart';
 import 'package:mobileoffice/ui/LoginView.dart';
 
 class Splash extends StatelessWidget {
+
+  Splash() {
+    FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) {
+        print('on launch $message');
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.getToken().then((token){
+      print(token);
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     Timer(Duration(milliseconds: 1500), () {

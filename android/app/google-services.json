@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "797373052636",
+    "firebase_url": "https://parking-e88e3.firebaseio.com",
+    "project_id": "parking-e88e3",
+    "storage_bucket": "parking-e88e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797373052636:android:0fff01bd9dbe1d36",
+        "android_client_info": {
+          "package_name": "com.vattenfall.parking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "797373052636-um89s2bgrqottrfskgcog6mgakotrb3g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb2LL_-QxCTdjKW3c6faoIjrXmGzq1Qew"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

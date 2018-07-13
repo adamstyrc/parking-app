@@ -64,6 +64,22 @@ class WebService {
     return http.get('https://jsonplaceholder.typicode.com/posts/1');
   }
 
+  Future<void> postFirebaseToken(String token) async {
+    Map<String, dynamic> bodyMap = {
+      'token': token,
+      'platform': 'android',
+    };
+
+    final response = await  http.post(API_ADDRESS + '/users/me/notifiers', body: json.encode(bodyMap),headers: await prepareHeaders());
+
+    Logger.log("BODY: " + response.body);
+    if (isResponseSuccessful(response)) {
+      return;
+    } else {
+      throw Exception('Could not register push token');
+    }
+  }
+
   Future<AccessToken> postAuth(String email, String password) async {
     Map<String, dynamic> bodyMap = {
       'email': email,

@@ -1,4 +1,4 @@
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'dart:async';
 
 import 'package:mobileoffice/Config.dart';
@@ -31,6 +31,14 @@ class UserController {
     userEmail = email;
     await Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken.access_token);
     await Config.setString(ConfigKeys.USER_EMAIL, email);
+
+
+    try {
+      var token = await FirebaseMessaging().getToken();
+      await webService.postFirebaseToken(token);
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<String> getAccessToken() {

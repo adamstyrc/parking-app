@@ -5,6 +5,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  firebase_messaging: "^1.0.3"
+
   cupertino_icons: ^0.1.0
   flutter_calendar: ^0.0.1
   json: any
