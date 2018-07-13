@@ -14,8 +14,11 @@ class Calendarro extends StatefulWidget {
     this.startDate,
     this.endDate,
     this.displayMode,
-    this.dayTileBuilder
+    this.dayTileBuilder,
+    this.selectedDate,
   }) : super(key: key);
+
+  DateTime selectedDate;
 
   DateTime startDate;
   DateTime endDate;
@@ -32,7 +35,8 @@ class Calendarro extends StatefulWidget {
         startDate: startDate,
         endDate: endDate,
         displayMode: displayMode,
-      dayBuilder: dayTileBuilder
+      dayBuilder: dayTileBuilder,
+      selectedDate: selectedDate
     );
     return state;
   }
@@ -52,6 +56,13 @@ class Calendarro extends StatefulWidget {
     print("position: $position");
     return position;
   }
+
+  int getPageForDate(DateTime date) {
+    int daysDifference = date.difference(DateUtils.toMidnight(startDate)).inDays ;
+    int startDayOffset = startDate.weekday - DateTime.monday;
+    int page = (daysDifference + startDayOffset) ~/ 7;
+    return page;
+  }
 }
 
 enum DisplayMode { MONTHS, WEEKS }
@@ -61,7 +72,8 @@ class CalendarroState extends State<Calendarro> {
     this.displayMode,
     this.startDate,
     this.endDate,
-    this.dayBuilder
+    this.dayBuilder,
+    this.selectedDate
   });
 
   DateTime startDate;
@@ -78,7 +90,9 @@ class CalendarroState extends State<Calendarro> {
   void initState() {
     super.initState();
 
-    selectedDate = startDate;
+    if (selectedDate == null) {
+      selectedDate = startDate;
+    }
   }
 
   void setSelectedDate(DateTime date) {
@@ -89,8 +103,7 @@ class CalendarroState extends State<Calendarro> {
 
   void setCurrentDate(DateTime date) {
     setState(() {
-      int daysDifference = date.difference(startDate).inDays ;
-      int page = (daysDifference + startDayOffset) ~/ 7;
+      int page = widget.getPageForDate(date);
       pageView.controller.jumpToPage(page);
     });
   }
@@ -109,7 +122,7 @@ class CalendarroState extends State<Calendarro> {
     pageView = new PageView.builder(
         itemBuilder: (context, position) => buildCalendarPage(position),
         itemCount: pagesCount,
-      controller: new PageController(),
+      controller: new PageController(initialPage: widget.getPageForDate(selectedDate)),
     );
 
     return new Container(

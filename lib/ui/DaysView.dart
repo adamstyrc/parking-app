@@ -43,25 +43,32 @@ class DaysViewState extends State<DaysView> {
     if (startDate.weekday > 5) {
       startDate = startDate.add(Duration(days: 8 - startDate.weekday));
     }
+    var today = DateTime.now();
+
     calendarro = Calendarro(
       key: calendarroStateKey,
       startDate: startDate,
       endDate: endDate,
       displayMode: DisplayMode.WEEKS,
       dayTileBuilder: DaysViewTileBuilder(),
+      selectedDate: today,
     );
 
     var lastPosition = calendarro.getPositionOfDate(endDate);
+    var todayPosition = calendarro.getPositionOfDate(today);
     pageView = new PageView.builder(
         itemBuilder: (context, position) => buildDayView(position),
         itemCount: lastPosition + 1,
-        controller: new PageController(),
+        controller: new PageController(initialPage: todayPosition),
         onPageChanged: (position) {
           DateTime selectedDate = getDateFromPosition(position);
 
           calendarroStateKey.currentState.setSelectedDate(selectedDate);
           calendarroStateKey.currentState.setCurrentDate(selectedDate);
         });
+
+//    calendarro.setCurrentDate(DateTime.now());
+
     return new Column(children: <Widget>[
       new Material(child: calendarro, elevation: 4.0, color: Colors.orange),
       new Container(height: 360.0, child: pageView)
