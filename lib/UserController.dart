@@ -32,13 +32,8 @@ class UserController {
     await Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken.access_token);
     await Config.setString(ConfigKeys.USER_EMAIL, email);
 
-
-    try {
-      var token = await FirebaseMessaging().getToken();
-      await webService.postFirebaseToken(token);
-    } catch (e) {
-      print(e);
-    }
+    var token = await FirebaseMessaging().getToken();
+    await webService.postFirebaseToken(token);
   }
 
   Future<String> getAccessToken() {
