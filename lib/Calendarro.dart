@@ -171,8 +171,6 @@ class CalendarroState extends State<Calendarro> {
     return new CalendarPage(
         pageStartDate: pageStartDate,
         pageEndDate: pageEndDate);
-
-
   }
 }
 
@@ -205,7 +203,7 @@ class CalendarPage extends StatelessWidget {
 
     if (pageEndDate.isAfter(weekLastDayDate)) {
       rows.add(
-          new Row(children: buildCalendarRow(context, pageStartDate, pageEndDate))
+          new Row(children: buildCalendarRow(context, pageStartDate, weekLastDayDate))
       );
 
       for (var i = 1; i < 6; i++) {
@@ -277,12 +275,7 @@ class CalendarDayItem extends StatelessWidget {
     context = context;
     bool isWeekend = DateUtils.isWeekend(date);
     var textColor = isWeekend ? Colors.grey : Colors.black;
-
-    var today = DateTime.now();
-    bool isToday = today.day == date.day && today.month == date.month && today.year == date.year;
-
-//    Calendarro calendarro = context.ancestorWidgetOfExactType(Calendarro);
-//    CalendarroState calendarro = context.ancestorStateOfType(TypeMatcher<CalendarroState>());
+    bool isToday = DateUtils.isToday(date);
     calendarro = Calendarro.of(context) as CalendarroState;
 
     bool isSelected = calendarro.selectedDate.day == date.day;

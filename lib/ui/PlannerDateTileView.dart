@@ -40,7 +40,6 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
     var textColor = isWeekend ? Colors.grey : Colors.black;
 
     bool isToday = DateUtils.isToday(date);
-    bool pastDay = DateUtils.isSpecialPastDay(date);
 
     calendarro = Calendarro.of(context);
     var reservedByMe =
