@@ -48,6 +48,21 @@ class WebService {
     }
   }
 
+  Future<void> postParkingNextReservations(String yearMonth, List<int> days) async {
+    Map<String, dynamic> bodyMap = {
+      'days': days
+    };
+
+    final response = await http.post(API_ADDRESS + '/calendar/$yearMonth/reservations', headers: await prepareHeaders(), body: json.encode(bodyMap));
+
+    if (isResponseSuccessful(response)) {
+      Logger.log("BODY: " + response.body);
+      return response;
+    } else {
+      throw Exception('Failed request');
+    }
+  }
+
   Future<void> deleteParking(String date) async {
     final response =
     await http.delete(API_ADDRESS + '/calendar/$date/reservation', headers: await prepareHeaders());

@@ -15,6 +15,7 @@ class Calendarro extends StatefulWidget {
       this.displayMode = DisplayMode.WEEKS,
       this.dayTileBuilder,
       this.selectedDate,
+      this.selectedDates,
       this.selectionMode = SelectionMode.SINGLE})
       : super(key: key);
 
