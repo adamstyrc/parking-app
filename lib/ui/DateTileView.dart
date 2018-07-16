@@ -56,7 +56,7 @@ class DateTileState extends State<DateTileView> {
         today.year == date.year;
 
     calendarro = Calendarro.of(context);
-    bool isSelected = calendarro.selectedDate.day == date.day;
+    bool isSelected = calendarro.isDateSelected(date);
 
     BoxDecoration boxDecoration;
     if (isSelected) {

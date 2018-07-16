@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
+import 'package:mobileoffice/ui/PlannerNextMonthTileBuilder.dart';
 import '../Calendarro.dart';
 import 'DateTileView.dart';
 import 'PlannerDateTileView.dart';
@@ -22,7 +23,7 @@ class PlannerView extends StatelessWidget {
           if (position == 0) {
             return Column(children: <Widget>[
               Text("July", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
-              Container(height: 12.0),
+              Container(height: 16.0),
               Calendarro(
                 startDate: DateUtils.getFirstDayOfCurrentMonth(),
                 endDate: DateUtils.getLastDayOfCurrentMonth(),
@@ -33,12 +34,13 @@ class PlannerView extends StatelessWidget {
           } else {
             return Column(children: <Widget>[
               Text("August 2018", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
-              Container(height: 12.0),
+              Container(height: 16.0),
               Calendarro(
                 startDate: DateUtils.getFirstDayOfNextMonth(),
                 endDate: DateUtils.getLastDayOfNextMonth(),
                 displayMode: DisplayMode.MONTHS,
-                dayTileBuilder: new DaysViewTileBuilder(),
+                dayTileBuilder: PlannerNextMonthTileBuilder(),
+                selectionMode: SelectionMode.MULTI,
               ),
 
               RaisedButton(
@@ -68,7 +70,6 @@ class PlannerView extends StatelessWidget {
 }
 
 class DaysViewTileBuilder extends DayTileBuilder {
-  DateTime tileDate;
   CalendarroState calendarro;
 
   DaysViewTileBuilder({this.calendarro});

@@ -6,6 +6,8 @@ import 'package:mobileoffice/Config.dart';
 import 'package:mobileoffice/Logger.dart';
 import 'package:mobileoffice/ReservationsController.dart';
 import 'package:mobileoffice/UserController.dart';
+import 'package:mobileoffice/WebService.dart';
+import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/ui/Dashboard.dart';
 
 import 'package:mobileoffice/ui/LoginView.dart';
@@ -16,6 +18,12 @@ class Splash extends StatelessWidget {
     FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) {
+        print('Firebase onMessage $message');
+
+        ReservationsController.get().updateReservations().then((currentMonth) {
+          eventBus.fire(ReservationsUpdatedEvent());
+        });
+
         print('on message $message');
       },
       onResume: (Map<String, dynamic> message) {
