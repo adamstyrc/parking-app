@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/controller/FutureReservationsController.dart';
 import 'package:mobileoffice/ui/PlannerNextMonthTileBuilder.dart';
@@ -40,7 +41,7 @@ class PlannerView extends StatelessWidget {
         itemBuilder: (context, position) {
           if (position == 0) {
             return Column(children: <Widget>[
-              Text("July",
+              Text(DatePrinter.printNiceMonthYear(DateUtils.getFirstDayOfCurrentMonth()),
                   style:
                       TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
               Container(height: 16.0),
@@ -48,7 +49,7 @@ class PlannerView extends StatelessWidget {
             ]);
           } else {
             return Column(children: <Widget>[
-              Text("August 2018",
+              Text(DatePrinter.printNiceMonthYear(DateUtils.getFirstDayOfNextMonth()),
                   style:
                       TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
               Container(height: 16.0),
