@@ -39,16 +39,12 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
     bool isWeekend = DateUtils.isWeekend(date);
     var textColor = isWeekend ? Colors.grey : Colors.black;
 
-    var today = DateTime.now();
-    bool isToday = today.day == date.day &&
-        today.month == date.month &&
-        today.year == date.year;
+    bool isToday = DateUtils.isToday(date);
+    bool pastDay = DateUtils.isSpecialPastDay(date);
 
     calendarro = Calendarro.of(context);
-//    bool isSelected = calendarro.selectedDate.day == date.day;
     var reservedByMe =
         reservationsController.isMineReservationInDay(date.day);
-//    bool isSelected = date.day % 5 > 1 && !isWeekend;
 
     var todayBorder = Border.all(
       color: Colors.orange,
@@ -109,8 +105,10 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
   void handleTap() async {
     print("tap: " + date.toString());
 
-    var dialog = prepareReservationChangeDialog();
-    showDialog(context: context, builder: (_) => dialog);
+    if (!DateUtils.isSpecialPastDay(date)) {
+      var dialog = prepareReservationChangeDialog();
+      showDialog(context: context, builder: (_) => dialog);
+    }
   }
 
   AlertDialog prepareReservationChangeDialog()  {

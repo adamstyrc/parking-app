@@ -7,6 +7,20 @@ class DateUtils {
     return date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
   }
 
+  static bool isToday(DateTime date) {
+    var now = DateTime.now();
+    return date.day == now.day && date.month == now.month && date.year == now.year;
+  }
+
+  static bool isPastDay(DateTime date) {
+    var today = toMidnight(DateTime.now());
+    return date.isBefore(today);
+  }
+
+  static bool isSpecialPastDay(DateTime date) {
+    return isPastDay(date) || (isToday(date) && DateTime.now().hour >= 12);
+  }
+
   static DateTime getFirstDayOfCurrentMonth() {
     var dateTime = DateTime.now();
     dateTime = getFirstDayOfMonth(dateTime.month);

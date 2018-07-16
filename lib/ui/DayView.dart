@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/ReservationsController.dart';
+import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
 
 class DayView extends StatefulWidget {
@@ -22,6 +23,8 @@ class DayViewState extends State<DayView> {
   Widget build(BuildContext context) {
     var reservationsController = ReservationsController.get();
 
+    bool pastDay = DateUtils.isSpecialPastDay(date);
+
     bool dayFullyReserved = reservationsController.isDayFullyReserved(date.day);
     bool dayReservedByMe =
         reservationsController.isMineReservationInDay(date.day);
@@ -40,7 +43,7 @@ class DayViewState extends State<DayView> {
               color: Colors.blue,
               textColor: Colors.white,
               child: Text("DROP"),
-              onPressed: () {
+              onPressed: pastDay ? null : () {
                 ReservationsController.get().dropReservation(date).then((_) {
                   setState(() {});
                 });
@@ -98,7 +101,8 @@ class DayViewState extends State<DayView> {
                 color: Colors.blue,
                 textColor: Colors.white,
                 child: Text("BOOK"),
-                onPressed: () {
+                disabledColor: Colors.grey,
+                onPressed: pastDay ? null : () {
                   ReservationsController.get().makeReservation(date).then((_) {
                     setState(() {});
                   });
