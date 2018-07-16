@@ -56,7 +56,9 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
 
   void handleTap() async {
     print("tap: " + date.toString());
-    calendarro.widget.toggleDate(date);
+    if (DateUtils.isWeekend(date)) {
+      calendarro.widget.toggleDate(date);
+    }
 //    calendarro.selectedDate
   }
 }

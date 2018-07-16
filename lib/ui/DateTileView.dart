@@ -50,10 +50,7 @@ class DateTileState extends State<DateTileView> {
     bool isWeekend = DateUtils.isWeekend(date);
     var textColor = isWeekend ? Colors.grey : Colors.black;
 
-    var today = DateTime.now();
-    bool isToday = today.day == date.day &&
-        today.month == date.month &&
-        today.year == date.year;
+    bool isToday = DateUtils.isToday(date);
 
     calendarro = Calendarro.of(context);
     bool isSelected = calendarro.isDateSelected(date);
