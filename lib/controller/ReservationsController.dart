@@ -1,7 +1,7 @@
 import 'package:mobileoffice/Models/MonthReservations.dart';
-import 'package:mobileoffice/UserController.dart';
+import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
-import 'package:mobileoffice/WebService.dart';
+import 'package:mobileoffice/api/WebService.dart';
 import 'dart:async';
 
 import 'package:mobileoffice/events.dart';

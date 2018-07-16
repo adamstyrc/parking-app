@@ -3,10 +3,10 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:mobileoffice/Logger.dart';
+import 'package:mobileoffice/Utils/Logger.dart';
 import 'package:mobileoffice/Models/AccessToken.dart';
 import 'package:mobileoffice/Models/MonthReservations.dart';
-import 'package:mobileoffice/UserController.dart';
+import 'package:mobileoffice/controller/UserController.dart';
 
 class WebService {
 

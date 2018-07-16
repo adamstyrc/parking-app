@@ -6,8 +6,8 @@ import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
-import 'package:mobileoffice/WebService.dart';
-import 'package:mobileoffice/ReservationsController.dart';
+import 'package:mobileoffice/api/WebService.dart';
+import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/Models/MonthReservations.dart';
 import 'package:http/http.dart' as http;
 

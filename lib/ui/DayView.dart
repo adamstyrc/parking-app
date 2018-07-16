@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobileoffice/ReservationsController.dart';
+import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
 

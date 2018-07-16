@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mobileoffice/UserController.dart';
+import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
-import 'package:mobileoffice/ReservationsController.dart';
+import 'package:mobileoffice/controller/ReservationsController.dart';
 
 class PlannerDateTileView extends StatefulWidget {
   DateTime date;

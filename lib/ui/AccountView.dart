@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:mobileoffice/Config.dart';
-import 'package:mobileoffice/UserController.dart';
+import 'package:mobileoffice/storage/Config.dart';
+import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/ui/LoginView.dart';
 
 class AccountView extends StatelessWidget {

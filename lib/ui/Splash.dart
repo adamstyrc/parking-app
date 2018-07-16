@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:mobileoffice/Config.dart';
-import 'package:mobileoffice/Logger.dart';
-import 'package:mobileoffice/ReservationsController.dart';
-import 'package:mobileoffice/UserController.dart';
-import 'package:mobileoffice/WebService.dart';
+import 'package:mobileoffice/storage/Config.dart';
+import 'package:mobileoffice/Utils/Logger.dart';
+import 'package:mobileoffice/controller/ReservationsController.dart';
+import 'package:mobileoffice/controller/UserController.dart';
+import 'package:mobileoffice/api/WebService.dart';
 import 'package:mobileoffice/controller/FutureReservationsController.dart';
 import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/ui/Dashboard.dart';
