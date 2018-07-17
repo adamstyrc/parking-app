@@ -136,9 +136,5 @@ class DateTileState extends State<DateTileView> {
       monthReservations.toString();
     });
 
-    WebService().fetchPost().then((http.Response response) {
-      response.body;
-    });
-
   }
 }

@@ -15,11 +15,11 @@ class WebService {
 
   Future<MonthReservations> getParkingMonth(String yearMonth) async {
     final response =
-        await http.get(API_ADDRESS + '/calendar/' + yearMonth, headers: await prepareHeaders());
+        await http.get(API_ADDRESS + '/calendar/$yearMonth', headers: await prepareHeaders());
+
+    logResponse(response);
 
     if (response.statusCode == 200) {
-      var body = response.body;
-      Logger.log("BODY: " + body);
       return MonthReservations.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load post');
@@ -40,8 +40,8 @@ class WebService {
     final response =
         await http.post(API_ADDRESS + '/calendar/$date/reservation', headers: await prepareHeaders());
 
+    logResponse(response);
     if (isResponseSuccessful(response)) {
-      Logger.log("BODY: " + response.body);
       return response;
     } else {
       throw Exception('Failed request');
@@ -55,8 +55,8 @@ class WebService {
 
     final response = await http.post(API_ADDRESS + '/calendar/$yearMonth/reservations', headers: await prepareHeaders(), body: json.encode(bodyMap));
 
+    logResponse(response);
     if (isResponseSuccessful(response)) {
-      Logger.log("BODY: " + response.body);
       return response;
     } else {
       throw Exception('Failed request');
@@ -67,16 +67,13 @@ class WebService {
     final response =
     await http.delete(API_ADDRESS + '/calendar/$date/reservation', headers: await prepareHeaders());
 
+    logResponse(response);
+
     if (isResponseSuccessful(response)) {
-      Logger.log("BODY: " + response.body);
       return response;
     } else {
       throw Exception('Failed request');
     }
-  }
-
-  Future<http.Response> fetchPost() {
-    return http.get('https://jsonplaceholder.typicode.com/posts/1');
   }
 
   Future<void> postFirebaseToken(String token) async {
@@ -87,7 +84,7 @@ class WebService {
 
     final response = await  http.post(API_ADDRESS + '/users/me/notifiers', body: json.encode(bodyMap),headers: await prepareHeaders());
 
-    Logger.log("BODY: " + response.body);
+    logResponse(response);
     if (isResponseSuccessful(response)) {
       return;
     } else {
@@ -104,9 +101,8 @@ class WebService {
     final response =
       await http.post(API_ADDRESS + '/auth', headers: await prepareHeaders(), body: json.encode(bodyMap));
 
+    logResponse(response);
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      Logger.log(response.body);
-
       return AccessToken.fromJson(json.decode(response.body));
     } else {
       throw Exception('failure');
@@ -115,5 +111,9 @@ class WebService {
 
   bool isResponseSuccessful(http.Response response) {
     return response.statusCode >= 200 && response.statusCode < 300;
+  }
+
+  void logResponse(http.Response response) {
+    Logger.log('${response.request.method} ${response.request.url.toString()} => code:${response.statusCode}, BODY: \n ${response.body}');
   }
 }
