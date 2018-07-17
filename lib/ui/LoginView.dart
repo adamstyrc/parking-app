@@ -15,8 +15,10 @@ class LoginView extends StatefulWidget {
 
 class LoginViewState extends State<LoginView> {
 
-  final loginTFController = TextEditingController(text: "adam.styrc@vattenfall.com");
-  final passwordTFController = TextEditingController(text: "password");
+//  final loginTFController = TextEditingController(text: "adam.styrc@vattenfall.com");
+//  final passwordTFController = TextEditingController(text: "password");
+  final loginTFController = TextEditingController(text: "@vattenfall.com");
+  final passwordTFController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
