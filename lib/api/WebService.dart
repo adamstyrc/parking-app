@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:mobileoffice/Models/User3.dart';
+import 'package:mobileoffice/Models/User.dart';
 import 'package:mobileoffice/Utils/Logger.dart';
 import 'package:mobileoffice/Models/AccessToken.dart';
 import 'package:mobileoffice/Models/MonthReservations.dart';

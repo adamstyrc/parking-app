@@ -1,4 +1,3 @@
-import 'User2.dart';
 
 class MonthReservations {
 
