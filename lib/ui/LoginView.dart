@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/controller/FutureReservationsController.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/main.dart';
@@ -58,12 +59,11 @@ class LoginViewState extends State<LoginView> {
 
                           print("login: $email");
 
-                          UserController.get().login(email, password).then((_) {
-                            ReservationsController.get().updateReservations().then((_) {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
-                            }).catchError((Exception e) {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
-                            });
+                          UserController.get().login(email, password).then((_) async {
+                            await FutureReservationsController.get().updateReservations();
+                            await ReservationsController.get().updateReservations();
+
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
                           }).catchError(() {
 
                           });
