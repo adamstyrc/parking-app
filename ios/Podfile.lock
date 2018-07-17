@@ -1,65 +1,71 @@
 PODS:
-  - Firebase/Core (4.6.0):
-    - FirebaseAnalytics (= 4.0.5)
-    - FirebaseCore (= 4.0.11)
-  - Firebase/Database (4.6.0):
+  - Firebase/Core (5.3.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 5.0.1)
+  - Firebase/CoreOnly (5.3.0):
+    - FirebaseCore (= 5.0.4)
+  - Firebase/Messaging (5.3.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (= 3.0.2)
+  - firebase_messaging (0.0.1):
     - Firebase/Core
-    - FirebaseDatabase (= 4.1.1)
-  - firebase_core (0.0.1):
-    - Firebase/Core
+    - Firebase/Messaging
     - Flutter
-  - firebase_database (0.0.1):
-    - Firebase/Database
-    - Flutter
-  - FirebaseAnalytics (4.0.5):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
+  - FirebaseAnalytics (5.0.1):
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.11):
+  - FirebaseCore (5.0.4):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseDatabase (4.1.1):
-    - FirebaseAnalytics (~> 4.0)
-    - FirebaseCore (~> 4.0)
-    - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (2.0.6)
+  - FirebaseInstanceID (3.1.1):
+    - FirebaseCore (~> 5.0)
+  - FirebaseMessaging (3.0.2):
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
   - Flutter (1.0.0)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - leveldb-library (1.20)
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - GoogleToolboxForMac/Logger (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - GoogleToolboxForMac/NSData+zlib (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - Protobuf (3.6.0)
+  - shared_preferences (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
-  - firebase_core (from `Pods/.symlinks/plugins/firebase_core-0.2.2/ios`)
-  - firebase_database (from `Pods/.symlinks/plugins/firebase_database-0.4.4/ios`)
+  - firebase_messaging (from `Pods/.symlinks/plugins/firebase_messaging-1.0.3/ios`)
   - Flutter (from `Pods/.symlinks/flutter/ios`)
+  - shared_preferences (from `Pods/.symlinks/plugins/shared_preferences-0.4.2/ios`)
 
 EXTERNAL SOURCES:
-  firebase_core:
-    :path: Pods/.symlinks/plugins/firebase_core-0.2.2/ios
-  firebase_database:
-    :path: Pods/.symlinks/plugins/firebase_database-0.4.4/ios
+  firebase_messaging:
+    :path: Pods/.symlinks/plugins/firebase_messaging-1.0.3/ios
   Flutter:
     :path: Pods/.symlinks/flutter/ios
+  shared_preferences:
+    :path: Pods/.symlinks/plugins/shared_preferences-0.4.2/ios
 
 SPEC CHECKSUMS:
-  Firebase: 27321a925aa85520618255a7c630859e0502ccbd
-  firebase_core: ce5006bb48508ee4e71e0f429a3f519bb8ee2961
-  firebase_database: b78d1e592c4f3cf826497dae722116a937aa99e0
-  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
-  FirebaseCore: 2a946ece8fbe3ce1fdeeb55324f273caade22df9
-  FirebaseDatabase: 2e6e8e110b93b9a6e7aac71774c769a363035cb1
-  FirebaseInstanceID: 24958382a1011bba5aaff37e334e7a650b9118f5
-  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  leveldb-library: 4f9eedf84ab46b4fa3b7893bf30714b2a1a74022
+  Firebase: 68afeeb05461db02d7c9e3215cda28068670f4aa
+  firebase_messaging: a5f5d4a9491b660f33a1f94bd0596558f820bad1
+  FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
+  FirebaseCore: 62f1b792a49bb9e8b4073f24606d2c93ffc352f0
+  FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
+  FirebaseMessaging: 6894b8fe0a0cf26c3b13dad729f1131654ae0bdb
+  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
+  shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
 
 PODFILE CHECKSUM: 0420ab312a523ae0eecfb1fc19ea51dd82cc17c7
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0
