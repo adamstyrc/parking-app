@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:mobileoffice/Models/User3.dart';
 import 'package:mobileoffice/Utils/Logger.dart';
 import 'package:mobileoffice/Models/AccessToken.dart';
 import 'package:mobileoffice/Models/MonthReservations.dart';
@@ -109,12 +110,12 @@ class WebService {
     }
   }
 
-  Future<void> getUser() async {
-    final response = await http.get(API_ADDRESS + '/users', headers: await prepareHeaders());
+  Future<User> getUser() async {
+    final response = await http.get(API_ADDRESS + '/users/me', headers: await prepareHeaders());
     logResponse(response);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return ;
+      return User.fromJson(json.decode(response.body));
     } else {
       throw Exception('failure');
     }

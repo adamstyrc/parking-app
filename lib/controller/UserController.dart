@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:mobileoffice/Models/User3.dart';
 import 'dart:async';
 
 import 'package:mobileoffice/storage/Config.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserController {
 
   String userEmail;
+  User user;
   WebService webService = WebService();
 
   //SINGLETON
@@ -50,8 +52,8 @@ class UserController {
     return Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken);
   }
 
-  Future<void> updateUser() async {
-    return await webService.getUser();
+  Future<User> updateUser() async {
+    return user = await webService.getUser();
   }
 
   Future<bool> logout() async {
