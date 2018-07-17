@@ -43,8 +43,8 @@ class FutureReservationsController {
   List<DateTime> getSelectedDates() {
     var nextMonth = DateUtils.getFirstDayOfNextMonth();
     var selectedDates = List<DateTime>();
-    nextMonthReservations.reservations.forEach((r) {
-      if (r.reservations.contains(UserController.get().userEmail)) {
+    nextMonthReservations.days.forEach((r) {
+      if (r.booked.contains(UserController.get().userEmail)) {
         selectedDates.add(DateTime(nextMonth.year, nextMonth.month, r.day));
       }
     });

@@ -2,31 +2,35 @@ import 'User2.dart';
 
 class MonthReservations {
 
-  List<Reservation> reservations;
+  List<Reservation> days;
   int spots;
 
-  MonthReservations({this.reservations, this.spots});
+  MonthReservations({this.days, this.spots});
 
   factory MonthReservations.fromJson(Map<String, dynamic> json) {
-    var reservationsMap = json['reservations'] as List<dynamic>;
+    var reservationsMap = json['days'] as List<dynamic>;
     var reservations = reservationsMap.map((entry) {
       return Reservation.fromJson(entry);
     });
 
     return MonthReservations(
-        reservations: reservations.toList(),
+        days: reservations.toList(),
         spots: 2);
   }
 }
 
 class Reservation {
   int day;
-  List<String> reservations;
+  List<String> booked;
+  List<String> followed;
+  List<String> granted;
 
-  Reservation({this.day, this.reservations});
+  Reservation({this.day, this.booked, this.followed, this.granted});
 
   factory Reservation.fromJson(Map<String, dynamic> json) {
-    var reservations = json['reservations'] as List<dynamic>;
-    return Reservation(day: json['day'], reservations: reservations.cast<String>());
+    var booked = json['booked'] as List<dynamic>;
+    var followed = json['followed'] as List<dynamic>;
+    var granted = json['granted'] as List<dynamic>;
+    return Reservation(day: json['day'], booked: booked.cast<String>(), granted: granted.cast<String>(), followed: followed.cast<String>());
   }
 }
