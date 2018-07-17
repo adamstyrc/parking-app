@@ -3,7 +3,7 @@ import 'package:mobileoffice/ui/Splash.dart';
 
 
 void main() => runApp(MaterialApp(
-  title: 'Flutter Demo',
+  title: 'Parking Vattenfall',
   theme: new ThemeData(
     primaryColor: Colors.orange,
     accentColor: Colors.cyan[600],
