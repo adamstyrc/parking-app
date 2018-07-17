@@ -132,9 +132,6 @@ class DateTileState extends State<DateTileView> {
 //      print(monthReservations.users);
 //    });
 
-    ReservationsController().updateReservations().then((monthReservations) {
-      monthReservations.toString();
-    });
-
+    ReservationsController().updateReservations().then((monthReservations) {});
   }
 }

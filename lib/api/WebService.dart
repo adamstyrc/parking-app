@@ -109,6 +109,17 @@ class WebService {
     }
   }
 
+  Future<void> getUser() async {
+    final response = await http.get(API_ADDRESS + '/users', headers: await prepareHeaders());
+    logResponse(response);
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return ;
+    } else {
+      throw Exception('failure');
+    }
+  }
+
   bool isResponseSuccessful(http.Response response) {
     return response.statusCode >= 200 && response.statusCode < 300;
   }

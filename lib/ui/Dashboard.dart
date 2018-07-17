@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/Utils/Logger.dart';
+import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/ui/AccountView.dart';
 import 'package:mobileoffice/ui/DaysView.dart';
 import 'package:mobileoffice/ui/PlannerView.dart';
@@ -13,10 +15,32 @@ class Dashboard extends StatefulWidget {
 }
 
 class DashboardState extends State<Dashboard>
-    with SingleTickerProviderStateMixin<Dashboard> {
+    with SingleTickerProviderStateMixin<Dashboard>, WidgetsBindingObserver {
   int selectedTabIndex = 0;
   Widget displayedTabWidget = null;
   TabController tabController;
+
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    Logger.log("state $state");
+
+    if (state == AppLifecycleState.resumed) {
+      ReservationsController.get().updateReservations().then((r) {});
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

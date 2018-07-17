@@ -52,6 +52,7 @@ class Splash extends StatelessWidget {
       } else {
         await FutureReservationsController.get().updateReservations();
         await ReservationsController.get().updateReservations();
+        await UserController.get().updateUser();
 
         Navigator.pushReplacement(
           context,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
@@ -15,9 +17,24 @@ class DayView extends StatefulWidget {
 }
 
 class DayViewState extends State<DayView> {
+
   DateTime date;
+  StreamSubscription reservationsUpdatedEventSubscription;
 
   DayViewState({this.date});
+
+  @override
+  void initState() {
+    reservationsUpdatedEventSubscription = eventBus.on<ReservationsUpdatedEvent>().listen((event) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    reservationsUpdatedEventSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +120,7 @@ class DayViewState extends State<DayView> {
                 child: Text("BOOK"),
                 disabledColor: Colors.grey,
                 onPressed: pastDay ? null : () {
-                  ReservationsController.get().makeReservation(date).then((_) {
-                    setState(() {});
-                  });
+                  ReservationsController.get().makeReservation(date).then((_) {});
                 })
           ],
         );

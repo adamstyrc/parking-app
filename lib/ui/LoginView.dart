@@ -64,6 +64,7 @@ class LoginViewState extends State<LoginView> {
                           UserController.get().login(email, password).then((_) async {
                             await FutureReservationsController.get().updateReservations();
                             await ReservationsController.get().updateReservations();
+                            await UserController.get().updateUser();
 
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
                           }).catchError(() {

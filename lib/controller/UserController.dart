@@ -50,6 +50,10 @@ class UserController {
     return Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken);
   }
 
+  Future<void> updateUser() async {
+    return await webService.getUser();
+  }
+
   Future<bool> logout() async {
     var tokenCleared = await Config.setString(ConfigKeys.ACCESS_TOKEN, "");
     var userCleared = await Config.setString(ConfigKeys.USER_EMAIL, "");

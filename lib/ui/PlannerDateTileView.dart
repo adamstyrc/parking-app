@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
+import 'package:mobileoffice/events.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';
@@ -18,13 +19,13 @@ class PlannerDateTileView extends StatefulWidget {
   State<PlannerDateTileView> createState() {
     return new PlannerDateTileState(date: date);
   }
-
 }
 
 class PlannerDateTileState extends State<PlannerDateTileView> {
   DateTime date;
   CalendarroState calendarro;
   ReservationsController reservationsController = ReservationsController.get();
+  StreamSubscription reservationsUpdatedEventSubscription;
 
   PlannerDateTileState({
     this.date,
@@ -32,7 +33,17 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
   });
 
   @override
-  void initState() {}
+  void initState() {
+    reservationsUpdatedEventSubscription = eventBus.on<ReservationsUpdatedEvent>().listen((event) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    reservationsUpdatedEventSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
