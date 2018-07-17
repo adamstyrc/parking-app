@@ -74,6 +74,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
 
     return new Expanded(
         child: new GestureDetector(
+          behavior: HitTestBehavior.translucent,
       child: new Container(
           height: 40.0,
           decoration: boxDecoration,
