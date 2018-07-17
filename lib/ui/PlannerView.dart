@@ -76,8 +76,8 @@ class PlannerView extends StatelessWidget {
       ),
       Container(
           height: 400.0,
-          child: new Material(
-              child: monthsPageView, elevation: 4.0, color: Colors.white)),
+              child: monthsPageView,
+      )
     ]);
   }
 }
