@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
+import 'package:mobileoffice/ui/ProgressButton.dart';
 
 class DayView extends StatefulWidget {
   DateTime date;
@@ -46,6 +47,7 @@ class DayViewState extends State<DayView> {
     bool dayReservedByMe =
         reservationsController.isMineReservationInDay(date.day);
     if (dayReservedByMe) {
+      var dropProgressButton = GlobalKey<ProgressButtonState>();
       return new Column(
         children: <Widget>[
           Padding(
@@ -56,15 +58,15 @@ class DayViewState extends State<DayView> {
             height: 230.0,
           ),
           Container(height: 16.0),
-          RaisedButton(
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: Text("DROP"),
-              onPressed: pastDay ? null : () {
-                ReservationsController.get().dropReservation(date).then((_) {
-                  setState(() {});
-                });
-              })
+          ProgressButton(
+            key: dropProgressButton,
+            onPressed: pastDay ? null : () {
+              ReservationsController.get().dropReservation(date).then((_) {
+                dropProgressButton.currentState.setProgress(false);
+                setState(() {});
+              }).catchError((e) {dropProgressButton.currentState.setProgress(false);});
+            }, text: Text("DROP"),
+          )
         ],
       );
     } else {
@@ -84,6 +86,7 @@ class DayViewState extends State<DayView> {
         var radius = Radius.circular(8.0);
         var freeSpacesCount = reservationsController.getFreeSpacesCountForDay(date.day);
 
+        var bookProgressButtonKey = GlobalKey<ProgressButtonState>();
         return Column(
           children: <Widget>[
             Padding(
@@ -114,14 +117,17 @@ class DayViewState extends State<DayView> {
                 ])
             ),
             Container(height: 16.0),
-            RaisedButton(
-                color: Colors.blue,
-                textColor: Colors.white,
-                child: Text("BOOK"),
-                disabledColor: Colors.grey,
-                onPressed: pastDay ? null : () {
-                  ReservationsController.get().makeReservation(date).then((_) {});
-                })
+            ProgressButton(
+              key: bookProgressButtonKey,
+              onPressed: pastDay ? null : () {
+                ReservationsController.get().makeReservation(date).then((_) {
+                  bookProgressButtonKey.currentState.setProgress(false);
+                }).catchError((e) {
+                  bookProgressButtonKey.currentState.setProgress(false);
+                });
+              },
+              text: Text("BOOK"),
+            )
           ],
         );
       }

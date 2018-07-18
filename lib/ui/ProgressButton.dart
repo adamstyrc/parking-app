@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 class ProgressButton extends StatefulWidget {
   VoidCallback onPressed;
+  Text text;
 
-  ProgressButton({GlobalKey<ProgressButtonState> key, this.onPressed}) : super(key : key);
+  ProgressButton(
+      {GlobalKey<ProgressButtonState> key, this.onPressed, this.text})
+      : super(key: key);
 
   @override
   State createState() {
@@ -23,13 +26,14 @@ class ProgressButtonState extends State<ProgressButton> {
         child: Theme(
           data: Theme.of(context).copyWith(accentColor: Colors.blue),
           child: new CircularProgressIndicator(),
-        ), opacity: inProgress ? 1.0 : 0.0);
+        ),
+        opacity: inProgress ? 1.0 : 0.0);
     button = Opacity(
         child: RaisedButton(
             color: Colors.blue,
             textColor: Colors.white,
-            child: Text("UPDATE"),
-            onPressed: () {
+            child: widget.text,
+            onPressed: widget.onPressed == null ? null : () {
               setProgress(true);
               widget.onPressed();
             }),

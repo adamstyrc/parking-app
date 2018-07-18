@@ -13,7 +13,6 @@ class PlannerView extends StatelessWidget {
   Calendarro calendarro;
   Calendarro nextMonthCalendarro;
 
-
   var nextMonthCalendarroStateKey = GlobalKey<CalendarroState>();
 
   @override
@@ -46,7 +45,9 @@ class PlannerView extends StatelessWidget {
         itemBuilder: (context, position) {
           if (position == 0) {
             return Column(children: <Widget>[
-              Text(DatePrinter.printNiceMonthYear(DateUtils.getFirstDayOfCurrentMonth()),
+              Text(
+                  DatePrinter.printNiceMonthYear(
+                      DateUtils.getFirstDayOfCurrentMonth()),
                   style:
                       TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
               Container(height: 16.0),
@@ -55,21 +56,27 @@ class PlannerView extends StatelessWidget {
           } else {
             var progressButtonKey = GlobalKey<ProgressButtonState>();
             return Column(children: <Widget>[
-              Text(DatePrinter.printNiceMonthYear(DateUtils.getFirstDayOfNextMonth()),
+              Text(
+                  DatePrinter
+                      .printNiceMonthYear(DateUtils.getFirstDayOfNextMonth()),
                   style:
                       TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
               Container(height: 16.0),
               nextMonthCalendarro,
-              ProgressButton(key: progressButtonKey, onPressed: () {
-                FutureReservationsController
-                    .get()
-                    .syncReservations(nextMonthCalendarro.selectedDates).then((r) {
-                  nextMonthCalendarroStateKey.currentState.update();
-                  progressButtonKey.currentState.setProgress(false);
-                }).catchError((e) {
-                  progressButtonKey.currentState.setProgress(false);
-                });
-              }),
+              ProgressButton(
+                  key: progressButtonKey,
+                  onPressed: () {
+                    FutureReservationsController
+                        .get()
+                        .syncReservations(nextMonthCalendarro.selectedDates)
+                        .then((r) {
+                      nextMonthCalendarroStateKey.currentState.update();
+                      progressButtonKey.currentState.setProgress(false);
+                    }).catchError((e) {
+                      progressButtonKey.currentState.setProgress(false);
+                    });
+                  },
+              text: Text("SAVE"),),
             ]);
           }
         },
@@ -82,8 +89,8 @@ class PlannerView extends StatelessWidget {
         height: 16.0,
       ),
       Container(
-          height: 400.0,
-              child: monthsPageView,
+        height: 400.0,
+        child: monthsPageView,
       )
     ]);
   }
