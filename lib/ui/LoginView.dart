@@ -5,6 +5,7 @@ import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/main.dart';
 import 'package:mobileoffice/ui/Dashboard.dart';
+import 'package:mobileoffice/ui/ProgressButton.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -15,13 +16,14 @@ class LoginView extends StatefulWidget {
 
 class LoginViewState extends State<LoginView> {
 
-//  final loginTFController = TextEditingController(text: "adam.styrc@vattenfall.com");
-//  final passwordTFController = TextEditingController(text: "password");
-  final loginTFController = TextEditingController(text: "@vattenfall.com");
-  final passwordTFController = TextEditingController();
+  final loginTFController = TextEditingController(text: "adam.styrc@vattenfall.com");
+  final passwordTFController = TextEditingController(text: "password");
+//  final loginTFController = TextEditingController(text: "@vattenfall.com");
+//  final passwordTFController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    var loginButtonKey = GlobalKey<ProgressButtonState>();
     return new Scaffold(
       body: Container(
           color: Colors.white,
@@ -54,7 +56,9 @@ class LoginViewState extends State<LoginView> {
                         ),
                       ),
                       Container(height: 16.0),
-                      RaisedButton(
+                      ProgressButton(
+                        key: loginButtonKey,
+                        text: Text("LOGIN"),
                         onPressed: () {
                           var email = loginTFController.text.trim();
                           var password = passwordTFController.text.trim();
@@ -66,14 +70,12 @@ class LoginViewState extends State<LoginView> {
                             await ReservationsController.get().updateReservations();
                             await UserController.get().updateUser();
 
+                            loginButtonKey.currentState.setProgress(false);
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
                           }).catchError(() {
-
+                            loginButtonKey.currentState.setProgress(false);
                           });
                         },
-                        color: Colors.blue,
-                        child: Text("LOGIN"),
-                        textColor: Colors.white,
                       )
                     ],
                   ),

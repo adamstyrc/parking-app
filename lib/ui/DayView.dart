@@ -93,7 +93,7 @@ class DayViewState extends State<DayView> {
                 padding: EdgeInsets.all(18.0),
                 child: new Text("Seems you can still fit in.")),
             Container(
-                width: 200.0,
+                width: 220.0,
                 height: 230.0,
                 decoration: new ShapeDecoration(
                     shape: new RoundedRectangleBorder(

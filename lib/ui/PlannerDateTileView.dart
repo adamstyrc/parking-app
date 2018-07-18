@@ -49,7 +49,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
   Widget build(BuildContext context) {
     bool isWeekend = DateUtils.isWeekend(date);
     var textColor = isWeekend ? Colors.grey : Colors.black;
-
+    var specialPastDay = DateUtils.isSpecialPastDay(date);
     bool isToday = DateUtils.isToday(date);
 
     calendarro = Calendarro.of(context);
@@ -62,7 +62,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
     );
     BoxDecoration boxDecoration;
     if (reservedByMe && !isWeekend) {
-      if (DateUtils.isSpecialPastDay(date)) {
+      if (specialPastDay) {
         boxDecoration = BoxDecoration(color: Colors.grey,
             shape: BoxShape.circle,
             border: isToday ? todayBorder : null);
@@ -126,6 +126,11 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
     if (!DateUtils.isSpecialPastDay(date)) {
       var dialog = prepareReservationChangeDialog();
       showDialog(context: context, builder: (_) => dialog);
+    } else {
+      final snackBar = SnackBar(
+        content: Text('Cannot change past bookings.'),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
     }
   }
 
