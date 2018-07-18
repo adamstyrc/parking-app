@@ -7,6 +7,7 @@ class MonthReservations {
   MonthReservations({this.days, this.spots});
 
   factory MonthReservations.fromJson(Map<String, dynamic> json) {
+    var spots = json['spots'] as int;
     var reservationsMap = json['days'] as List<dynamic>;
     var reservations = reservationsMap.map((entry) {
       return Reservation.fromJson(entry);
@@ -14,7 +15,7 @@ class MonthReservations {
 
     return MonthReservations(
         days: reservations.toList(),
-        spots: 2);
+        spots: spots);
   }
 }
 
