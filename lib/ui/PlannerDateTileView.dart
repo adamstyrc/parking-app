@@ -130,7 +130,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
       return AlertDialog(
         title: new Text("Drop the reservation"),
         content: new Text(
-            "Would you like to drop the reservation for ${DatePrinter.printPrettyDate(date)}"),
+            "Would you like to drop the reservation for ${DatePrinter.printNiceDate(date)}"),
         actions: <Widget>[
           new FlatButton(
             child: new Text("Cancel"),
@@ -150,7 +150,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
       if (reservationsController.isDayFullyReserved(date.day)) {
         return AlertDialog(
           title: Text("Parking lot overflow"),
-          content: Text("Seems that ${DatePrinter.printPrettyDate(date)} is under invasion and there are no free places left. Wait for notification if anything gets released."),
+          content: Text("Seems that ${DatePrinter.printNiceDate(date)} is under invasion and there are no free places left. Wait for notification if anything gets released."),
           actions: <Widget>[
             new FlatButton(
               child: new Text("OK"),
@@ -165,7 +165,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
       return AlertDialog(
         title: new Text("Make a reservation"),
         content: new Text(
-            "Would you like to make a reservation for ${DatePrinter.printPrettyDate(date)}"),
+            "Would you like to make a reservation for ${DatePrinter.printNiceDate(date)}"),
         actions: <Widget>[
           new FlatButton(
             child: new Text("Cancel"),

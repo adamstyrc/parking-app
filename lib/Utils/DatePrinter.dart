@@ -1,6 +1,4 @@
-
 class DatePrinter {
-
   static String printServerDate(DateTime date) {
     return "${date.year}-${print2Digits(date.month)}-${print2Digits(date.day)}";
   }
@@ -51,6 +49,29 @@ class DatePrinter {
   }
 
   static String printNiceMonthYear(DateTime date) {
-      return "${printMonthName(date)} ${date.year}";
+    return "${printMonthName(date)} ${date.year}";
+  }
+
+  static String printNiceDate(DateTime date) {
+    return "${printDayName(date)}, ${date.day} ${printMonthName(date)} ${date.year}";
+  }
+
+  static printDayName(DateTime date) {
+    switch (date.weekday) {
+      case 1:
+        return "Monday";
+      case 2:
+        return "Tuesday";
+      case 3:
+        return "Wednesday";
+      case 4:
+        return "Thursday";
+      case 5:
+        return "Friday";
+      case 6:
+        return "Saturday";
+      default:
+        return "Sunday";
     }
+  }
 }
