@@ -201,7 +201,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
     reservationsController.makeReservation(date).then((_) {
       Navigator.of(context).pop();
       setState(() {});
-    }).catchError(() {
+    }).catchError((e) {
       Navigator.of(context).pop();
     });
   }
@@ -210,7 +210,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
     reservationsController.dropReservation(date).then((_) {
       Navigator.of(context).pop();
       setState(() {});
-    }).catchError(() {
+    }).catchError((e) {
       Navigator.of(context).pop();
     });
   }

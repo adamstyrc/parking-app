@@ -72,7 +72,7 @@ class LoginViewState extends State<LoginView> {
 
                             loginButtonKey.currentState.setProgress(false);
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
-                          }).catchError(() {
+                          }).catchError((e) {
                             loginButtonKey.currentState.setProgress(false);
                           });
                         },
