@@ -208,6 +208,10 @@ class CalendarroState extends State<Calendarro> {
       selectedDates.add(date);
     });
   }
+
+  void update() {
+    setState(() {});
+  }
 }
 
 class CalendarPage extends StatelessWidget {

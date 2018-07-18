@@ -94,11 +94,6 @@ class Splash extends StatelessWidget {
                     .copyWith(accentColor: Colors.orangeAccent),
               ),
               alignment: Alignment(0.0, 0.9)),
-          Align(
-            child: Text("Parking App",
-                style: TextStyle(color: Colors.orangeAccent)),
-            alignment: Alignment(0.0, 0.65),
-          )
         ]));
   }
 }

@@ -62,8 +62,15 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
     );
     BoxDecoration boxDecoration;
     if (reservedByMe && !isWeekend) {
-        boxDecoration =
-        new BoxDecoration(color: Colors.blue, shape: BoxShape.circle, border: isToday ? todayBorder : null);
+      if (DateUtils.isSpecialPastDay(date)) {
+        boxDecoration = BoxDecoration(color: Colors.grey,
+            shape: BoxShape.circle,
+            border: isToday ? todayBorder : null);
+      } else {
+        boxDecoration = BoxDecoration(color: Colors.blue,
+            shape: BoxShape.circle,
+            border: isToday ? todayBorder : null);
+      }
     } else if (isToday) {
       boxDecoration = new BoxDecoration(
           border: todayBorder,

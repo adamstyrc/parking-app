@@ -4,6 +4,7 @@ import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/controller/FutureReservationsController.dart';
 import 'package:mobileoffice/ui/PlannerNextMonthTileBuilder.dart';
+import 'package:mobileoffice/ui/ProgressButton.dart';
 import '../Calendarro.dart';
 import 'DateTileView.dart';
 import 'PlannerDateTileView.dart';
@@ -11,6 +12,9 @@ import 'PlannerDateTileView.dart';
 class PlannerView extends StatelessWidget {
   Calendarro calendarro;
   Calendarro nextMonthCalendarro;
+
+
+  var nextMonthCalendarroStateKey = GlobalKey<CalendarroState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +33,7 @@ class PlannerView extends StatelessWidget {
     );
 
     nextMonthCalendarro = Calendarro(
+      key: nextMonthCalendarroStateKey,
       startDate: DateUtils.getFirstDayOfNextMonth(),
       endDate: DateUtils.getLastDayOfNextMonth(),
       displayMode: DisplayMode.MONTHS,
@@ -48,21 +53,23 @@ class PlannerView extends StatelessWidget {
               calendarro,
             ]);
           } else {
+            var progressButtonKey = GlobalKey<ProgressButtonState>();
             return Column(children: <Widget>[
               Text(DatePrinter.printNiceMonthYear(DateUtils.getFirstDayOfNextMonth()),
                   style:
                       TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
               Container(height: 16.0),
               nextMonthCalendarro,
-              RaisedButton(
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  child: Text("UPDATE"),
-                  onPressed: () {
-                    FutureReservationsController
-                        .get()
-                        .syncReservations(nextMonthCalendarro.selectedDates);
-                  })
+              ProgressButton(key: progressButtonKey, onPressed: () {
+                FutureReservationsController
+                    .get()
+                    .syncReservations(nextMonthCalendarro.selectedDates).then((r) {
+                  nextMonthCalendarroStateKey.currentState.update();
+                  progressButtonKey.currentState.setProgress(false);
+                }).catchError((e) {
+                  progressButtonKey.currentState.setProgress(false);
+                });
+              }),
             ]);
           }
         },
