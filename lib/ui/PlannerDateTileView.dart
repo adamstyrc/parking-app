@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mobileoffice/controller/CurrentMonthController.dart';
-import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
-import 'package:mobileoffice/events.dart';
-import 'package:mobileoffice/ui/DateTileDecorator.dart';
-import '../Calendarro.dart';
-import 'package:mobileoffice/ui/CircleView.dart';
+import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';
+import 'package:mobileoffice/controller/UserController.dart';
+import 'package:mobileoffice/events.dart';
+import 'package:mobileoffice/ui/CircleView.dart';
+import 'package:mobileoffice/ui/DateTileDecorator.dart';
+
+import '../Calendarro.dart';
 
 class PlannerDateTileView extends StatefulWidget {
   DateTime date;
@@ -26,7 +27,7 @@ class PlannerDateTileView extends StatefulWidget {
 class PlannerDateTileState extends State<PlannerDateTileView> {
   DateTime date;
   CalendarroState calendarro;
-  ReservationsController reservationsController = CurrentMonthReservationsController.get();
+  CurrentMonthReservationsController reservationsController = CurrentMonthReservationsController.get();
   StreamSubscription reservationsUpdatedEventSubscription;
 
   PlannerDateTileState({
@@ -201,7 +202,6 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
   }
 
   void onMakeReservationPressed(DateTime date) {
-    var reservationsController = CurrentMonthReservationsController.get();
     reservationsController.makeReservation(date).then((_) {
       Navigator.of(context).pop();
       setState(() {});

@@ -6,7 +6,7 @@ import 'dart:async';
 
 import 'package:mobileoffice/events.dart';
 
-class ReservationsController {
+abstract class ReservationsController {
 
   String monthYear;
 

@@ -1,16 +1,12 @@
 import 'dart:async';
 
-import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/events.dart';
-import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
-import 'package:mobileoffice/api/WebService.dart';
-import 'package:mobileoffice/controller/ReservationsController.dart';
-import 'package:mobileoffice/Models/MonthReservations.dart';
-import 'package:http/http.dart' as http;
+
+import '../Calendarro.dart';
 
 class DateTileView extends StatefulWidget {
   DateTime date;
@@ -134,6 +130,6 @@ class DateTileState extends State<DateTileView> {
 //      print(monthReservations.users);
 //    });
 
-    ReservationsController().updateReservations().then((monthReservations) {});
+    CurrentMonthReservationsController().updateReservations().then((monthReservations) {});
   }
 }
