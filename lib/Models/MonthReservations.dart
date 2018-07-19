@@ -3,7 +3,8 @@ class MonthReservations {
 
   List<Reservation> days;
   int spots;
-  bool granted = true;
+  bool granted = false;
+//  bool granted = true;
 
   MonthReservations({this.days, this.spots});
 

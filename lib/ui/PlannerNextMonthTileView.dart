@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Calendarro.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
-import 'package:mobileoffice/controller/FutureReservationsController.dart';
+import 'package:mobileoffice/controller/NextMonthReservationsController.dart';
+import 'package:mobileoffice/ui/DateTileDecorator.dart';
+import 'package:mobileoffice/ui/ReservationChangeDialog.dart';
 
 class PlannerNextMonthTileView extends StatefulWidget {
   DateTime date;
@@ -18,6 +20,8 @@ class PlannerNextMonthTileView extends StatefulWidget {
 class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
   DateTime date;
   CalendarroState calendarro;
+
+  NextMonthReservationsController nextMonthReservationsController = NextMonthReservationsController.get();
 
   PlannerNextMonthTileViewState({
     this.date,
@@ -52,6 +56,23 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
   }
 
   BoxDecoration prepareTileDecoration() {
+    if (nextMonthReservationsController.isNextMonthGranted()) {
+      var reservedByMe = nextMonthReservationsController.isMineReservationInDay(
+          date.day);
+
+      if (reservedByMe) {
+        return DateTileDecorator.BLUE_CIRCLE;
+      } else {
+        return null;
+      }
+    } else {
+      if (calendarro.isDateSelected(date)) {
+        return DateTileDecorator.LIGHTBLUE_CIRCLE;
+      } else {
+        return null;
+      }
+    }
+
 //    FutureReservationsController.get().nextMonthReservations
 //    calendarro.widget.selectionMode
 //    if (calendarro.isDateSelected(date)) {
@@ -60,9 +81,15 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
 
   void handleTap() async {
     print("tap: " + date.toString());
+
     if (!DateUtils.isWeekend(date)) {
-      calendarro.widget.toggleDate(date);
+      if (nextMonthReservationsController.isNextMonthGranted()) {
+        var dialog = ReservationChangeDialog().prepareReservationChangeDialog(
+            context, date);
+        showDialog(context: context, builder: (_) => dialog);
+      } else {
+        calendarro.widget.toggleDate(date);
+      }
     }
-//    calendarro.selectedDate
   }
 }

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/controller/CurrentMonthController.dart';
-import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
 import 'package:mobileoffice/ui/DateTileDecorator.dart';
+import 'package:mobileoffice/ui/ReservationChangeDialog.dart';
 
 import '../Calendarro.dart';
 
@@ -129,7 +129,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
     print("tap: " + date.toString());
 
     if (!DateUtils.isSpecialPastDay(date)) {
-      var dialog = prepareReservationChangeDialog();
+      var dialog = ReservationChangeDialog().prepareReservationChangeDialog(context, date);
       showDialog(context: context, builder: (_) => dialog);
     } else {
       final snackBar = SnackBar(

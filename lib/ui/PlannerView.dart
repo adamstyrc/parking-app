@@ -1,14 +1,12 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
-import 'package:mobileoffice/controller/FutureReservationsController.dart';
+import 'package:mobileoffice/controller/NextMonthReservationsController.dart';
 import 'package:mobileoffice/ui/PlannerDateTileBuilder.dart';
 import 'package:mobileoffice/ui/PlannerNextMonthTileBuilder.dart';
 import 'package:mobileoffice/ui/ProgressButton.dart';
+
 import '../Calendarro.dart';
-import 'DateTileView.dart';
-import 'PlannerDateTileView.dart';
 
 class PlannerView extends StatelessWidget {
   Calendarro calendarro;
@@ -51,7 +49,7 @@ class PlannerView extends StatelessWidget {
   }
 
   void buildNextMonthCalendar() {
-    var futureReservationsController = FutureReservationsController.get();
+    var futureReservationsController = NextMonthReservationsController.get();
 
     var nextMonthGranted = futureReservationsController.isNextMonthGranted();
     nextMonthCalendarro = Calendarro(
@@ -78,8 +76,7 @@ class PlannerView extends StatelessWidget {
   }
 
   Column buildNextMonthPlanner() {
-    var progressButtonKey = GlobalKey<ProgressButtonState>();
-    return Column(children: <Widget>[
+    var columnChildren = <Widget>[
       Text(
           DatePrinter
               .printNiceMonthYear(DateUtils.getFirstDayOfNextMonth()),
@@ -87,10 +84,22 @@ class PlannerView extends StatelessWidget {
               TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
       Container(height: 16.0),
       nextMonthCalendarro,
-      ProgressButton(
+    ];
+
+    if (!NextMonthReservationsController.get().isNextMonthGranted()) {
+      ProgressButton progressButton = prepareSaveButton();
+      columnChildren.add(progressButton);
+    }
+
+    return Column(children: columnChildren);
+  }
+
+  ProgressButton prepareSaveButton() {
+    var progressButtonKey = GlobalKey<ProgressButtonState>();
+    var progressButton = ProgressButton(
           key: progressButtonKey,
           onPressed: () {
-            FutureReservationsController
+            NextMonthReservationsController
                 .get()
                 .syncReservations(nextMonthCalendarro.selectedDates)
                 .then((r) {
@@ -100,7 +109,7 @@ class PlannerView extends StatelessWidget {
               progressButtonKey.currentState.setProgress(false);
             });
           },
-      text: Text("SAVE"),),
-    ]);
+      text: Text("SAVE"),);
+    return progressButton;
   }
 }
