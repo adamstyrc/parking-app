@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/Logger.dart';
+import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/ui/AccountView.dart';
 import 'package:mobileoffice/ui/DaysView.dart';
@@ -26,7 +27,7 @@ class DashboardState extends State<Dashboard>
     Logger.log("state $state");
 
     if (state == AppLifecycleState.resumed) {
-      ReservationsController.get().updateReservations().then((r) {});
+      CurrentMonthReservationsController.get().updateReservations().then((r) {});
     }
   }
 

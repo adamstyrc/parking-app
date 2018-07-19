@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/controller/FutureReservationsController.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/controller/UserController.dart';
@@ -67,7 +68,7 @@ class LoginViewState extends State<LoginView> {
 
                           UserController.get().login(email, password).then((_) async {
                             await FutureReservationsController.get().updateReservations();
-                            await ReservationsController.get().updateReservations();
+                            await CurrentMonthReservationsController.get().updateReservations();
                             await UserController.get().updateUser();
 
                             loginButtonKey.currentState.setProgress(false);

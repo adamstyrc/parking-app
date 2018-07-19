@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
@@ -39,7 +40,7 @@ class DayViewState extends State<DayView> {
 
   @override
   Widget build(BuildContext context) {
-    var reservationsController = ReservationsController.get();
+    var reservationsController = CurrentMonthReservationsController.get();
 
     bool pastDay = DateUtils.isSpecialPastDay(date);
 
@@ -61,7 +62,7 @@ class DayViewState extends State<DayView> {
           ProgressButton(
             key: dropProgressButton,
             onPressed: pastDay ? null : () {
-              ReservationsController.get().dropReservation(date).then((_) {
+              CurrentMonthReservationsController.get().dropReservation(date).then((_) {
                 dropProgressButton.currentState.setProgress(false);
                 setState(() {});
               }).catchError((e) {dropProgressButton.currentState.setProgress(false);});
@@ -120,7 +121,7 @@ class DayViewState extends State<DayView> {
             ProgressButton(
               key: bookProgressButtonKey,
               onPressed: pastDay ? null : () {
-                ReservationsController.get().makeReservation(date).then((_) {
+                CurrentMonthReservationsController.get().makeReservation(date).then((_) {
                   bookProgressButtonKey.currentState.setProgress(false);
                 }).catchError((e) {
                   bookProgressButtonKey.currentState.setProgress(false);

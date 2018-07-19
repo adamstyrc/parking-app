@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
+import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/events.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
@@ -77,7 +78,7 @@ class DateTileState extends State<DateTileView> {
     )));
 
     if (!isWeekend) {
-      var reservationsController = ReservationsController.get();
+      var reservationsController = CurrentMonthReservationsController.get();
       var fullyReserved = reservationsController.isDayFullyReserved(date.day);
       var reservedByMe = reservationsController.isMineReservationInDay(date.day);
       stackChildren.add(buildSignaturesRow(fullyReserved, reservedByMe));

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
@@ -25,7 +26,7 @@ class PlannerDateTileView extends StatefulWidget {
 class PlannerDateTileState extends State<PlannerDateTileView> {
   DateTime date;
   CalendarroState calendarro;
-  ReservationsController reservationsController = ReservationsController.get();
+  ReservationsController reservationsController = CurrentMonthReservationsController.get();
   StreamSubscription reservationsUpdatedEventSubscription;
 
   PlannerDateTileState({
@@ -200,7 +201,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
   }
 
   void onMakeReservationPressed(DateTime date) {
-    var reservationsController = ReservationsController.get();
+    var reservationsController = CurrentMonthReservationsController.get();
     reservationsController.makeReservation(date).then((_) {
       Navigator.of(context).pop();
       setState(() {});

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/storage/Config.dart';
 import 'package:mobileoffice/Utils/Logger.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';
@@ -20,7 +21,7 @@ class Splash extends StatelessWidget {
       onMessage: (Map<String, dynamic> message) {
         print('Firebase onMessage $message');
 
-        ReservationsController.get().updateReservations().then((currentMonth) {
+        CurrentMonthReservationsController.get().updateReservations().then((currentMonth) {
           eventBus.fire(ReservationsUpdatedEvent());
         });
 
@@ -51,7 +52,7 @@ class Splash extends StatelessWidget {
         );
       } else {
         await FutureReservationsController.get().updateReservations();
-        await ReservationsController.get().updateReservations();
+        await CurrentMonthReservationsController.get().updateReservations();
         await UserController.get().updateUser();
 
         Navigator.pushReplacement(

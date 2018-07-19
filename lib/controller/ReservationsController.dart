@@ -8,27 +8,17 @@ import 'package:mobileoffice/events.dart';
 
 class ReservationsController {
 
-  MonthReservations currentMonthReservations;
+  String monthYear;
+
+  MonthReservations monthReservations;
   WebService webService = WebService();
 
-  //SINGLETON
-  static final ReservationsController _singleton = new ReservationsController._internal();
-
-  factory ReservationsController() {
-    return _singleton;
-  }
-
-  static ReservationsController get() {
-    return _singleton;
-  }
-
-  ReservationsController._internal();
-  //!SINGLETON
+  ReservationsController({this.monthYear});
 
   Future<MonthReservations> updateReservations() async {
-    currentMonthReservations = await webService.getParkingMonth(getCurrentYearMonth());
+    monthReservations = await webService.getParkingMonth(monthYear);
     eventBus.fire(ReservationsUpdatedEvent());
-    return currentMonthReservations;
+    return monthReservations;
   }
 
   Future<MonthReservations> makeReservation(DateTime date) async {
@@ -44,7 +34,7 @@ class ReservationsController {
   }
 
   List<String> getReservationsForDay(int day) {
-    for (var reservation in currentMonthReservations.days) {
+    for (var reservation in monthReservations.days) {
       if (reservation.day == day) {
         return reservation.granted;
       }
@@ -54,13 +44,13 @@ class ReservationsController {
   }
 
   int getFreeSpacesCountForDay(int day) {
-    return currentMonthReservations.spots - getReservationsForDay(day).length;
+    return monthReservations.spots - getReservationsForDay(day).length;
   }
 
   bool isDayFullyReserved(int day) {
-    for (var reservation  in currentMonthReservations.days) {
+    for (var reservation  in monthReservations.days) {
       if (reservation.day == day) {
-        return reservation.granted.length >= currentMonthReservations.spots;
+        return reservation.granted.length >= monthReservations.spots;
       }
     }
 
@@ -68,7 +58,7 @@ class ReservationsController {
   }
 
   bool isEmailReservationInDay(int day, String email) {
-    for (var reservation  in currentMonthReservations.days) {
+    for (var reservation  in monthReservations.days) {
       if (reservation.day == day) {
         return reservation.granted.contains(email);
       }
@@ -79,14 +69,5 @@ class ReservationsController {
 
   bool isMineReservationInDay(int day) {
     return isEmailReservationInDay(day, UserController.get().userEmail);
-  }
-
-  int getCurrentMonth() {
-    return DateTime.now().month;
-  }
-
-  String getCurrentYearMonth() {
-    var now = DateTime.now();
-    return DatePrinter.printServerYearMonth(now);
   }
 }

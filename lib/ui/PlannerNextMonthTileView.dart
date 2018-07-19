@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Calendarro.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
+import 'package:mobileoffice/controller/FutureReservationsController.dart';
 
 class PlannerNextMonthTileView extends StatefulWidget {
   DateTime date;
@@ -51,12 +52,10 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
   }
 
   BoxDecoration prepareTileDecoration() {
-    BoxDecoration boxDecoration;
-    if (calendarro.isDateSelected(date)) {
-      boxDecoration =
-      new BoxDecoration(color: Colors.blue, shape: BoxShape.circle);
-    }
-    return boxDecoration;
+//    FutureReservationsController.get().nextMonthReservations
+//    calendarro.widget.selectionMode
+//    if (calendarro.isDateSelected(date)) {
+//    }
   }
 
   void handleTap() async {
