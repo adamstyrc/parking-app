@@ -61,4 +61,7 @@ class FutureReservationsController {
 
     return daysList;
   }
+
+  bool isNextMonthGranted() => nextMonthReservations.granted;
+
 }

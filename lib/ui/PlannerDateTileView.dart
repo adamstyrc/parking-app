@@ -5,6 +5,7 @@ import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
+import 'package:mobileoffice/ui/DateTileDecorator.dart';
 import '../Calendarro.dart';
 import 'package:mobileoffice/ui/CircleView.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';
@@ -34,7 +35,8 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
 
   @override
   void initState() {
-    reservationsUpdatedEventSubscription = eventBus.on<ReservationsUpdatedEvent>().listen((event) {
+    reservationsUpdatedEventSubscription =
+        eventBus.on<ReservationsUpdatedEvent>().listen((event) {
       setState(() {});
     });
   }
@@ -47,58 +49,59 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
 
   @override
   Widget build(BuildContext context) {
-    bool isWeekend = DateUtils.isWeekend(date);
-    var textColor = isWeekend ? Colors.grey : Colors.black;
-    var specialPastDay = DateUtils.isSpecialPastDay(date);
-    bool isToday = DateUtils.isToday(date);
-
     calendarro = Calendarro.of(context);
-    var reservedByMe =
-        reservationsController.isMineReservationInDay(date.day);
 
-    var todayBorder = Border.all(
-      color: Colors.orange,
-      width: 1.0,
-    );
-    BoxDecoration boxDecoration;
-    if (reservedByMe && !isWeekend) {
-      if (specialPastDay) {
-        boxDecoration = BoxDecoration(color: Colors.grey,
-            shape: BoxShape.circle,
-            border: isToday ? todayBorder : null);
-      } else {
-        boxDecoration = BoxDecoration(color: Colors.blue,
-            shape: BoxShape.circle,
-            border: isToday ? todayBorder : null);
-      }
-    } else if (isToday) {
-      boxDecoration = new BoxDecoration(
-          border: todayBorder,
-          shape: BoxShape.circle);
-    }
+    var weekend = DateUtils.isWeekend(date);
+    var textColor = weekend ? Colors.grey : Colors.black;
 
     var stackChildren = <Widget>[];
-    stackChildren.add(new Center(
-        child: new Text(
+    stackChildren.add(Center(
+        child: Text(
       "${date.day}",
       textAlign: TextAlign.center,
       style: new TextStyle(color: textColor),
     )));
 
-    if (!isWeekend) {
+    if (!weekend) {
       var fullyReserved = reservationsController.isDayFullyReserved(date.day);
       stackChildren.add(buildSignaturesRow(fullyReserved));
     }
 
     return new Expanded(
         child: new GestureDetector(
-          behavior: HitTestBehavior.translucent,
+      behavior: HitTestBehavior.translucent,
       child: new Container(
           height: 40.0,
-          decoration: boxDecoration,
+          decoration: prepareTileDecoration(weekend),
           child: new Stack(children: stackChildren)),
       onTap: handleTap,
     ));
+  }
+
+  BoxDecoration prepareTileDecoration(bool isWeekend) {
+    var reservedByMe = reservationsController.isMineReservationInDay(date.day);
+    var specialPastDay = DateUtils.isSpecialPastDay(date);
+    bool isToday = DateUtils.isToday(date);
+
+    if (isToday) {
+      if (isWeekend) {
+        return DateTileDecorator.ORANGE_BORDER;
+      } else if (reservedByMe && specialPastDay) {
+        return DateTileDecorator.GREY_CIRCLE_BORDERED;
+      } else if (reservedByMe) {
+        return DateTileDecorator.BLUE_CIRCLE_BORDERED;
+      } else {
+        return null;
+      }
+    } else {
+      if (reservedByMe && specialPastDay) {
+        return DateTileDecorator.GREY_CIRCLE;
+      } else if (reservedByMe) {
+        return DateTileDecorator.BLUE_CIRCLE;
+      } else {
+        return null;
+      }
+    }
   }
 
   Container buildSignaturesRow(bool occupied) {
@@ -134,7 +137,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
     }
   }
 
-  AlertDialog prepareReservationChangeDialog()  {
+  AlertDialog prepareReservationChangeDialog() {
     var email = UserController.get().userEmail;
     var isMineReservationInDay =
         reservationsController.isEmailReservationInDay(date.day, email);
@@ -162,7 +165,8 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
       if (reservationsController.isDayFullyReserved(date.day)) {
         return AlertDialog(
           title: Text("Parking lot overflow"),
-          content: Text("Seems that ${DatePrinter.printNiceDate(date)} is under invasion and there are no free places left. Wait for notification if anything gets released."),
+          content: Text(
+              "Seems that ${DatePrinter.printNiceDate(date)} is under invasion and there are no free places left. Wait for notification if anything gets released."),
           actions: <Widget>[
             new FlatButton(
               child: new Text("OK"),
@@ -171,7 +175,6 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
               },
             ),
           ],
-
         );
       }
       return AlertDialog(

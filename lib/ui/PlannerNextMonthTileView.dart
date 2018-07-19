@@ -14,7 +14,6 @@ class PlannerNextMonthTileView extends StatefulWidget {
   }
 }
 
-
 class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
   DateTime date;
   CalendarroState calendarro;
@@ -25,16 +24,12 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
 
   @override
   Widget build(BuildContext context) {
+    calendarro = Calendarro.of(context);
+
     bool isWeekend = DateUtils.isWeekend(date);
     var textColor = isWeekend ? Colors.grey : Colors.black;
 
-    calendarro = Calendarro.of(context);
-
-    BoxDecoration boxDecoration;
-    if (calendarro.isDateSelected(date)) {
-      boxDecoration =
-      new BoxDecoration(color: Colors.blue, shape: BoxShape.circle);
-    }
+    BoxDecoration boxDecoration = prepareTileDecoration();
 
     var stackChildren = <Widget>[];
     stackChildren.add(new Center(
@@ -53,6 +48,15 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
               child: new Stack(children: stackChildren)),
           onTap: handleTap,
         ));
+  }
+
+  BoxDecoration prepareTileDecoration() {
+    BoxDecoration boxDecoration;
+    if (calendarro.isDateSelected(date)) {
+      boxDecoration =
+      new BoxDecoration(color: Colors.blue, shape: BoxShape.circle);
+    }
+    return boxDecoration;
   }
 
   void handleTap() async {
