@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
+import 'package:mobileoffice/Utils/Utils.dart';
 import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/events.dart';
@@ -86,14 +87,12 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
     bool isToday = DateUtils.isToday(date);
 
     if (isToday) {
-      if (isWeekend) {
-        return DateTileDecorator.ORANGE_BORDER;
-      } else if (reservedByMe && specialPastDay) {
+      if (reservedByMe && specialPastDay) {
         return DateTileDecorator.GREY_CIRCLE_BORDERED;
       } else if (reservedByMe) {
         return DateTileDecorator.BLUE_CIRCLE_BORDERED;
       } else {
-        return null;
+        return DateTileDecorator.ORANGE_BORDER;
       }
     } else {
       if (reservedByMe && specialPastDay) {
@@ -132,10 +131,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
       var dialog = ReservationChangeDialog().prepareReservationChangeDialog(context, date);
       showDialog(context: context, builder: (_) => dialog);
     } else {
-      final snackBar = SnackBar(
-        content: Text('Cannot change past bookings.'),
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
+      Utils.displaySnackbarText(context, 'Cannot change past bookings.');
     }
   }
 

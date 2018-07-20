@@ -8,6 +8,7 @@ import 'package:mobileoffice/Utils/Logger.dart';
 import 'package:mobileoffice/Models/AccessToken.dart';
 import 'package:mobileoffice/Models/MonthReservations.dart';
 import 'package:mobileoffice/controller/UserController.dart';
+import 'package:mobileoffice/exception/AuthException.dart';
 
 class WebService {
 
@@ -105,6 +106,8 @@ class WebService {
     logResponse(response);
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return AccessToken.fromJson(json.decode(response.body));
+    } if (response.statusCode == 403) {
+      throw AuthException();
     } else {
       throw Exception('failure');
     }

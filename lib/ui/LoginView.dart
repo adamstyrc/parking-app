@@ -1,7 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mobileoffice/Utils/Utils.dart';
 import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/controller/NextMonthReservationsController.dart';
 import 'package:mobileoffice/controller/UserController.dart';
+import 'package:mobileoffice/exception/AuthException.dart';
 import 'package:mobileoffice/ui/Dashboard.dart';
 import 'package:mobileoffice/ui/ProgressButton.dart';
 
@@ -13,7 +17,6 @@ class LoginView extends StatefulWidget {
 }
 
 class LoginViewState extends State<LoginView> {
-
 //  final loginTFController = TextEditingController(text: "adam.styrc@vattenfall.com");
 //  final passwordTFController = TextEditingController(text: "password");
   final loginTFController = TextEditingController(text: "@vattenfall.com");
@@ -21,7 +24,6 @@ class LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    var loginButtonKey = GlobalKey<ProgressButtonState>();
     return new Scaffold(
       body: Container(
           color: Colors.white,
@@ -36,7 +38,7 @@ class LoginViewState extends State<LoginView> {
                     children: <Widget>[
                       TextField(
                         controller: loginTFController,
-                    keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           hintText: 'email',
                           contentPadding:
@@ -54,35 +56,67 @@ class LoginViewState extends State<LoginView> {
                         ),
                       ),
                       Container(height: 16.0),
-                      ProgressButton(
-                        key: loginButtonKey,
-                        text: Text("LOGIN"),
-                        onPressed: () {
-                          var email = loginTFController.text.trim();
-                          var password = passwordTFController.text.trim();
-
-                          print("login: $email");
-
-                          UserController.get().login(email, password).then((_) async {
-                            await NextMonthReservationsController.get().updateReservations();
-                            await CurrentMonthReservationsController.get().updateReservations();
-                            await UserController.get().updateUser();
-
-                            loginButtonKey.currentState.setProgress(false);
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
-                          }).catchError((e) {
-                            loginButtonKey.currentState.setProgress(false);
-                          });
-                        },
-                      )
+                      prepareProgressButton(context)
                     ],
                   ),
                 ),
               ),
-
-              Container(color: Colors.blue, height: 100.0, width: 150.0,)
+              Container(
+                color: Colors.blue,
+                height: 100.0,
+                width: 150.0,
+              )
             ],
           )),
+    );
+  }
+
+  Builder prepareProgressButton(BuildContext context) {
+    return Builder(
+      builder: (BuildContext context) {
+        var loginButtonKey = GlobalKey<ProgressButtonState>();
+        return ProgressButton(
+          key: loginButtonKey,
+          text: Text("LOGIN"),
+          onPressed: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+
+            var email = loginTFController.text.trim();
+            var password = passwordTFController.text.trim();
+
+            print("login: $email");
+
+            UserController
+                .get()
+                .login(email, password)
+                .then((_) async {
+              await NextMonthReservationsController
+                  .get()
+                  .updateReservations();
+              await CurrentMonthReservationsController
+                  .get()
+                  .updateReservations();
+              await UserController.get().updateUser();
+
+              if (loginButtonKey.currentState != null) {
+                loginButtonKey.currentState.setProgress(false);
+              }
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Dashboard()));
+            }).catchError((e) {
+              if (loginButtonKey.currentState != null) {
+                loginButtonKey.currentState.setProgress(false);
+              }
+              if (e is AuthException) {
+                Utils.displaySnackbarText(
+                    context, "Invalid login or password.");
+              }
+            });
+          },
+        );
+      },
     );
   }
 
