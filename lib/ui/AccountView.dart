@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:mobileoffice/storage/Config.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/ui/LoginView.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountView extends StatelessWidget {
 
@@ -21,10 +21,24 @@ class AccountView extends StatelessWidget {
       Container(height: 8.0),
       Text("${userController.user.points}", style: TextStyle(color: Colors.orange, fontSize: 28.0)),
       Container(height: 16.0,),
+      FlatButton(onPressed: checkUpdate,
+        child: Text("CHECK UPDATE"),
+      ),
       FlatButton(onPressed: () {
         logout(context);
-      }, child: Text("LOGOUT"))
+      }, child: Text("LOGOUT")),
+
     ]);
+  }
+
+
+  void checkUpdate() async {
+    const url = 'https://office.freeworld.cloud/install';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   void logout(BuildContext context) async {
