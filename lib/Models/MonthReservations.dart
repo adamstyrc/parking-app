@@ -3,13 +3,13 @@ class MonthReservations {
 
   List<Reservation> days;
   int spots;
-  bool granted = false;
-//  bool granted = true;
+  bool granted;
 
-  MonthReservations({this.days, this.spots});
+  MonthReservations({this.days, this.spots, this.granted});
 
   factory MonthReservations.fromJson(Map<String, dynamic> json) {
     var spots = json['spots'] as int;
+    var granted = json['granted'] as bool;
     var reservationsMap = json['days'] as List<dynamic>;
     var reservations = reservationsMap.map((entry) {
       return Reservation.fromJson(entry);
@@ -17,7 +17,8 @@ class MonthReservations {
 
     return MonthReservations(
         days: reservations.toList(),
-        spots: spots);
+        spots: spots,
+    granted: granted);
   }
 }
 

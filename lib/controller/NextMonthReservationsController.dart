@@ -59,5 +59,5 @@ class NextMonthReservationsController extends ReservationsController {
     return daysList;
   }
 
-  bool isNextMonthGranted() => monthReservations.granted;
+  bool isNextMonthGranted() => monthReservations.granted != null ? monthReservations.granted : false;
 }

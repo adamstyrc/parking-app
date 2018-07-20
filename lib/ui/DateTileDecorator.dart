@@ -19,7 +19,7 @@ class DateTileDecorator {
   static final BLUE_CIRCLE_BORDERED = BoxDecoration(
       color: Colors.blue, shape: BoxShape.circle, border: _ORANGE_BORDER);
   static final LIGHTBLUE_CIRCLE =
-  BoxDecoration(color: Colors.blue, shape: BoxShape.circle);
+  BoxDecoration(color: Colors.lightBlue, shape: BoxShape.circle);
   static final ORANGE_BORDER =
   BoxDecoration(shape: BoxShape.circle, border: _ORANGE_BORDER);
   static final WHITE_BORDER =

@@ -10,8 +10,4 @@ class PlannerNextMonthTileBuilder extends DayTileBuilder {
   Widget build(BuildContext context, DateTime date) {
     return PlannerNextMonthTileView(date: date);
   }
-//  @override
-//  Widget build(BuildContext context, DateTime tileDate) {
-//    return new PlannerNextMonthTileBuilder.dart(date: tileDate, calendarro: calendarro);
-//  }
 }

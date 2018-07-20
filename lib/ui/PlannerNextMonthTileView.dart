@@ -72,11 +72,6 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
         return null;
       }
     }
-
-//    FutureReservationsController.get().nextMonthReservations
-//    calendarro.widget.selectionMode
-//    if (calendarro.isDateSelected(date)) {
-//    }
   }
 
   void handleTap() async {
