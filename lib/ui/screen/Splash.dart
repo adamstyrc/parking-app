@@ -43,7 +43,7 @@ class Splash extends StatelessWidget {
       if (!userLogged) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginView()),
+          MaterialPageRoute(builder: (context) => Login()),
         );
       } else {
         await NextMonthReservationsController.get().updateReservations();

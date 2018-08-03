@@ -9,14 +9,14 @@ import 'package:mobileoffice/exception/AuthException.dart';
 import 'package:mobileoffice/ui/screen/Dashboard.dart';
 import 'package:mobileoffice/ui/widget/ProgressButton.dart';
 
-class LoginView extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
   State createState() {
     return LoginViewState();
   }
 }
 
-class LoginViewState extends State<LoginView> {
+class LoginViewState extends State<Login> {
 //  final loginTFController = TextEditingController(text: "adam.styrc@vattenfall.com");
 //  final passwordTFController = TextEditingController(text: "password");
   final loginTFController = TextEditingController(text: "@vattenfall.com");

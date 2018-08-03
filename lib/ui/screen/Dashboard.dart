@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/Logger.dart';
 import 'package:mobileoffice/controller/CurrentMonthController.dart';
-import 'package:mobileoffice/ui/screen/AccountPage.dart';
-import 'package:mobileoffice/ui/screen/DaysPage.dart';
-import 'package:mobileoffice/ui/screen/PlannerPage.dart';
+import 'package:mobileoffice/ui/page/AccountPage.dart';
+import 'package:mobileoffice/ui/page/DaysPage.dart';
+import 'package:mobileoffice/ui/page/PlannerPage.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key key, this.title}) : super(key: key);
@@ -44,24 +44,12 @@ class DashboardState extends State<Dashboard>
 
   @override
   Widget build(BuildContext context) {
-    displayedTabWidget = new Text("cccc");
     return new Scaffold(
-//    appBar: AppBar(
-//      title: Text("Parking"),
-//    ),
       bottomNavigationBar: new BottomNavigationBar(
           currentIndex: selectedTabIndex,
           onTap: (int index) {
             setState(() {
               this.selectedTabIndex = index;
-
-              switch (selectedTabIndex) {
-                case 0:
-                  displayedTabWidget = new Text("aaaa");
-                  break;
-                case 1:
-                  displayedTabWidget = new Text("bbbb");
-              }
             });
           },
           items: <BottomNavigationBarItem>[
@@ -92,17 +80,12 @@ class DashboardState extends State<Dashboard>
             elevation: 4.0,
             color: Colors.orange),
         new Stack(children: <Widget>[
-          new Offstage(offstage: selectedTabIndex != 0, child: DaysView()),
-          new Offstage(offstage: selectedTabIndex != 1, child: PlannerView()),
-          new Offstage(offstage: selectedTabIndex != 2, child: AccountView()),
+          new Offstage(offstage: selectedTabIndex != 0, child: DaysPage()),
+          new Offstage(offstage: selectedTabIndex != 1, child: PlannerPage()),
+          new Offstage(offstage: selectedTabIndex != 2, child: AccountPage()),
         ])
       ]),
       floatingActionButton: null,
-//      floatingActionButton: new FloatingActionButton(
-//        onPressed: _incrementCounter,
-//        tooltip: 'Increment',
-//        child: new Icon(Icons.add),
-//      ),
     );
   }
 }

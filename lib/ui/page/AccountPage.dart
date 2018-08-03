@@ -5,7 +5,7 @@ import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/ui/screen/Login.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AccountView extends StatelessWidget {
+class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class AccountView extends StatelessWidget {
 
   void logout(BuildContext context) async {
     UserController.get().logout().then((success) {
-      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => LoginView()));
+      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => Login()));
     });
   }
 }

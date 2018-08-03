@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:mobileoffice/Calendarro.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
+import 'package:mobileoffice/ui/page/DayDetailsPage.dart';
 import 'package:mobileoffice/ui/widget/DateTileView.dart';
-import 'package:mobileoffice/ui/widget/DayView.dart';
 
 
-class DaysView extends StatefulWidget {
+class DaysPage extends StatefulWidget {
   @override
   State createState() {
     return DaysViewState();
   }
 }
 
-class DaysViewState extends State<DaysView> {
+class DaysViewState extends State<DaysPage> {
   final calendarroStateKey = GlobalKey<CalendarroState>();
 
   Calendarro calendarro;
@@ -66,8 +66,6 @@ class DaysViewState extends State<DaysView> {
           calendarroStateKey.currentState.setCurrentDate(selectedDate);
         });
 
-//    calendarro.setCurrentDate(DateTime.now());
-
     return new Column(children: <Widget>[
       new Material(child: calendarro, elevation: 4.0, color: Colors.orange),
       new Container(height: 360.0, child: pageView)
@@ -87,7 +85,7 @@ class DaysViewState extends State<DaysView> {
 
   Widget buildDayView(int position) {
     DateTime currentSelectedDate = getDateFromPosition(position);
-    return DayView(date: currentSelectedDate);
+    return DayDetailsPage(date: currentSelectedDate);
   }
 
   @override

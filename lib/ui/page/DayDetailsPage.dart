@@ -6,10 +6,10 @@ import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/ui/widget/ProgressButton.dart';
 
-class DayView extends StatefulWidget {
+class DayDetailsPage extends StatefulWidget {
   DateTime date;
 
-  DayView({this.date});
+  DayDetailsPage({this.date});
 
   @override
   State createState() {
@@ -17,7 +17,7 @@ class DayView extends StatefulWidget {
   }
 }
 
-class DayViewState extends State<DayView> {
+class DayViewState extends State<DayDetailsPage> {
 
   DateTime date;
   StreamSubscription reservationsUpdatedEventSubscription;
