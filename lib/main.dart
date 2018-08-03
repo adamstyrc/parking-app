@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobileoffice/ui/Splash.dart';
+import 'package:mobileoffice/ui/screen/Splash.dart';
 
 
 void main() => runApp(MaterialApp(

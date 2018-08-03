@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Calendarro.dart';
-import 'package:mobileoffice/ui/PlannerNextMonthTileView.dart';
+import 'package:mobileoffice/ui/widget/PlannerNextMonthTileView.dart';
 
 class PlannerNextMonthTileBuilder extends DayTileBuilder {
 

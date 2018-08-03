@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/events.dart';
-import 'package:mobileoffice/ui/ProgressButton.dart';
+import 'package:mobileoffice/ui/widget/ProgressButton.dart';
 
 class DayView extends StatefulWidget {
   DateTime date;

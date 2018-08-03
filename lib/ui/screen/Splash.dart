@@ -6,8 +6,8 @@ import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/controller/NextMonthReservationsController.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/events.dart';
-import 'package:mobileoffice/ui/Dashboard.dart';
-import 'package:mobileoffice/ui/LoginView.dart';
+import 'package:mobileoffice/ui/screen/Dashboard.dart';
+import 'package:mobileoffice/ui/screen/Login.dart';
 
 class Splash extends StatelessWidget {
   Splash() {

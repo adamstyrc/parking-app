@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/Calendarro.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/controller/NextMonthReservationsController.dart';
 import 'package:mobileoffice/ui/PlannerDateTileBuilder.dart';
 import 'package:mobileoffice/ui/PlannerNextMonthTileBuilder.dart';
-import 'package:mobileoffice/ui/ProgressButton.dart';
-
-import '../Calendarro.dart';
+import 'package:mobileoffice/ui/widget/ProgressButton.dart';
 
 class PlannerView extends StatelessWidget {
   Calendarro calendarro;

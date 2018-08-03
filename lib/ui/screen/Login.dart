@@ -6,8 +6,8 @@ import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/controller/NextMonthReservationsController.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/exception/AuthException.dart';
-import 'package:mobileoffice/ui/Dashboard.dart';
-import 'package:mobileoffice/ui/ProgressButton.dart';
+import 'package:mobileoffice/ui/screen/Dashboard.dart';
+import 'package:mobileoffice/ui/widget/ProgressButton.dart';
 
 class LoginView extends StatefulWidget {
   @override

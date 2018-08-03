@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:mobileoffice/Models/MonthReservations.dart';
+import 'package:mobileoffice/model/MonthReservations.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';

@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/Calendarro.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
-import 'package:mobileoffice/ui/DayView.dart';
+import 'package:mobileoffice/ui/widget/DateTileView.dart';
+import 'package:mobileoffice/ui/widget/DayView.dart';
 
-import '../Calendarro.dart';
-import 'DateTileView.dart';
 
 class DaysView extends StatefulWidget {
   @override

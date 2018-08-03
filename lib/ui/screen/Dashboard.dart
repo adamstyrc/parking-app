@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/Logger.dart';
 import 'package:mobileoffice/controller/CurrentMonthController.dart';
-import 'package:mobileoffice/ui/AccountView.dart';
-import 'package:mobileoffice/ui/DaysView.dart';
-import 'package:mobileoffice/ui/PlannerView.dart';
+import 'package:mobileoffice/ui/screen/AccountPage.dart';
+import 'package:mobileoffice/ui/screen/DaysPage.dart';
+import 'package:mobileoffice/ui/screen/PlannerPage.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key key, this.title}) : super(key: key);

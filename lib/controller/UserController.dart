@@ -1,11 +1,10 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:mobileoffice/Models/User.dart';
+import 'package:mobileoffice/model/AccessToken.dart';
+import 'package:mobileoffice/model/User.dart';
 import 'dart:async';
 
 import 'package:mobileoffice/storage/Config.dart';
-import 'package:mobileoffice/Models/AccessToken.dart';
 import 'package:mobileoffice/api/WebService.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController {
 
