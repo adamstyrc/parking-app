@@ -103,7 +103,7 @@ class WebService {
       await http.post(API_ADDRESS + '/auth', headers: await prepareHeaders(), body: json.encode(bodyMap));
 
     logResponse(response);
-    if (response.statusCode >= 200 && response.statusCode < 300) {
+    if (isResponseSuccessful(response)) {
       return AccessToken.fromJson(json.decode(response.body));
     } if (response.statusCode == 403) {
       throw AuthException();
@@ -116,7 +116,7 @@ class WebService {
     final response = await http.get(API_ADDRESS + '/users/me', headers: await prepareHeaders());
     logResponse(response);
 
-    if (response.statusCode >= 200 && response.statusCode < 300) {
+    if (isResponseSuccessful(response)) {
       return User.fromJson(json.decode(response.body));
     } else {
       throw Exception('failure');
