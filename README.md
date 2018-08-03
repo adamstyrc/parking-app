@@ -1,6 +1,6 @@
 # parking-app
 
-Flutter-based project for managing parking reservations at office's lot. 
+My first Flutter-based project. App (Android and iOS) for managing parking reservations at office's lot. 
 
 ## Getting Started
 
