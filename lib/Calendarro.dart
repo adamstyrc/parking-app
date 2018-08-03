@@ -40,8 +40,6 @@ class Calendarro extends StatefulWidget {
   @override
   CalendarroState createState() {
     state = new CalendarroState(
-        displayMode: displayMode,
-        dayBuilder: dayTileBuilder,
         selectedDate: selectedDate,
         selectedDates: selectedDates);
     return state;
@@ -82,15 +80,12 @@ enum SelectionMode { SINGLE, MULTI }
 
 class CalendarroState extends State<Calendarro> {
   CalendarroState(
-      {this.displayMode,
-      this.dayBuilder,
+      {
       this.selectedDate,
       this.selectedDates});
 
-  DisplayMode displayMode;
   DateTime selectedDate;
   List<DateTime> selectedDates;
-  DayTileBuilder dayBuilder;
 
   int startDayOffset;
   int pagesCount;
@@ -121,7 +116,7 @@ class CalendarroState extends State<Calendarro> {
   @override
   Widget build(BuildContext context) {
     int daysRange = widget.endDate.difference(widget.startDate).inDays;
-    if (displayMode == DisplayMode.WEEKS) {
+    if (widget.displayMode == DisplayMode.WEEKS) {
       pagesCount = daysRange ~/ 7 + 1;
     } else {
       pagesCount = widget.endDate.month - widget.startDate.month + 1;
@@ -138,7 +133,7 @@ class CalendarroState extends State<Calendarro> {
     );
 
     return new Container(
-        height: displayMode == DisplayMode.WEEKS ? 60.0 : 320.0,
+        height: widget.displayMode == DisplayMode.WEEKS ? 60.0 : 320.0,
         child: pageView);
   }
 
@@ -146,7 +141,7 @@ class CalendarroState extends State<Calendarro> {
     DateTime pageStartDate;
     DateTime pageEndDate;
 
-    if (displayMode == DisplayMode.WEEKS) {
+    if (widget.displayMode == DisplayMode.WEEKS) {
       if (position == 0) {
         pageStartDate = widget.startDate;
         pageEndDate = widget.startDate.add(new Duration(days: 6 - startDayOffset));
@@ -271,8 +266,8 @@ class CalendarPage extends StatelessWidget {
     for (int i = 0; i < 7; i++) {
       if (i + 1 >= rowStartDate.weekday && i + 1 <= rowEndDate.weekday) {
         CalendarroState calendarro = Calendarro.of(context) as CalendarroState;
-        if (calendarro.dayBuilder != null) {
-          Widget dayTile = calendarro.dayBuilder.build(context, currentDate);
+        if (calendarro.widget.dayTileBuilder != null) {
+          Widget dayTile = calendarro.widget.dayTileBuilder.build(context, currentDate);
           items.add(dayTile);
         } else {
           items.add(CalendarDayItem(date: currentDate));
