@@ -1,6 +1,6 @@
-# mobileoffice
+# parking-app
 
-A new Flutter project.
+My first Flutter-based project. App (Android and iOS) for managing parking reservations at office's lot. 
 
 ## Getting Started
 
