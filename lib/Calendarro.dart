@@ -17,7 +17,11 @@ class Calendarro extends StatefulWidget {
       this.selectedDate,
       this.selectedDates,
       this.selectionMode = SelectionMode.SINGLE})
-      : super(key: key);
+      : super(key: key) {
+
+    startDate = DateUtils.toMidnight(startDate);
+    endDate = DateUtils.toMidnight(endDate);
+  }
 
   DateTime selectedDate;
   List<DateTime> selectedDates = List();
@@ -36,8 +40,6 @@ class Calendarro extends StatefulWidget {
   @override
   CalendarroState createState() {
     state = new CalendarroState(
-        startDate: startDate,
-        endDate: endDate,
         displayMode: displayMode,
         dayBuilder: dayTileBuilder,
         selectedDate: selectedDate,
@@ -81,14 +83,10 @@ enum SelectionMode { SINGLE, MULTI }
 class CalendarroState extends State<Calendarro> {
   CalendarroState(
       {this.displayMode,
-      this.startDate,
-      this.endDate,
       this.dayBuilder,
       this.selectedDate,
       this.selectedDates});
 
-  DateTime startDate;
-  DateTime endDate;
   DisplayMode displayMode;
   DateTime selectedDate;
   List<DateTime> selectedDates;
@@ -103,11 +101,8 @@ class CalendarroState extends State<Calendarro> {
     super.initState();
 
     if (selectedDate == null) {
-      selectedDate = startDate;
+      selectedDate = widget.startDate;
     }
-
-    startDate = DateUtils.toMidnight(startDate);
-    endDate = DateUtils.toMidnight(endDate);
   }
 
   void setSelectedDate(DateTime date) {
@@ -125,14 +120,14 @@ class CalendarroState extends State<Calendarro> {
 
   @override
   Widget build(BuildContext context) {
-    int daysRange = endDate.difference(startDate).inDays;
+    int daysRange = widget.endDate.difference(widget.startDate).inDays;
     if (displayMode == DisplayMode.WEEKS) {
       pagesCount = daysRange ~/ 7 + 1;
     } else {
-      pagesCount = endDate.month - startDate.month + 1;
+      pagesCount = widget.endDate.month - widget.startDate.month + 1;
     }
 
-    startDayOffset = startDate.weekday - DateTime.monday;
+    startDayOffset = widget.startDate.weekday - DateTime.monday;
 
     pageView = new PageView.builder(
       itemBuilder: (context, position) => buildCalendarPage(position),
@@ -153,32 +148,32 @@ class CalendarroState extends State<Calendarro> {
 
     if (displayMode == DisplayMode.WEEKS) {
       if (position == 0) {
-        pageStartDate = startDate;
-        pageEndDate = startDate.add(new Duration(days: 6 - startDayOffset));
+        pageStartDate = widget.startDate;
+        pageEndDate = widget.startDate.add(new Duration(days: 6 - startDayOffset));
       } else if (position == pagesCount - 1) {
         pageStartDate =
-            startDate.add(new Duration(days: 7 * position - startDayOffset));
-        pageEndDate = endDate;
+            widget.startDate.add(new Duration(days: 7 * position - startDayOffset));
+        pageEndDate = widget.endDate;
       } else {
         pageStartDate =
-            startDate.add(new Duration(days: 7 * position - startDayOffset));
-        pageEndDate = startDate
+            widget.startDate.add(new Duration(days: 7 * position - startDayOffset));
+        pageEndDate = widget.startDate
             .add(new Duration(days: 7 * position + 6 - startDayOffset));
       }
     } else {
       if (position == 0) {
-        pageStartDate = startDate;
+        pageStartDate = widget.startDate;
         DateTime nextMonthFirstDate =
-            new DateTime(startDate.year, startDate.month + 1, 1);
+            new DateTime(widget.startDate.year, widget.startDate.month + 1, 1);
         pageEndDate = nextMonthFirstDate.subtract(new Duration(days: 1));
       } else if (position == pagesCount - 1) {
-        pageEndDate = endDate;
-        pageStartDate = new DateTime(endDate.year, endDate.month, 1);
+        pageEndDate = widget.endDate;
+        pageStartDate = new DateTime(widget.endDate.year, widget.endDate.month, 1);
       } else {
         pageStartDate =
-            new DateTime(startDate.year, startDate.month + position, 1);
+            new DateTime(widget.startDate.year, widget.startDate.month + position, 1);
         DateTime nextMonthFirstDate =
-            new DateTime(startDate.year, startDate.month + position + 1, 1);
+            new DateTime(widget.startDate.year, widget.startDate.month + position + 1, 1);
         pageEndDate = nextMonthFirstDate.subtract(new Duration(days: 1));
       }
     }
