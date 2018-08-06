@@ -44,8 +44,11 @@ class DateTileState extends State<DateTileView> {
 
   @override
   Widget build(BuildContext context) {
-    bool isWeekend = DateUtils.isWeekend(date);
-    var textColor = isWeekend ? Colors.grey : Colors.black;
+    var reservationsController = CurrentMonthReservationsController.get();
+
+    bool isDayOff = reservationsController.isDayOff(date);
+    var textColor = isDayOff ? Colors.grey : Colors.black;
+
 
     bool isToday = DateUtils.isToday(date);
 
@@ -73,7 +76,7 @@ class DateTileState extends State<DateTileView> {
       style: new TextStyle(color: textColor),
     )));
 
-    if (!isWeekend) {
+    if (!isDayOff) {
       var reservationsController = CurrentMonthReservationsController.get();
       var fullyReserved = reservationsController.isDayFullyReserved(date.day);
       var reservedByMe = reservationsController.isMineReservationInDay(date.day);

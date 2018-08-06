@@ -5,6 +5,7 @@ import 'dart:async';
 
 import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/model/MonthReservations.dart';
+import 'package:mobileoffice/utils/DateUtils.dart';
 
 abstract class ReservationsController {
 
@@ -55,6 +56,19 @@ abstract class ReservationsController {
     }
 
     return false;
+  }
+
+  bool isDayOff(DateTime date) {
+    if (DateUtils.isWeekend(date)) {
+      return true;
+    }
+
+    return isHoliday(date.day);
+  }
+
+  bool isHoliday(int day) {
+    var reservationDay = monthReservations.days.firstWhere((currentDay) => currentDay.day == day);
+    return reservationDay.holiday != null ? reservationDay.holiday : false;
   }
 
   bool isEmailReservationInDay(int day, String email) {

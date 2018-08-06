@@ -53,31 +53,39 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
   Widget build(BuildContext context) {
     calendarro = Calendarro.of(context);
 
-    var weekend = DateUtils.isWeekend(date);
-    var textColor = weekend ? Colors.grey : Colors.black;
+    var dayOff = reservationsController.isDayOff(date);
+    var textColor = dayOff ? Colors.grey : Colors.black;
 
     var stackChildren = <Widget>[];
     stackChildren.add(Center(
         child: Text(
-      "${date.day}",
-      textAlign: TextAlign.center,
-      style: new TextStyle(color: textColor),
-    )));
+          "${date.day}",
+          textAlign: TextAlign.center,
+          style: new TextStyle(color: textColor),
+        )));
 
-    if (!weekend) {
+    if (!dayOff) {
       var fullyReserved = reservationsController.isDayFullyReserved(date.day);
       stackChildren.add(buildSignaturesRow(fullyReserved));
     }
 
-    return new Expanded(
-        child: new GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      child: new Container(
-          height: 40.0,
-          decoration: prepareTileDecoration(weekend),
-          child: new Stack(children: stackChildren)),
-      onTap: handleTap,
-    ));
+    var tileContent = Container(
+        height: 40.0,
+        decoration: prepareTileDecoration(dayOff),
+        child: new Stack(children: stackChildren));
+
+    if (!dayOff) {
+      return Expanded(
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            child: tileContent,
+            onTap: handleTap,
+          ));
+    } else {
+      return Expanded(
+        child: tileContent,
+      );
+    }
   }
 
   BoxDecoration prepareTileDecoration(bool isWeekend) {

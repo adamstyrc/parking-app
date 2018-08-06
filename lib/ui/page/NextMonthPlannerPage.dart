@@ -58,9 +58,13 @@ class NextMonthPlannerPage extends StatelessWidget {
             .syncReservations(nextMonthCalendarro.selectedDates)
             .then((r) {
           nextMonthCalendarroStateKey.currentState.update();
-          progressButtonKey.currentState.setProgress(false);
+          if (progressButtonKey.currentState != null) {
+            progressButtonKey.currentState.setProgress(false);
+          }
         }).catchError((e) {
-          progressButtonKey.currentState.setProgress(false);
+          if (progressButtonKey.currentState != null) {
+            progressButtonKey.currentState.setProgress(false);
+          }
         });
       },
       text: Text("SAVE"),);

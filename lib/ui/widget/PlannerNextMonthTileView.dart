@@ -31,8 +31,8 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
   Widget build(BuildContext context) {
     calendarro = Calendarro.of(context);
 
-    bool isWeekend = DateUtils.isWeekend(date);
-    var textColor = isWeekend ? Colors.grey : Colors.black;
+    bool isDayOff = nextMonthReservationsController.isDayOff(date);
+    var textColor = isDayOff ? Colors.grey : Colors.black;
 
     BoxDecoration boxDecoration = prepareTileDecoration();
 
@@ -44,15 +44,21 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
           style: new TextStyle(color: textColor),
         )));
 
-    return new Expanded(
-        child: new GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          child: new Container(
-              height: 40.0,
-              decoration: boxDecoration,
-              child: new Stack(children: stackChildren)),
-          onTap: handleTap,
-        ));
+    var tileContent = Container(
+        height: 40.0,
+        decoration: boxDecoration,
+        child: new Stack(children: stackChildren));
+
+    if (!isDayOff) {
+      return Expanded(
+          child: new GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            child: tileContent,
+            onTap: handleTap,
+          ));
+    } else {
+      return Expanded(child: tileContent);
+    }
   }
 
   BoxDecoration prepareTileDecoration() {

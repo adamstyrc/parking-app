@@ -8,6 +8,8 @@ import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/ui/screen/Dashboard.dart';
 import 'package:mobileoffice/ui/screen/Login.dart';
+import 'package:mobileoffice/exception/AuthException.dart';
+
 
 class Splash extends StatelessWidget {
   Splash() {
@@ -46,9 +48,15 @@ class Splash extends StatelessWidget {
           MaterialPageRoute(builder: (context) => Login()),
         );
       } else {
-        await NextMonthReservationsController.get().updateReservations();
+        await UserController.get().updateUser().catchError((e) {
+          if (e is AuthException) {
+            UserController.get().logout().then((success) {
+              Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => Login()));
+            });
+          }
+        });
         await CurrentMonthReservationsController.get().updateReservations();
-        await UserController.get().updateUser();
+        await NextMonthReservationsController.get().updateReservations();
 
         Navigator.pushReplacement(
           context,

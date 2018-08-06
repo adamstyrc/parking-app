@@ -46,7 +46,20 @@ class DayViewState extends State<DayDetailsPage> {
     bool dayFullyReserved = reservationsController.isDayFullyReserved(date.day);
     bool dayReservedByMe =
         reservationsController.isMineReservationInDay(date.day);
-    if (dayReservedByMe) {
+    if (reservationsController.isHoliday(date.day)) {
+      return new Column(
+        children: <Widget>[
+          Padding(
+              padding: EdgeInsets.all(18.0),
+              child: new Text("Enjoy your day off from work!")),
+          Image(
+//            image: new AssetImage("img/holiday3.jpg"),
+            image: new AssetImage("img/holiday.png"),
+            height: 230.0,
+          ),
+        ],
+      );
+    } else if (dayReservedByMe) {
       var dropProgressButton = GlobalKey<ProgressButtonState>();
       return new Column(
         children: <Widget>[
@@ -62,9 +75,15 @@ class DayViewState extends State<DayDetailsPage> {
             key: dropProgressButton,
             onPressed: pastDay ? null : () {
               CurrentMonthReservationsController.get().dropReservation(date).then((_) {
-                dropProgressButton.currentState.setProgress(false);
+                if (dropProgressButton.currentState != null) {
+                  dropProgressButton.currentState.setProgress(false);
+                }
                 setState(() {});
-              }).catchError((e) {dropProgressButton.currentState.setProgress(false);});
+              }).catchError((e) {
+                if (dropProgressButton.currentState != null) {
+                  dropProgressButton.currentState.setProgress(false);
+                }
+              });
             }, text: Text("DROP"),
           )
         ],

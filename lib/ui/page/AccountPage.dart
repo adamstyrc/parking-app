@@ -19,7 +19,7 @@ class AccountPage extends StatelessWidget {
       Container(height: 32.0),
       Text("Points:", style: TextStyle(fontWeight: FontWeight.bold)),
       Container(height: 8.0),
-      Text("${userController.user.points}", style: TextStyle(color: Colors.orange, fontSize: 28.0)),
+      Text("${userController.user.points.current}", style: TextStyle(color: Colors.orange, fontSize: 28.0)),
       Container(height: 16.0,),
       FlatButton(onPressed: checkUpdate,
         child: Text("CHECK UPDATE"),

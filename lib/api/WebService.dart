@@ -118,6 +118,8 @@ class WebService {
 
     if (isResponseSuccessful(response)) {
       return User.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 403) {
+      throw AuthException();
     } else {
       throw Exception('failure');
     }

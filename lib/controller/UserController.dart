@@ -58,6 +58,10 @@ class UserController {
   Future<bool> logout() async {
     var tokenCleared = await Config.setString(ConfigKeys.ACCESS_TOKEN, "");
     var userCleared = await Config.setString(ConfigKeys.USER_EMAIL, "");
+
+    user = null;
+    userEmail = null;
+
     return tokenCleared && userCleared;
   }
 }
