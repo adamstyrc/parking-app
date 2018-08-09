@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobileoffice/Calendarro.dart';
 import 'package:mobileoffice/ui/widget/PlannerDateTileView.dart';
+import 'package:calendarro/calendarro.dart';
 
 class PlannerDateTileBuilder extends DayTileBuilder {
   CalendarroState calendarro;
