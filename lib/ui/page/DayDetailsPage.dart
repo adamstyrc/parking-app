@@ -46,6 +46,8 @@ class DayViewState extends State<DayDetailsPage> {
     bool dayFullyReserved = reservationsController.isDayFullyReserved(date.day);
     bool dayReservedByMe =
         reservationsController.isMineReservationInDay(date.day);
+
+    var freeSpacesCountForDay = reservationsController.getFreeSpacesCountForDay(date.day);
     if (reservationsController.isHoliday(date.day)) {
       return new Column(
         children: <Widget>[
@@ -61,11 +63,13 @@ class DayViewState extends State<DayDetailsPage> {
       );
     } else if (dayReservedByMe) {
       var dropProgressButton = GlobalKey<ProgressButtonState>();
+
+      var freeSpacesCountForDayText = freeSpacesCountForDay > 0 ? freeSpacesCountForDay : "None";
       return new Column(
         children: <Widget>[
           Padding(
               padding: EdgeInsets.all(18.0),
-              child: new Text("Your space is waiting for you.")),
+              child: new Text("A parking space is waiting for you. $freeSpacesCountForDayText left.")),
           Image(
             image: new AssetImage("img/parking_reserved.jpg"),
             height: 230.0,
@@ -103,7 +107,7 @@ class DayViewState extends State<DayDetailsPage> {
         );
       } else {
         var radius = Radius.circular(8.0);
-        var freeSpacesCount = reservationsController.getFreeSpacesCountForDay(date.day);
+        var freeSpacesCount = freeSpacesCountForDay;
 
         var bookProgressButtonKey = GlobalKey<ProgressButtonState>();
         return Column(
