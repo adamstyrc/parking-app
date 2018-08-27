@@ -13,17 +13,20 @@ class User {
 
 class Points {
   double current;
+  int ranking;
 
-  Points({this.current});
+  Points({this.current, this.ranking});
 
   factory Points.fromJson(Map<String, dynamic> json) {
     double current;
+    int ranking;
     try {
       current = json['current'] as double;
+      ranking = json['ranking'] as int;
     } catch (e) {
       current = (json['current'] as int).toDouble();
     }
 
-    return Points(current: current);
+    return Points(current: current, ranking: ranking);
   }
 }
