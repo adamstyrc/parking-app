@@ -17,11 +17,23 @@ class NextMonthPlannerPage extends StatelessWidget {
     buildNextMonthCalendar();
 
     var columnChildren = <Widget>[
-      Text(
-          DatePrinter
-              .printNiceMonthYear(DateUtils.getFirstDayOfNextMonth()),
-          style:
-          TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+      Stack(
+        children: <Widget>[
+          Align(
+              alignment: FractionalOffset(0.5, 0.0),
+              child: Text(
+                  DatePrinter
+                      .printNiceMonthYear(DateUtils.getFirstDayOfNextMonth()),
+                  style:
+                  TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0))),
+          Align(
+              alignment: FractionalOffset(0.05, 0.0),
+              child: Image(
+                image: new AssetImage("img/arrow_left.png"),
+                height: 24.0,
+              ))
+        ],
+      ),
       Container(height: 16.0),
       nextMonthCalendarro,
     ];

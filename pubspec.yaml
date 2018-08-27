@@ -37,6 +37,8 @@ flutter:
     - img/parking_reserved.jpg
     - img/splash_background.jpg
     - img/holiday.png
+    - img/arrow_left.png
+    - img/arrow_right.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
