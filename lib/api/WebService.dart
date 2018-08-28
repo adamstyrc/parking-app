@@ -125,6 +125,21 @@ class WebService {
     }
   }
 
+  Future<void> postParkingGuest(String date, String guestName) async {
+    Map<String, dynamic> bodyMap = {
+      'guest_name': guestName,
+    };
+
+    final response = await http.post(API_ADDRESS + '/calendar/$date/reservation_guest', headers: await prepareHeaders(), body: json.encode(bodyMap));
+
+    logResponse(response);
+    if (isResponseSuccessful(response)) {
+      return response;
+    } else {
+      throw Exception('Failed request');
+    }
+  }
+
   bool isResponseSuccessful(http.Response response) {
     return response.statusCode >= 200 && response.statusCode < 300;
   }

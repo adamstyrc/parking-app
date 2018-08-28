@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/events.dart';
+import 'package:mobileoffice/ui/BookGuestDialog.dart';
 import 'package:mobileoffice/ui/widget/ProgressButton.dart';
 
 class DayDetailsPage extends StatefulWidget {
@@ -18,15 +19,23 @@ class DayDetailsPage extends StatefulWidget {
 }
 
 class DayViewState extends State<DayDetailsPage> {
-
   DateTime date;
   StreamSubscription reservationsUpdatedEventSubscription;
+  var progressButtonKey = GlobalKey<ProgressButtonState>();
+
+  CurrentMonthReservationsController reservationsController;
+  bool pastDay;
+  bool dayFullyReserved;
+  bool dayReservedByMe;
+  bool holiday;
+  int freeSpacesCountForDay;
 
   DayViewState({this.date});
 
   @override
   void initState() {
-    reservationsUpdatedEventSubscription = eventBus.on<ReservationsUpdatedEvent>().listen((event) {
+    reservationsUpdatedEventSubscription =
+        eventBus.on<ReservationsUpdatedEvent>().listen((event) {
       setState(() {});
     });
   }
@@ -39,121 +48,159 @@ class DayViewState extends State<DayDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var reservationsController = CurrentMonthReservationsController.get();
+    reservationsController = CurrentMonthReservationsController.get();
+    this.pastDay = DateUtils.isSpecialPastDay(date);
 
-    bool pastDay = DateUtils.isSpecialPastDay(date);
+    holiday = reservationsController.isHoliday(date.day);
+    dayFullyReserved = reservationsController.isDayFullyReserved(date.day);
+    dayReservedByMe = reservationsController.isMineReservationInDay(date.day);
+    freeSpacesCountForDay =
+        reservationsController.getFreeSpacesCountForDay(date.day);
 
-    bool dayFullyReserved = reservationsController.isDayFullyReserved(date.day);
-    bool dayReservedByMe =
-        reservationsController.isMineReservationInDay(date.day);
-
-    var freeSpacesCountForDay = reservationsController.getFreeSpacesCountForDay(date.day);
-    if (reservationsController.isHoliday(date.day)) {
-      return new Column(
-        children: <Widget>[
-          Padding(
-              padding: EdgeInsets.all(18.0),
-              child: new Text("Enjoy your day off from work!")),
-          Image(
-//            image: new AssetImage("img/holiday3.jpg"),
-            image: new AssetImage("img/holiday.png"),
-            height: 230.0,
-          ),
-        ],
-      );
-    } else if (dayReservedByMe) {
-      var dropProgressButton = GlobalKey<ProgressButtonState>();
-
-      var freeSpacesCountForDayText = freeSpacesCountForDay > 0 ? freeSpacesCountForDay : "None";
-      return new Column(
-        children: <Widget>[
-          Padding(
-              padding: EdgeInsets.all(18.0),
-              child: new Text("A parking space is waiting for you. $freeSpacesCountForDayText left.")),
-          Image(
-            image: new AssetImage("img/parking_reserved.jpg"),
-            height: 230.0,
-          ),
-          Container(height: 16.0),
-          ProgressButton(
-            key: dropProgressButton,
-            onPressed: pastDay ? null : () {
-              CurrentMonthReservationsController.get().dropReservation(date).then((_) {
-                if (dropProgressButton.currentState != null) {
-                  dropProgressButton.currentState.setProgress(false);
-                }
-                setState(() {});
-              }).catchError((e) {
-                if (dropProgressButton.currentState != null) {
-                  dropProgressButton.currentState.setProgress(false);
-                }
-              });
-            }, text: Text("DROP"),
-          )
-        ],
-      );
-    } else {
-      if (dayFullyReserved) {
-        return Column(
-          children: <Widget>[
-            new Padding(
-                padding: EdgeInsets.all(18.0),
-                child: new Text("We are fully booked, sir, sorry.")),
-            Image(
-              image: new AssetImage("img/parking_full.png"),
-              width: 180.0,
-            )
-          ],
-        );
-      } else {
-        var radius = Radius.circular(8.0);
-        var freeSpacesCount = freeSpacesCountForDay;
-
-        var bookProgressButtonKey = GlobalKey<ProgressButtonState>();
-        return Column(
-          children: <Widget>[
+    return LayoutBuilder(
+      builder: (context, constraints) =>
+          Stack(alignment: FractionalOffset(0.5, 0.0), children: <Widget>[
             Padding(
                 padding: EdgeInsets.all(18.0),
-                child: new Text("Seems you can still fit in.")),
-            Container(
-                width: 220.0,
-                height: 230.0,
-                decoration: new ShapeDecoration(
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(radius),
-                        side: new BorderSide(color: Colors.lightBlue, width: 3.0))),
-                child: Stack(children: <Widget>[
-                  Align(
-                      alignment: FractionalOffset(0.5, 0.1),
-                      child: Text(
-                        "PARKING",
-                        style: TextStyle(color: Colors.blue, fontSize: 45.0),
-                        textAlign: TextAlign.center,
-                      )),
-                  Align(
-                    alignment: FractionalOffset(0.85, 0.9),
-                    child: Row(children: <Widget>[
-                      Text("$freeSpacesCount", style: TextStyle(color: Colors.green, fontSize: 100.0, fontWeight: FontWeight.bold)),
-                      Text("FREE", style: TextStyle(color: Colors.green, fontSize: 27.0))
-                    ], mainAxisSize: MainAxisSize.min),
-                  )
-                ])
+                child: Text(getDescriptionText())),
+            Positioned(child: getDayImage(), top: 48.0),
+            Positioned(
+                top: 290.0,
+                left: constraints.maxWidth - 80.0,
+                child: Image(
+                  image: AssetImage("img/guests.png"),
+                  height: 24.0,
+                )),
+            Positioned(
+              top: 290.0,
+              child: getReserveButton(),
             ),
-            Container(height: 16.0),
-            ProgressButton(
-              key: bookProgressButtonKey,
-              onPressed: pastDay ? null : () {
-                CurrentMonthReservationsController.get().makeReservation(date).then((_) {
-                  bookProgressButtonKey.currentState.setProgress(false);
-                }).catchError((e) {
-                  bookProgressButtonKey.currentState.setProgress(false);
-                });
-              },
-              text: Text("BOOK"),
+            Positioned(
+              top: 332.0,
+              child: getAddGuestButton(),
             )
-          ],
-        );
-      }
+          ]),
+    );
+  }
+
+  String getDescriptionText() {
+    if (holiday) {
+      return "Enjoy your day off from work!";
+    } else if (dayReservedByMe) {
+      var freeSpacesCountForDayText =
+          freeSpacesCountForDay > 0 ? freeSpacesCountForDay : "None";
+      return "A parking space is waiting for you. $freeSpacesCountForDayText left.";
+    } else if (dayFullyReserved) {
+      return "We are fully booked, sir, sorry.";
+    } else {
+      return "Seems you can still fit in.";
     }
+  }
+
+  Widget getDayImage() {
+    if (holiday) {
+      return Image(image: AssetImage("img/holiday.png"), height: 230.0);
+    } else if (dayReservedByMe) {
+      return Image(
+          image: AssetImage("img/parking_reserved.jpg"), height: 230.0);
+    } else if (dayFullyReserved) {
+      return Image(image: AssetImage("img/parking_full.png"), height: 230.0);
+    } else {
+      var radius = Radius.circular(8.0);
+      return Container(
+          width: 220.0,
+          height: 230.0,
+          decoration: new ShapeDecoration(
+              shape: new RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(radius),
+                  side: new BorderSide(color: Colors.lightBlue, width: 3.0))),
+          child: Stack(children: <Widget>[
+            Align(
+                alignment: FractionalOffset(0.5, 0.1),
+                child: Text(
+                  "PARKING",
+                  style: TextStyle(color: Colors.blue, fontSize: 45.0),
+                  textAlign: TextAlign.center,
+                )),
+            Align(
+              alignment: FractionalOffset(0.85, 0.9),
+              child: Row(children: <Widget>[
+                Text("$freeSpacesCountForDay",
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 100.0,
+                        fontWeight: FontWeight.bold)),
+                Text("FREE",
+                    style: TextStyle(color: Colors.green, fontSize: 27.0))
+              ], mainAxisSize: MainAxisSize.min),
+            )
+          ]));
+    }
+  }
+
+  Widget getReserveButton() {
+    bool buttonVisible = (dayReservedByMe || !dayFullyReserved) && !holiday;
+    return Opacity(
+        opacity: buttonVisible ? 1.0 : 0.0,
+        child: ProgressButton(
+          key: progressButtonKey,
+          onPressed: pastDay
+              ? null
+              : () {
+                  onReserveButtonPressed();
+                },
+          text: Text(getButtonText()),
+        ));
+  }
+
+  void onReserveButtonPressed() {
+    if (dayReservedByMe) {
+      CurrentMonthReservationsController
+          .get()
+          .dropReservation(date)
+          .then((_) {
+        if (progressButtonKey.currentState != null) {
+          progressButtonKey.currentState.setProgress(false);
+        }
+        setState(() {});
+      }).catchError((e) {
+        if (progressButtonKey.currentState != null) {
+          progressButtonKey.currentState.setProgress(false);
+        }
+      });
+    } else {
+      CurrentMonthReservationsController
+          .get()
+          .makeReservation(date)
+          .then((_) {
+        progressButtonKey.currentState.setProgress(false);
+      }).catchError((e) {
+        progressButtonKey.currentState.setProgress(false);
+      });
+    }
+  }
+
+  String getButtonText() {
+    if (dayReservedByMe) {
+      return "DROP";
+    } else {
+      return "BOOK";
+    }
+  }
+
+  Widget getAddGuestButton() {
+    var addingGuestPossible = (DateUtils.isToday(date) && DateTime.now().hour >= 9) && !dayFullyReserved;
+    return Opacity(
+        child: RaisedButton(
+          color: Colors.blue,
+          textColor: Colors.white,
+          child: Text("ADD GUEST"),
+          onPressed: () {
+            var dialog = BookGuestDialog()
+                .prepareBookGuestDialog(context, date);
+            showDialog(context: context, builder: (_) => dialog);
+          },
+        ),
+        opacity: addingGuestPossible ? 1.0 : 0.0);
   }
 }

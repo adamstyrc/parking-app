@@ -17,18 +17,18 @@ class ReservationChangeDialog {
 
     if (reservedByMe) {
       return AlertDialog(
-        title: new Text("Drop the reservation"),
-        content: new Text(
+        title: Text("Drop the reservation"),
+        content: Text(
             "Would you like to drop the reservation for ${DatePrinter.printNiceDate(date)}"),
         actions: <Widget>[
-          new FlatButton(
-            child: new Text("Cancel"),
+          FlatButton(
+            child: Text("Cancel"),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          new FlatButton(
-            child: new Text("OK"),
+          FlatButton(
+            child: Text("OK"),
             onPressed: () {
               onDropReservationPressed(context, date);
             },
@@ -42,8 +42,8 @@ class ReservationChangeDialog {
           content: Text(
               "Seems that ${DatePrinter.printNiceDate(date)} is under invasion and there are no free places left. Wait for notification if anything gets released."),
           actions: <Widget>[
-            new FlatButton(
-              child: new Text("OK"),
+            FlatButton(
+              child: Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -52,18 +52,18 @@ class ReservationChangeDialog {
         );
       }
       return AlertDialog(
-        title: new Text("Make a reservation"),
-        content: new Text(
+        title: Text("Make a reservation"),
+        content: Text(
             "Would you like to make a reservation for ${DatePrinter.printNiceDate(date)}"),
         actions: <Widget>[
-          new FlatButton(
-            child: new Text("Cancel"),
+          FlatButton(
+            child: Text("Cancel"),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          new FlatButton(
-            child: new Text("OK"),
+          FlatButton(
+            child: Text("OK"),
             onPressed: () {
               onMakeReservationPressed(context, date);
             },

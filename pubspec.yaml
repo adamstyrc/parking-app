@@ -39,6 +39,7 @@ flutter:
     - img/holiday.png
     - img/arrow_left.png
     - img/arrow_right.png
+    - img/guests.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

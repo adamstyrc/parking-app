@@ -68,7 +68,7 @@ class DaysViewState extends State<DaysPage> {
 
     return new Column(children: <Widget>[
       new Material(child: calendarro, elevation: 4.0, color: Colors.orange),
-      new Container(height: 360.0, child: pageView)
+      new Container(height: 400.0, child: pageView)
     ]);
   }
 
