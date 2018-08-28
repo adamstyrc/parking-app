@@ -153,7 +153,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
             "Would you like to drop the reservation for ${DatePrinter.printNiceDate(date)}"),
         actions: <Widget>[
           new FlatButton(
-            child: new Text("Cancel"),
+            child: new Text("CANCEL"),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -188,7 +188,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
             "Would you like to make a reservation for ${DatePrinter.printNiceDate(date)}"),
         actions: <Widget>[
           new FlatButton(
-            child: new Text("Cancel"),
+            child: new Text("CANCEL"),
             onPressed: () {
               Navigator.of(context).pop();
             },

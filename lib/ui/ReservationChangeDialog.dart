@@ -22,7 +22,7 @@ class ReservationChangeDialog {
             "Would you like to drop the reservation for ${DatePrinter.printNiceDate(date)}"),
         actions: <Widget>[
           FlatButton(
-            child: Text("Cancel"),
+            child: Text("CANCEL"),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -57,7 +57,7 @@ class ReservationChangeDialog {
             "Would you like to make a reservation for ${DatePrinter.printNiceDate(date)}"),
         actions: <Widget>[
           FlatButton(
-            child: Text("Cancel"),
+            child: Text("CANCEL"),
             onPressed: () {
               Navigator.of(context).pop();
             },
