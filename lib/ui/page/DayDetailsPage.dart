@@ -67,10 +67,7 @@ class DayViewState extends State<DayDetailsPage> {
             Positioned(
                 top: 290.0,
                 left: constraints.maxWidth - 80.0,
-                child: Image(
-                  image: AssetImage("img/guests.png"),
-                  height: 24.0,
-                )),
+                child: getGuestImage()),
             Positioned(
               top: 290.0,
               child: getReserveButton(),
@@ -155,10 +152,7 @@ class DayViewState extends State<DayDetailsPage> {
 
   void onReserveButtonPressed() {
     if (dayReservedByMe) {
-      CurrentMonthReservationsController
-          .get()
-          .dropReservation(date)
-          .then((_) {
+      CurrentMonthReservationsController.get().dropReservation(date).then((_) {
         if (progressButtonKey.currentState != null) {
           progressButtonKey.currentState.setProgress(false);
         }
@@ -169,10 +163,7 @@ class DayViewState extends State<DayDetailsPage> {
         }
       });
     } else {
-      CurrentMonthReservationsController
-          .get()
-          .makeReservation(date)
-          .then((_) {
+      CurrentMonthReservationsController.get().makeReservation(date).then((_) {
         progressButtonKey.currentState.setProgress(false);
       }).catchError((e) {
         progressButtonKey.currentState.setProgress(false);
@@ -189,18 +180,38 @@ class DayViewState extends State<DayDetailsPage> {
   }
 
   Widget getAddGuestButton() {
-    var addingGuestPossible = (DateUtils.isToday(date) && DateTime.now().hour >= 9) && !dayFullyReserved;
+    var addingGuestPossible =
+        (DateUtils.isToday(date) && DateTime.now().hour >= 9) &&
+            !dayFullyReserved;
     return Opacity(
         child: RaisedButton(
           color: Colors.blue,
           textColor: Colors.white,
           child: Text("ADD GUEST"),
           onPressed: () {
-            var dialog = BookGuestDialog()
-                .prepareBookGuestDialog(context, date);
+            var dialog =
+                BookGuestDialog().prepareBookGuestDialog(context, date);
             showDialog(context: context, builder: (_) => dialog);
           },
         ),
         opacity: addingGuestPossible ? 1.0 : 0.0);
+  }
+
+  Widget getGuestImage() {
+    var guestsAdded = true;
+    return Opacity(
+        opacity: guestsAdded ? 1.0 : 0.0,
+        child: GestureDetector(
+            child: Image(
+              image: AssetImage("img/guests.png"),
+              height: 24.0,
+            ),
+            onTap: () {
+              var dialog = AlertDialog(
+                title: Text("Guests list"),
+                content: Text("my mama"),
+              );
+              showDialog(context: context, builder: (_) => dialog);
+            }));
   }
 }
