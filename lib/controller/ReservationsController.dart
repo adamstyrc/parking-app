@@ -1,3 +1,4 @@
+import 'package:calendarro/date_utils.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/Utils/DatePrinter.dart';
 import 'package:mobileoffice/api/WebService.dart';
@@ -5,7 +6,6 @@ import 'dart:async';
 
 import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/model/MonthReservations.dart';
-import 'package:mobileoffice/utils/DateUtils.dart';
 
 abstract class ReservationsController {
 

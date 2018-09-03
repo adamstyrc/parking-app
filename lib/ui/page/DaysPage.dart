@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:calendarro/date_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:mobileoffice/Utils/DateUtils.dart';
 import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/ui/page/DayDetailsPage.dart';
 import 'package:mobileoffice/ui/widget/DateTileView.dart';
@@ -40,7 +40,8 @@ class DaysViewState extends State<DaysPage> {
     DateTime endDate = DateUtils.getLastDayOfCurrentMonth();
 
     if (startDate.weekday > 5) {
-      startDate = startDate.add(Duration(days: 8 - startDate.weekday));
+      startDate = DateUtils.addDaysToDate(startDate, 8 - startDate.weekday);
+//      startDate = startDate.add(Duration(days: 8 - startDate.weekday));
     }
     var today = DateTime.now();
 
@@ -78,8 +79,7 @@ class DaysViewState extends State<DaysPage> {
     var nextDateWeek = (nextDay / 5).floor();
 
     var weekdayDifference = nextDateWeekday + 1 - calendarro.startDate.weekday;
-    var selectedDate = calendarro.startDate
-        .add(new Duration(days: (nextDateWeek * 7 + weekdayDifference)));
+    var selectedDate = DateUtils.addDaysToDate(calendarro.startDate, nextDateWeek * 7 + weekdayDifference);
     return selectedDate;
   }
 
