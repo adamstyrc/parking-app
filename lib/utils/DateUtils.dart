@@ -46,9 +46,9 @@ class DateUtils {
   }
 
   static DateTime getLastDayOfNextMonth() {
-    var nextMonth = getFirstDayOfNextMonth()
-        .add(Duration(days: 31));
-    return DateTime(nextMonth.year, nextMonth.month, 1)
+    var nextNextMonth = getFirstDayOfCurrentMonth()
+        .add(Duration(days: 31 * 2));
+    return DateTime(nextNextMonth.year, nextNextMonth.month, 1)
     .subtract(Duration(days: 1));
   }
 
