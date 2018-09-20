@@ -194,13 +194,15 @@ class DayViewState extends State<DayDetailsPage> {
             showDialog(context: context, builder: (_) => dialog);
           },
         ),
-        opacity: addingGuestPossible ? 1.0 : 0.0);
+//        opacity: addingGuestPossible ? 1.0 : 0.0);
+        opacity: 0.0);
   }
 
   Widget getGuestImage() {
     var guestsAdded = true;
     return Opacity(
-        opacity: guestsAdded ? 1.0 : 0.0,
+//        opacity: guestsAdded ? 1.0 : 0.0,
+        opacity: 0.0,
         child: GestureDetector(
             child: Image(
               image: AssetImage("img/guests.png"),
