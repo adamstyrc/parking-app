@@ -41,7 +41,7 @@ class NextMonthReservationsController extends ReservationsController {
     var nextMonth = DateUtils.getFirstDayOfNextMonth();
     var selectedDates = List<DateTime>();
     monthReservations.days.forEach((r) {
-      if (r.booked.contains(UserController.get().userEmail)) {
+      if (r.getBooked().contains(UserController.get().userEmail)) {
         selectedDates.add(DateTime(nextMonth.year, nextMonth.month, r.day));
       }
     });

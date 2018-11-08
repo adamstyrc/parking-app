@@ -37,7 +37,7 @@ abstract class ReservationsController {
   List<String> getReservationsForDay(int day) {
     for (var reservation in monthReservations.days) {
       if (reservation.day == day) {
-        return reservation.granted;
+        return reservation.getGranted();
       }
     }
 
@@ -51,7 +51,7 @@ abstract class ReservationsController {
   bool isDayFullyReserved(int day) {
     for (var reservation  in monthReservations.days) {
       if (reservation.day == day) {
-        return reservation.granted.length >= monthReservations.spots;
+        return reservation.getGranted().length >= monthReservations.spots;
       }
     }
 
@@ -74,7 +74,7 @@ abstract class ReservationsController {
   bool isEmailReservationInDay(int day, String email) {
     for (var reservation  in monthReservations.days) {
       if (reservation.day == day) {
-        return reservation.granted.contains(email);
+        return reservation.getGranted().contains(email);
       }
     }
 

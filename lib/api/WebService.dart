@@ -11,7 +11,7 @@ import 'package:mobileoffice/exception/AuthException.dart';
 
 class WebService {
 
-  final API_ADDRESS = 'http://office1.freeworld.cloud/api';
+  final API_ADDRESS = 'https://visp-parking-web-unix.azurewebsites.net/api';
   final STATIC_HEADERS =  { "Accept": "application/json", "Content-Type": "application/json" };
 
   Future<MonthReservations> getParkingMonth(String yearMonth) async {
