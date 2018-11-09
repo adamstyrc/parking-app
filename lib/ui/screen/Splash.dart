@@ -48,13 +48,13 @@ class Splash extends StatelessWidget {
           MaterialPageRoute(builder: (context) => Login()),
         );
       } else {
-//        await UserController.get().updateUser().catchError((e) {
-//          if (e is AuthException) {
-//            UserController.get().logout().then((success) {
-//              Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => Login()));
-//            });
-//          }
-//        });
+        await UserController.get().updateUser().catchError((e) {
+          if (e is AuthException) {
+            UserController.get().logout().then((success) {
+              Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => Login()));
+            });
+          }
+        });
         await CurrentMonthReservationsController.get().updateReservations();
         await NextMonthReservationsController.get().updateReservations();
 

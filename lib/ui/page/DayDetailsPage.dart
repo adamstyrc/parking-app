@@ -202,18 +202,37 @@ class DayViewState extends State<DayDetailsPage> {
     var guestsAdded = true;
     return Opacity(
 //        opacity: guestsAdded ? 1.0 : 0.0,
-        opacity: 0.0,
+        opacity: 1.0,
         child: GestureDetector(
             child: Image(
               image: AssetImage("img/guests.png"),
               height: 24.0,
             ),
             onTap: () {
+              var reservationsForDay = reservationsController.getReservationsForDay(date.day);
+
               var dialog = AlertDialog(
                 title: Text("Guests list"),
-                content: Text("my mama"),
+//                content: Text("my mama"),
+                content: ListView.builder(
+                  // Let the ListView know how many items it needs to build
+                  itemCount: reservationsForDay.length,
+                  // Provide a builder function. This is where the magic happens! We'll
+                  // convert each item into a Widget based on the type of item it is.
+                  itemBuilder: (context, index) {
+                    final item = reservationsForDay[index];
+                    return ListTile(
+                      title: Text(
+                        item,
+//                        style: Theme.of(context).textTheme.headline,
+                      ),
+                    );
+                  },
+                )
               );
               showDialog(context: context, builder: (_) => dialog);
             }));
   }
+
+
 }
