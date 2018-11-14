@@ -95,6 +95,7 @@ class LoginViewState extends State<Login> {
                   .get()
                   .updateReservations();
               await UserController.get().updateUser();
+              await UserController.get().updateUsers();
 
               if (loginButtonKey.currentState != null) {
                 loginButtonKey.currentState.setProgress(false);

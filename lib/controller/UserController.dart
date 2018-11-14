@@ -9,7 +9,8 @@ import 'package:mobileoffice/api/WebService.dart';
 class UserController {
 
   String userEmail;
-  User user;
+  MyUser user;
+  List<User> allUsers;
   WebService webService = WebService();
 
   //SINGLETON
@@ -51,8 +52,9 @@ class UserController {
     return Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken);
   }
 
-  Future<User> updateUser() async {
-    return user = await webService.getUser();
+  Future<MyUser> updateUser() async {
+    user = await webService.getUser();
+    return user;
   }
 
   Future<bool> logout() async {
@@ -61,7 +63,38 @@ class UserController {
 
     user = null;
     userEmail = null;
+    allUsers = null;
 
     return tokenCleared && userCleared;
+  }
+
+  Future<List<User>> updateUsers() async {
+    allUsers = await webService.getUsers();
+    return allUsers;
+  }
+
+  String getUserName(String email) {
+    String userName;
+    allUsers.forEach((user) {
+        if (user.email == email) {
+          userName = user.name;
+        }
+    });
+
+    return userName;
+  }
+}
+
+class User {
+  String email;
+  String name;
+
+  User({this.email, this.name});
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+        email: json['email'],
+        name: json['name']
+    );
   }
 }

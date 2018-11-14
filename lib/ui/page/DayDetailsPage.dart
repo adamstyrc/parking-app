@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:calendarro/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/controller/CurrentMonthController.dart';
+import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/ui/BookGuestDialog.dart';
 import 'package:mobileoffice/ui/widget/ProgressButton.dart';
@@ -210,7 +211,9 @@ class DayViewState extends State<DayDetailsPage> {
             ),
             onTap: () {
               var reservationsForDay = reservationsController.getReservationsForDay(date.day);
-
+              List<String> userNames = List<String>();
+              reservationsForDay.forEach((email) => userNames.add(UserController.get().getUserName(email)));
+//              List<String> userNames = reservationsForDay.map((r) { return UserController.get().getUserName(r); });
               var dialog = AlertDialog(
                 title: Text("Guests list"),
 //                content: Text("my mama"),
@@ -220,10 +223,12 @@ class DayViewState extends State<DayDetailsPage> {
                   // Provide a builder function. This is where the magic happens! We'll
                   // convert each item into a Widget based on the type of item it is.
                   itemBuilder: (context, index) {
-                    final item = reservationsForDay[index];
+                    final email = reservationsForDay[index];
+                    var userName = userNames[index];
                     return ListTile(
                       title: Text(
-                        item,
+//                        email,
+                        userName,
 //                        style: Theme.of(context).textTheme.headline,
                       ),
                     );

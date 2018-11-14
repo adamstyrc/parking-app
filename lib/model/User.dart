@@ -1,11 +1,11 @@
-class User {
+class MyUser {
   Points points;
 
-  User({this.points});
+  MyUser({this.points});
 
-  factory User.fromJson(Map<String, dynamic> json) {
+  factory MyUser.fromJson(Map<String, dynamic> json) {
     var points = json['points'] as Map<String, dynamic>;
-    return User(
+    return MyUser(
       points: Points.fromJson(points),
     );
   }

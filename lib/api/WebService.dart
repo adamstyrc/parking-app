@@ -112,12 +112,37 @@ class WebService {
     }
   }
 
-  Future<User> getUser() async {
+  Future<MyUser> getUser() async {
     final response = await http.get(API_ADDRESS + '/users/me', headers: await prepareHeaders());
     logResponse(response);
 
     if (isResponseSuccessful(response)) {
-      return User.fromJson(json.decode(response.body));
+      return MyUser.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 403) {
+      throw AuthException();
+    } else {
+      throw Exception('failure');
+    }
+  }
+
+  Future<List<User>> getUsers() async {
+    final response = await http.get(API_ADDRESS + '/users', headers: await prepareHeaders());
+    logResponse(response);
+
+    if (isResponseSuccessful(response)) {
+      final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+      return parsed.map<User>((json) => User.fromJson(json)).toList();
+
+      List body = json.decode(response.body);
+      var users = body.map((item) {
+        return User.fromJson(item);
+      } );
+      return users;
+//      for (var value in list) {
+//
+//      }
+
+      return body;
     } else if (response.statusCode == 403) {
       throw AuthException();
     } else {
