@@ -34,7 +34,7 @@ class AccountPage extends StatelessWidget {
 
 
   void checkUpdate() async {
-    const url = 'https://office.freeworld.cloud/install';
+    const url = 'https://visp-parking-web-unix.azurewebsites.net';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
