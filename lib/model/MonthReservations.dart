@@ -72,14 +72,8 @@ class ReservationDay {
         reservations: reservations.toList());
   }
 
-  List<String> getGranted() {
-    return reservations.where((r) => r.type == ReservationType.GRANTED)
-        .map((r) => r.email)
-        .toList(growable: true);
-  }
-
-  List<String> getBooked() {
-    return reservations.where((r) => r.type == ReservationType.BOOKED)
+  List<String> get(ReservationType reservationType) {
+    return reservations.where((r) => r.type == reservationType)
         .map((r) => r.email)
         .toList(growable: true);
   }

@@ -37,7 +37,7 @@ abstract class ReservationsController {
   List<String> getReservationsForDay(int day) {
     for (var reservation in monthReservations.days) {
       if (reservation.day == day) {
-        return reservation.getGranted();
+        return reservation.get(ReservationType.GRANTED);
       }
     }
 
@@ -51,7 +51,7 @@ abstract class ReservationsController {
   bool isDayFullyReserved(int day) {
     for (var reservation  in monthReservations.days) {
       if (reservation.day == day) {
-        return reservation.getGranted().length >= monthReservations.spots;
+        return reservation.get(ReservationType.GRANTED).length >= monthReservations.spots;
       }
     }
 
@@ -74,7 +74,7 @@ abstract class ReservationsController {
   bool isEmailReservationInDay(int day, String email) {
     for (var reservation  in monthReservations.days) {
       if (reservation.day == day) {
-        return reservation.getGranted().contains(email);
+        return reservation.get(ReservationType.GRANTED).contains(email);
       }
     }
 
@@ -83,5 +83,18 @@ abstract class ReservationsController {
 
   bool isMineReservationInDay(int day) {
     return isEmailReservationInDay(day, UserController.get().userEmail);
+  }
+
+  bool isDayFollowedByMe(int day) {
+    var userEmail = UserController.get().userEmail;
+
+    for (var reservation  in monthReservations.days) {
+      if (reservation.day == day) {
+        var followedList = reservation.get(ReservationType.FOLLOWED);
+        return followedList.contains(userEmail);
+      }
+    }
+
+    return false;
   }
 }

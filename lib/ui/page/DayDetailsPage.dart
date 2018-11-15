@@ -28,6 +28,7 @@ class DayViewState extends State<DayDetailsPage> {
   bool pastDay;
   bool dayFullyReserved;
   bool dayReservedByMe;
+  bool dayFollowedByMe;
   bool holiday;
   int freeSpacesCountForDay;
 
@@ -55,6 +56,7 @@ class DayViewState extends State<DayDetailsPage> {
     holiday = reservationsController.isHoliday(date.day);
     dayFullyReserved = reservationsController.isDayFullyReserved(date.day);
     dayReservedByMe = reservationsController.isMineReservationInDay(date.day);
+    dayFollowedByMe = reservationsController.isDayFollowedByMe(date.day);
     freeSpacesCountForDay =
         reservationsController.getFreeSpacesCountForDay(date.day);
 
@@ -137,7 +139,7 @@ class DayViewState extends State<DayDetailsPage> {
   }
 
   Widget getReserveButton() {
-    bool buttonVisible = (dayReservedByMe || !dayFullyReserved) && !holiday;
+    bool buttonVisible = !holiday;
     return Opacity(
         opacity: buttonVisible ? 1.0 : 0.0,
         child: ProgressButton(
@@ -152,7 +154,7 @@ class DayViewState extends State<DayDetailsPage> {
   }
 
   void onReserveButtonPressed() {
-    if (dayReservedByMe) {
+    if (dayReservedByMe || dayFollowedByMe) {
       CurrentMonthReservationsController.get().dropReservation(date).then((_) {
         if (progressButtonKey.currentState != null) {
           progressButtonKey.currentState.setProgress(false);
@@ -175,8 +177,12 @@ class DayViewState extends State<DayDetailsPage> {
   String getButtonText() {
     if (dayReservedByMe) {
       return "DROP";
-    } else {
+    } else if (freeSpacesCountForDay > 0) {
       return "BOOK";
+    } else if (dayFollowedByMe) {
+      return "UNFOLLOW";
+    } else {
+      return "FOLLOW";
     }
   }
 
