@@ -1,6 +1,6 @@
 import 'package:calendarro/date_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:mobileoffice/Utils/DatePrinter.dart';
+import 'package:mobileoffice/utils/DatePrinter.dart';
 import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/controller/NextMonthReservationsController.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';

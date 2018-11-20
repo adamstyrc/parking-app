@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:calendarro/date_utils.dart';
 import 'package:mobileoffice/model/MonthReservations.dart';
-import 'package:mobileoffice/Utils/DatePrinter.dart';
+import 'package:mobileoffice/utils/DatePrinter.dart';
 import 'package:mobileoffice/controller/ReservationsController.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 
