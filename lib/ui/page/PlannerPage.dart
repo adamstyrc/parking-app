@@ -34,7 +34,7 @@ class PlannerPage extends StatelessWidget {
         height: 16.0,
       ),
       Container(
-        height: 400.0,
+        height: 420.0,
         child: monthsPageView,
       )
     ]);
