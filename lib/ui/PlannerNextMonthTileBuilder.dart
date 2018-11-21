@@ -7,7 +7,7 @@ class PlannerNextMonthTileBuilder extends DayTileBuilder {
   PlannerNextMonthTileBuilder();
 
   @override
-  Widget build(BuildContext context, DateTime date) {
+  Widget build(BuildContext context, DateTime date, DateTimeCallback onTap) {
     return PlannerNextMonthTileView(date: date);
   }
 }
