@@ -100,7 +100,7 @@ class DaysViewTileBuilder extends DayTileBuilder {
   CalendarroState calendarro;
 
   @override
-  Widget build(BuildContext context, DateTime tileDate) {
+  Widget build(BuildContext context, DateTime tileDate, DateTimeCallback onTap) {
     calendarro = Calendarro.of(context);
     return new DateTileView(date: tileDate, calendarro: calendarro);
   }

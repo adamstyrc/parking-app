@@ -7,8 +7,9 @@ class PlannerDateTileBuilder extends DayTileBuilder {
 
   PlannerDateTileBuilder({this.calendarro});
 
+
   @override
-  Widget build(BuildContext context, DateTime tileDate) {
+  Widget build(BuildContext context, DateTime tileDate, DateTimeCallback onTap) {
     return new PlannerDateTileView(date: tileDate, calendarro: calendarro);
   }
 }
