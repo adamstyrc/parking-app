@@ -80,7 +80,7 @@ class WebService {
   Future<void> postFirebaseToken(String token) async {
     Map<String, dynamic> bodyMap = {
       'token': token,
-      'platform': 'android',
+      'platform': 'firebase',
     };
 
     final response = await  http.post(API_ADDRESS + '/users/me/notifiers', body: json.encode(bodyMap),headers: await prepareHeaders());
