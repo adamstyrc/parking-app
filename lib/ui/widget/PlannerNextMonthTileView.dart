@@ -5,6 +5,7 @@ import 'package:mobileoffice/controller/NextMonthReservationsController.dart';
 import 'package:mobileoffice/ui/DateTileDecorator.dart';
 import 'package:mobileoffice/ui/ReservationChangeDialog.dart';
 import 'package:calendarro/calendarro.dart';
+import 'package:mobileoffice/ui/widget/CircleView.dart';
 
 class PlannerNextMonthTileView extends StatefulWidget {
   DateTime date;
@@ -31,8 +32,8 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
   Widget build(BuildContext context) {
     calendarro = Calendarro.of(context);
 
-    bool isDayOff = nextMonthReservationsController.isDayOff(date);
-    var textColor = isDayOff ? Colors.grey : Colors.black;
+    bool dayOff = nextMonthReservationsController.isDayOff(date);
+    var textColor = dayOff ? Colors.grey : Colors.black;
 
     BoxDecoration boxDecoration = prepareTileDecoration();
 
@@ -44,12 +45,17 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
           style: new TextStyle(color: textColor),
         )));
 
+    if (!dayOff) {
+      var fullyReserved = nextMonthReservationsController.isDayFullyReserved(date.day);
+      stackChildren.add(buildSignaturesRow(fullyReserved));
+    }
+
     var tileContent = Container(
         height: 40.0,
         decoration: boxDecoration,
         child: new Stack(children: stackChildren));
 
-    if (!isDayOff) {
+    if (!dayOff) {
       return Expanded(
           child: new GestureDetector(
             behavior: HitTestBehavior.translucent,
@@ -78,6 +84,25 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
         return null;
       }
     }
+  }
+
+  Container buildSignaturesRow(bool occupied) {
+    var rowChildren = <Widget>[];
+
+    if (occupied) {
+      rowChildren.add(new CircleView(color: Colors.red, radius: 2.0));
+    }
+    return new Container(
+      child: new Row(
+        children: rowChildren,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+      ),
+      alignment: Alignment.topCenter,
+      padding: new EdgeInsets.only(
+        top: 40 * .70,
+      ),
+    );
   }
 
   void handleTap() async {
