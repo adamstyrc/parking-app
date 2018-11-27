@@ -28,26 +28,11 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
   DateTime date;
   CalendarroState calendarro;
   CurrentMonthReservationsController reservationsController = CurrentMonthReservationsController.get();
-  StreamSubscription reservationsUpdatedEventSubscription;
 
   PlannerDateTileState({
     this.date,
     this.calendarro,
   });
-
-  @override
-  void initState() {
-    reservationsUpdatedEventSubscription =
-        eventBus.on<ReservationsUpdatedEvent>().listen((event) {
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    reservationsUpdatedEventSubscription.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

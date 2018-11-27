@@ -1,12 +1,40 @@
+import 'dart:async';
+
 import 'package:calendarro/date_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/utils/DatePrinter.dart';
 import 'package:mobileoffice/ui/PlannerDateTileBuilder.dart';
 import 'package:mobileoffice/ui/page/NextMonthPlannerPage.dart';
 import 'package:calendarro/calendarro.dart';
 
-class PlannerPage extends StatelessWidget {
+class PlannerPage extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    return PlannerPageState();
+  }
+}
+
+class PlannerPageState extends State<PlannerPage> {
+
   Calendarro calendarro;
+  StreamSubscription reservationsUpdatedEventSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    reservationsUpdatedEventSubscription =
+        eventBus.on<ReservationsUpdatedEvent>().listen((event) {
+          setState(() {});
+        });
+  }
+
+  @override
+  void dispose() {
+    reservationsUpdatedEventSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +68,7 @@ class PlannerPage extends StatelessWidget {
     ]);
   }
 
+
   Column buildCurrentMonthPlanner() {
     return Column(children: <Widget>[
       Stack(
@@ -50,7 +79,7 @@ class PlannerPage extends StatelessWidget {
                   DatePrinter.printNiceMonthYear(
                       DateUtils.getFirstDayOfCurrentMonth()),
                   style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0))),
+                  TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0))),
           Align(
               alignment: FractionalOffset(0.95, 0.0),
               child: Image(
