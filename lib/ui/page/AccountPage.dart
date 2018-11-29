@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/api/WebService.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/ui/screen/Login.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,7 +35,7 @@ class AccountPage extends StatelessWidget {
 
 
   void checkUpdate() async {
-    const url = 'https://visp-parking-web-unix.azurewebsites.net';
+    const url = WebService.SERVER_ADDRESS;
     if (await canLaunch(url)) {
       await launch(url);
     } else {

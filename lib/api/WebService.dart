@@ -10,7 +10,7 @@ import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/exception/AuthException.dart';
 
 class WebService {
-  static final SERVER_ADDRESS = 'https://visp-parking-web-unix.azurewebsites.net';
+  static const SERVER_ADDRESS = 'https://visp-parking-web-unix.azurewebsites.net';
 
   final API_ADDRESS = SERVER_ADDRESS + '/api';
   final STATIC_HEADERS =  { "Accept": "application/json", "Content-Type": "application/json" };
