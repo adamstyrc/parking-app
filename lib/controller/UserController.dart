@@ -25,17 +25,7 @@ class UserController {
   }
 
   UserController._internal();
-//!SINGLETON
-
-  Future<void> login(String email, String password) async {
-    AccessToken accessToken = await webService.postAuth(email, password);
-
-    userName = email;
-    await Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken.access_token);
-    await Config.setString(ConfigKeys.USER_EMAIL, email);
-
-    registerPushToken();
-  }
+  //!SINGLETON
 
   Future<bool> setAccessToken(String accessToken) async {
     return Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken);
@@ -60,6 +50,7 @@ class UserController {
   Future<MyUser> updateUser() async {
     user = await webService.getUser();
     userName = user.user_id;
+    Config.setString(ConfigKeys.USER_EMAIL, userName);
     return user;
   }
 

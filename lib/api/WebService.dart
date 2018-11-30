@@ -94,24 +94,24 @@ class WebService {
     }
   }
 
-  Future<AccessToken> postAuth(String email, String password) async {
-    Map<String, dynamic> bodyMap = {
-      'email': email,
-      'password': password,
-    };
-
-    final response =
-      await http.post(API_ADDRESS + '/auth', headers: await prepareHeaders(), body: json.encode(bodyMap));
-
-    logResponse(response);
-    if (isResponseSuccessful(response)) {
-      return AccessToken.fromJson(json.decode(response.body));
-    } if (response.statusCode == 403) {
-      throw AuthException();
-    } else {
-      throw Exception('failure');
-    }
-  }
+//  Future<AccessToken> postAuth(String email, String password) async {
+//    Map<String, dynamic> bodyMap = {
+//      'email': email,
+//      'password': password,
+//    };
+//
+//    final response =
+//      await http.post(API_ADDRESS + '/auth', headers: await prepareHeaders(), body: json.encode(bodyMap));
+//
+//    logResponse(response);
+//    if (isResponseSuccessful(response)) {
+//      return AccessToken.fromJson(json.decode(response.body));
+//    } if (response.statusCode == 403) {
+//      throw AuthException();
+//    } else {
+//      throw Exception('failure');
+//    }
+//  }
 
   Future<MyUser> getUser() async {
     final response = await http.get(API_ADDRESS + '/users/me', headers: await prepareHeaders());
