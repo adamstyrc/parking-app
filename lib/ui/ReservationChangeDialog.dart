@@ -12,7 +12,7 @@ class ReservationChangeDialog {
 
     ReservationsController reservationsController = getReservationsController(date);
 
-    var email = UserController.get().userEmail;
+    var email = UserController.get().userName;
     var reservedByMe = reservationsController.isEmailReservationInDay(date.day, email);
 
     if (reservedByMe) {

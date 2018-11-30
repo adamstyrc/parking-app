@@ -82,11 +82,11 @@ abstract class ReservationsController {
   }
 
   bool isMineReservationInDay(int day) {
-    return isEmailReservationInDay(day, UserController.get().userEmail);
+    return isEmailReservationInDay(day, UserController.get().userName);
   }
 
   bool isDayFollowedByMe(int day) {
-    var userEmail = UserController.get().userEmail;
+    var userEmail = UserController.get().userName;
 
     for (var reservation  in monthReservations.days) {
       if (reservation.day == day) {

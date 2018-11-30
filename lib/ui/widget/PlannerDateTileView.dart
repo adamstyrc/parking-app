@@ -128,7 +128,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
   }
 
   AlertDialog prepareReservationChangeDialog() {
-    var email = UserController.get().userEmail;
+    var email = UserController.get().userName;
     var isMineReservationInDay =
         reservationsController.isEmailReservationInDay(date.day, email);
     if (isMineReservationInDay) {

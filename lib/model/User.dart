@@ -1,11 +1,15 @@
 class MyUser {
   Points points;
+  String user_id;
+  String name;
 
-  MyUser({this.points});
+  MyUser({this.user_id, this.name, this.points});
 
   factory MyUser.fromJson(Map<String, dynamic> json) {
     var points = json['points'] as Map<String, dynamic>;
     return MyUser(
+      user_id: json['user_id'] as String,
+      name: json['name'] as String,
       points: Points.fromJson(points),
     );
   }

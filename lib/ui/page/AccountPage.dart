@@ -16,7 +16,7 @@ class AccountPage extends StatelessWidget {
       Container(height: 16.0,),
       Text("Account:", style: TextStyle(fontWeight: FontWeight.bold)),
       Container(height: 8.0,),
-      Text("${userController.userEmail}"),
+      Text("${userController.userName}"),
       Container(height: 32.0),
       Text("Points:", style: TextStyle(fontWeight: FontWeight.bold)),
       Container(height: 8.0),

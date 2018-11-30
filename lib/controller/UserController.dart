@@ -8,7 +8,7 @@ import 'package:mobileoffice/api/WebService.dart';
 
 class UserController {
 
-  String userEmail;
+  String userName;
   MyUser user;
   List<User> allUsers;
   WebService webService = WebService();
@@ -30,11 +30,15 @@ class UserController {
   Future<void> login(String email, String password) async {
     AccessToken accessToken = await webService.postAuth(email, password);
 
-    userEmail = email;
+    userName = email;
     await Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken.access_token);
     await Config.setString(ConfigKeys.USER_EMAIL, email);
 
     registerPushToken();
+  }
+
+  Future<bool> setAccessToken(String accessToken) async {
+    return Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken);
   }
 
   void registerPushToken() {
@@ -49,16 +53,13 @@ class UserController {
 
   Future<bool> isUserLogged() async {
     var accessToken = await Config.getString(ConfigKeys.ACCESS_TOKEN);
-    userEmail = await Config.getString(ConfigKeys.USER_EMAIL);
+    userName = await Config.getString(ConfigKeys.USER_EMAIL);
     return accessToken != null && accessToken.length > 0;
-  }
-
-  Future<bool> setAccessToken(String accessToken) {
-    return Config.setString(ConfigKeys.ACCESS_TOKEN, accessToken);
   }
 
   Future<MyUser> updateUser() async {
     user = await webService.getUser();
+    userName = user.user_id;
     return user;
   }
 
@@ -67,7 +68,7 @@ class UserController {
     var userCleared = await Config.setString(ConfigKeys.USER_EMAIL, "");
 
     user = null;
-    userEmail = null;
+    userName = null;
     allUsers = null;
 
     return tokenCleared && userCleared;
