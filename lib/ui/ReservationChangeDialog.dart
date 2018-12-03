@@ -1,5 +1,6 @@
 import 'package:calendarro/date_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/ui/screen/ProgressScreen.dart';
 import 'package:mobileoffice/utils/DatePrinter.dart';
 import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/controller/NextMonthReservationsController.dart';
@@ -84,6 +85,9 @@ class ReservationChangeDialog {
   }
 
   void onMakeReservationPressed(BuildContext context, DateTime date) {
+    Navigator.of(context).pop();
+    Navigator.of(context).push(ProgressScreen());
+
     getReservationsController(date).makeReservation(date).then((_) {
       Navigator.of(context).pop();
 //      setState(() {});
@@ -93,6 +97,9 @@ class ReservationChangeDialog {
   }
 
   void onDropReservationPressed(BuildContext context, DateTime date) async {
+    Navigator.of(context).pop();
+    Navigator.of(context).push(ProgressScreen());
+
     getReservationsController(date).dropReservation(date).then((_) {
       Navigator.of(context).pop();
 //      setState(() {});
