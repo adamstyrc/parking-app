@@ -51,14 +51,6 @@ class ProgressScreen extends ModalRoute<void> {
         ),
         alignment: Alignment(0.0, 0.7)
     );
-//    return Center(
-//      child: Column(
-//        mainAxisSize: MainAxisSize.min,
-//        children: <Widget>[
-//          CircularProgressIndicator(),
-//        ],
-//      ),
-//    );
   }
 
   @override
