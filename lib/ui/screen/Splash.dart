@@ -48,20 +48,18 @@ class Splash extends StatelessWidget {
           MaterialPageRoute(builder: (context) => Login()),
         );
       } else {
-        await UserController.get().updateUser().catchError((e) {
+
+        await CurrentMonthReservationsController.get().updateReservations().catchError((e) {
           if (e is AuthException) {
             UserController.get().logout().then((success) {
               Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => Login()));
             });
           }
         });
+        await UserController.get().updateUser();
 
-        var remoteDataCalls = List<Future>();
-        remoteDataCalls.add(UserController.get().updateUsers());
-        remoteDataCalls.add(CurrentMonthReservationsController.get().updateReservations());
-        remoteDataCalls.add(NextMonthReservationsController.get().updateReservations());
-        await Future.wait(remoteDataCalls);
-
+        NextMonthReservationsController.get().updateReservations();
+        UserController.get().updateUsers();
         UserController.get().registerPushToken();
 
         Navigator.pushReplacement(
