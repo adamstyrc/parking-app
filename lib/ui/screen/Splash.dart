@@ -55,9 +55,13 @@ class Splash extends StatelessWidget {
             });
           }
         });
-        await UserController.get().updateUsers();
-        await CurrentMonthReservationsController.get().updateReservations();
-        await NextMonthReservationsController.get().updateReservations();
+
+        var remoteDataCalls = List<Future>();
+        remoteDataCalls.add(UserController.get().updateUsers());
+        remoteDataCalls.add(CurrentMonthReservationsController.get().updateReservations());
+        remoteDataCalls.add(NextMonthReservationsController.get().updateReservations());
+        await Future.wait(remoteDataCalls);
+
         UserController.get().registerPushToken();
 
         Navigator.pushReplacement(
