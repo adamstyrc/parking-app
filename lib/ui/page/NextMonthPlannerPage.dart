@@ -6,11 +6,12 @@ import 'package:mobileoffice/ui/widget/ProgressButton.dart';
 import 'package:mobileoffice/ui/PlannerNextMonthTileBuilder.dart';
 import 'package:calendarro/calendarro.dart';
 
-
 class NextMonthPlannerPage extends StatelessWidget {
-
   Calendarro nextMonthCalendarro;
   var nextMonthCalendarroStateKey = GlobalKey<CalendarroState>();
+  PageController plannerPageController;
+
+  NextMonthPlannerPage(this.plannerPageController);
 
   @override
   Widget build(BuildContext context) {
@@ -22,16 +23,21 @@ class NextMonthPlannerPage extends StatelessWidget {
           Align(
               alignment: FractionalOffset(0.5, 0.0),
               child: Text(
-                  DatePrinter
-                      .printNiceMonthYear(DateUtils.getFirstDayOfNextMonth()),
+                  DatePrinter.printNiceMonthYear(
+                      DateUtils.getFirstDayOfNextMonth()),
                   style:
-                  TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0))),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0))),
           Align(
               alignment: FractionalOffset(0.05, 0.0),
-              child: Image(
-                image: new AssetImage("img/arrow_left.png"),
-                height: 24.0,
-              ))
+              child: GestureDetector(
+                  child: Image(
+                    image: new AssetImage("img/arrow_left.png"),
+                    height: 24.0,
+                  ),
+                  onTap: () {
+                    plannerPageController
+                        .jumpToPage(plannerPageController.page.toInt() - 1);
+                  }))
         ],
       ),
       Container(height: 16.0),
@@ -56,7 +62,8 @@ class NextMonthPlannerPage extends StatelessWidget {
       endDate: DateUtils.getLastDayOfNextMonth(),
       displayMode: DisplayMode.MONTHS,
       dayTileBuilder: PlannerNextMonthTileBuilder(),
-      selectionMode: nextMonthGranted ? SelectionMode.SINGLE : SelectionMode.MULTI,
+      selectionMode:
+          nextMonthGranted ? SelectionMode.SINGLE : SelectionMode.MULTI,
       selectedDates: futureReservationsController.getSelectedDates(),
     );
   }
@@ -66,8 +73,7 @@ class NextMonthPlannerPage extends StatelessWidget {
     var progressButton = ProgressButton(
       key: progressButtonKey,
       onPressed: () {
-        NextMonthReservationsController
-            .get()
+        NextMonthReservationsController.get()
             .syncReservations(nextMonthCalendarro.selectedDates)
             .then((r) {
           nextMonthCalendarroStateKey.currentState.update();
@@ -80,7 +86,8 @@ class NextMonthPlannerPage extends StatelessWidget {
           }
         });
       },
-      text: Text("SAVE"),);
+      text: Text("SAVE"),
+    );
     return progressButton;
   }
 }

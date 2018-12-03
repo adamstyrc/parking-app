@@ -9,7 +9,6 @@ import 'package:mobileoffice/ui/page/NextMonthPlannerPage.dart';
 import 'package:calendarro/calendarro.dart';
 
 class PlannerPage extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return PlannerPageState();
@@ -17,17 +16,17 @@ class PlannerPage extends StatefulWidget {
 }
 
 class PlannerPageState extends State<PlannerPage> {
-
   Calendarro calendarro;
   StreamSubscription reservationsUpdatedEventSubscription;
+  PageController pageController = PageController();
 
   @override
   void initState() {
     super.initState();
     reservationsUpdatedEventSubscription =
         eventBus.on<ReservationsUpdatedEvent>().listen((event) {
-          setState(() {});
-        });
+      setState(() {});
+    });
   }
 
   @override
@@ -50,11 +49,11 @@ class PlannerPageState extends State<PlannerPage> {
           if (position == 0) {
             return buildCurrentMonthPlanner();
           } else {
-            return NextMonthPlannerPage();
+            return NextMonthPlannerPage(pageController);
           }
         },
         itemCount: 2,
-        controller: new PageController(),
+        controller: pageController,
         onPageChanged: (position) {});
 
     return Column(children: <Widget>[
@@ -68,7 +67,6 @@ class PlannerPageState extends State<PlannerPage> {
     ]);
   }
 
-
   Column buildCurrentMonthPlanner() {
     return Column(children: <Widget>[
       Stack(
@@ -79,12 +77,17 @@ class PlannerPageState extends State<PlannerPage> {
                   DatePrinter.printNiceMonthYear(
                       DateUtils.getFirstDayOfCurrentMonth()),
                   style:
-                  TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0))),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0))),
           Align(
               alignment: FractionalOffset(0.95, 0.0),
-              child: Image(
-                image: new AssetImage("img/arrow_right.png"),
-                height: 24.0,
+              child: GestureDetector(
+                  child: Image(
+                    image: new AssetImage("img/arrow_right.png"),
+                    height: 24.0,
+                  ),
+                onTap: () {
+                    pageController.jumpToPage(pageController.page.toInt() + 1);
+                },
               ))
         ],
       ),
