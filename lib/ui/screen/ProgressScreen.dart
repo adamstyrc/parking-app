@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 
@@ -13,7 +15,7 @@ class ProgressScreen extends ModalRoute<void> {
   bool get barrierDismissible => false;
 
   @override
-  Color get barrierColor => Colors.black.withOpacity(0.6);
+  Color get barrierColor => Colors.black.withOpacity(0.5);
 
   @override
   String get barrierLabel => null;
@@ -27,32 +29,36 @@ class ProgressScreen extends ModalRoute<void> {
       Animation<double> animation,
       Animation<double> secondaryAnimation,
       ) {
-    // This makes sure that text and other content follows the material style
-    return Material(
+
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Material(
       type: MaterialType.transparency,
-      // make sure that the overlay content is not cut off
       child: SafeArea(
         child: _buildOverlayContent(context),
       ),
+      )
     );
   }
 
   Widget _buildOverlayContent(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-//          Text(
-//            'This is a nice overlay',
-//            style: TextStyle(color: Colors.white, fontSize: 30.0),
-//          ),
-//          RaisedButton(
-//            onPressed: () => Navigator.pop(context),
-//            child: Text('Dismiss'),
-//          )
-        ],
-      ),
+    return Align(
+        child: Theme(
+          child: CircularProgressIndicator(),
+          data: Theme
+              .of(context)
+              .copyWith(accentColor: Colors.blue),
+        ),
+        alignment: Alignment(0.0, 0.7)
     );
+//    return Center(
+//      child: Column(
+//        mainAxisSize: MainAxisSize.min,
+//        children: <Widget>[
+//          CircularProgressIndicator(),
+//        ],
+//      ),
+//    );
   }
 
   @override
@@ -64,5 +70,11 @@ class ProgressScreen extends ModalRoute<void> {
         child: child,
       ),
     );
+  }
+
+  Future<bool> _onBackPressed() {
+    var completer = new Completer();
+    completer.complete(false);
+    return completer.future;
   }
 }
