@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobileoffice/api/WebService.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/ui/screen/Login.dart';
+import 'package:mobileoffice/ui/screen/Manual.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AccountPage extends StatelessWidget {
@@ -23,6 +24,12 @@ class AccountPage extends StatelessWidget {
       Text("${userController.user.points.current}", style: TextStyle(color: Colors.orange, fontSize: 28.0)),
       Text("which makes you no. ${userController.user.points.ranking} in the ranking."),
       Container(height: 32.0,),
+      FlatButton(onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Manual()));
+
+      },
+        child: Text("MANUAL"),
+      ),
       FlatButton(onPressed: checkUpdate,
         child: Text("CHECK UPDATE"),
       ),

@@ -89,7 +89,7 @@ class DayViewState extends State<DayDetailsPage> {
     } else if (dayReservedByMe) {
       var freeSpacesCountForDayText =
           freeSpacesCountForDay > 0 ? freeSpacesCountForDay : "None";
-      return "A parking space is waiting for you. $freeSpacesCountForDayText left.";
+      return "Parking space is waiting for you. $freeSpacesCountForDayText left.";
     } else if (dayFullyReserved) {
       return "We are fully booked, sir, sorry.";
     } else {
@@ -229,7 +229,6 @@ class DayViewState extends State<DayDetailsPage> {
                   // Provide a builder function. This is where the magic happens! We'll
                   // convert each item into a Widget based on the type of item it is.
                   itemBuilder: (context, index) {
-                    final email = reservationsForDay[index];
                     var userName = userNames[index];
                     return ListTile(
                       title: Text(

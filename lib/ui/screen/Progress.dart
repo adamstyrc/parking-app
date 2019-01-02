@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 
-class ProgressScreen extends ModalRoute<void> {
+class Progress extends ModalRoute<void> {
 
   @override
   Duration get transitionDuration => Duration(milliseconds: 500);
