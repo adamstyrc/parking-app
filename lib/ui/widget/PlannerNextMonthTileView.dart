@@ -72,7 +72,7 @@ class PlannerNextMonthTileViewState extends State<PlannerNextMonthTileView> {
 
   BoxDecoration prepareTileDecoration() {
     if (nextMonthReservationsController.isNextMonthGranted()) {
-      var reservedByMe = nextMonthReservationsController.isMineReservationInDay(
+      var reservedByMe = nextMonthReservationsController.isMineReservationOnDay(
           date.day);
 
       if (reservedByMe) {

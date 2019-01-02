@@ -74,7 +74,7 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
   }
 
   BoxDecoration prepareTileDecoration(bool isWeekend) {
-    var reservedByMe = reservationsController.isMineReservationInDay(date.day);
+    var reservedByMe = reservationsController.isMineReservationOnDay(date.day);
     var specialPastDay = DateUtils.isSpecialPastDay(date);
     bool isToday = DateUtils.isToday(date);
 
@@ -102,6 +102,13 @@ class PlannerDateTileState extends State<PlannerDateTileView> {
 
     if (occupied) {
       rowChildren.add(new CircleView(color: Colors.red, radius: 2.0));
+    }
+
+    if (reservationsController.isPointsCountedForDay(date.day)) {
+      if (rowChildren.isNotEmpty) {
+        rowChildren.add(new Container(width: 1.0, height: 2.0));
+      }
+      rowChildren.add(new CircleView(color: Colors.amber, radius: 2.0));
     }
     return new Container(
       child: new Row(

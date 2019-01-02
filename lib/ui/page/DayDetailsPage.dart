@@ -55,7 +55,7 @@ class DayViewState extends State<DayDetailsPage> {
 
     holiday = reservationsController.isHoliday(date.day);
     dayFullyReserved = reservationsController.isDayFullyReserved(date.day);
-    dayReservedByMe = reservationsController.isMineReservationInDay(date.day);
+    dayReservedByMe = reservationsController.isMineReservationOnDay(date.day);
     dayFollowedByMe = reservationsController.isDayFollowedByMe(date.day);
     freeSpacesCountForDay =
         reservationsController.getFreeSpacesCountForDay(date.day);

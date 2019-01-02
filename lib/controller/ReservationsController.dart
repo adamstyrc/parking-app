@@ -81,7 +81,26 @@ abstract class ReservationsController {
     return false;
   }
 
-  bool isMineReservationInDay(int day) {
+  bool isPointsCountedForDay(int day) {
+    var email = UserController.get().userName;
+
+    for (var reservation  in monthReservations.days) {
+      if (reservation.day == day) {
+        var grantedForDay = reservation.get(ReservationType.GRANTED);
+        var freedForDay = reservation.get(ReservationType.FREED);
+
+        var userHadReservation = grantedForDay.contains(email) ||
+            freedForDay.contains(email);
+
+        var reservationsCount = grantedForDay.length + freedForDay.length;
+        return userHadReservation && reservationsCount >= monthReservations.spots;
+      }
+    }
+
+    return false;
+  }
+
+  bool isMineReservationOnDay(int day) {
     return isEmailReservationInDay(day, UserController.get().userName);
   }
 

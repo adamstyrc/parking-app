@@ -5,6 +5,10 @@ class DateTileDecorator {
     color: Colors.orange,
     width: 1.0,
   );
+  static final _DARKBLUE_BORDER = Border.all(
+    color: Colors.indigo,
+    width: 1.0,
+  );
   static final _WHITE_BORDER = Border.all(
     color: Colors.white,
     width: 1.0,
@@ -18,6 +22,8 @@ class DateTileDecorator {
       BoxDecoration(color: Colors.blue, shape: BoxShape.circle);
   static final BLUE_CIRCLE_BORDERED = BoxDecoration(
       color: Colors.blue, shape: BoxShape.circle, border: _ORANGE_BORDER);
+  static final BLUE_CIRCLE_BLUE_BORDERED = BoxDecoration(
+      color: Colors.blue, shape: BoxShape.circle, border: _DARKBLUE_BORDER);
   static final LIGHTBLUE_CIRCLE =
 //  BoxDecoration(color: Colors.lightBlue, shape: BoxShape.circle);
   BoxDecoration(color: new Color(0x881E88E5), shape: BoxShape.circle);

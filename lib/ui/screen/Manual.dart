@@ -22,7 +22,7 @@ class Manual extends StatelessWidget {
                 "\n\n3\n"
                 "Releasing a reservation won't give back points for sure. Your space must be taken by another collegue if the parking was full!"
                 "\n\n4\n"
-                "Plan your next month reservations in advance from Planner. At the last days of current month, system will grant places according to employees demand and their point count."
+                "Plan your next month reservations in advance from Planner. On 28th of current month, system will grant places according to employees demand and their point count."
                 "\n\n5\n"
                 "When a person release it's place, you will get notification if you were subscribing that day. But be quick as who clicks first, gets it! "
                 ,

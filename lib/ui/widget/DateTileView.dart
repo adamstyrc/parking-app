@@ -79,7 +79,7 @@ class DateTileState extends State<DateTileView> {
     if (!isDayOff) {
       var reservationsController = CurrentMonthReservationsController.get();
       var fullyReserved = reservationsController.isDayFullyReserved(date.day);
-      var reservedByMe = reservationsController.isMineReservationInDay(date.day);
+      var reservedByMe = reservationsController.isMineReservationOnDay(date.day);
       stackChildren.add(buildSignaturesRow(fullyReserved, reservedByMe));
     }
 
@@ -107,6 +107,14 @@ class DateTileState extends State<DateTileView> {
       }
       rowChildren.add(new CircleView(color: Colors.blue, radius: 2.0));
     }
+
+    if (CurrentMonthReservationsController.get().isPointsCountedForDay(date.day)) {
+      if (rowChildren.isNotEmpty) {
+        rowChildren.add(new Container(width: 1.0, height: 2.0));
+      }
+      rowChildren.add(new CircleView(color: Colors.amber, radius: 2.0));
+    }
+
     return new Container(
       child: new Row(
         children: rowChildren,
