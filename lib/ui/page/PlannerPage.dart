@@ -114,60 +114,16 @@ class PlannerPageState extends State<PlannerPage> {
     ]);
   }
 
-//  Widget getLegendButton() {
-//    return RaisedButton(child: Text("LEGEND"),
-//      onPressed: () {
-//        var dialog = AlertDialog(
-//          title: new Text("Legend"),
-//          content: Column(
-//            mainAxisSize: MainAxisSize.min,
-//            children: <Widget>[
-//              Row(children: <Widget>[
-//                CircleView(color: Colors.red, radius: 4.0),
-////                  Container(width: 12.0),
-//                Text("   parking full")
-//              ]),
-//              Row(children: <Widget>[
-//                CircleView(color: Colors.amber, radius: 4.0),
-////                  Container(width: 12.0),
-//                Text("   points added for day")
-//              ]),
-//              Row(children: <Widget>[
-//                CircleView(color: Colors.blue, radius: 4.0),
-////                  Container(width: 12.0),
-//                Text("   you have reservation")
-//              ]),
-//              Row(children: <Widget>[
-//                CircleView(color: DateTileDecorator.LIGHTBLUE, radius: 4.0),
-////                  Container(width: 12.0),
-//                Text("   your demand for parking")
-//              ]),
-//              Row(children: <Widget>[
-//                CircleView(color: Colors.grey, radius: 4.0),
-////                  Container(width: 12.0),
-//                Text("   your past reservation")
-//              ]),
-//            ],
-////                "Would you like to drop the reservation for ${DatePrinter.printNiceDate(date)}"
-//          ),
-//          actions: <Widget>[
-//            FlatButton(
-//              child: new Text("OK"),
-//              onPressed: () {
-//                Navigator.of(context).pop();
-//              },
-//            ),
-//          ],
-//        );
-//        showDialog(context: context, builder: (_) => dialog);
-//      },);
-//  }
-
   Widget getLegendButton() {
     return GestureDetector(
       child: Container(
         padding: EdgeInsets.all(8.0),
-        child: Text("LEGEND", style: TextStyle(fontSize: 12.0),)
+        decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))
+            ),
+            color: Colors.orange),
+        child: Text("LEGEND", style: TextStyle(fontSize: 12.0, color: Colors.white),)
       ),
       onTap: () {
         var dialog = AlertDialog(
@@ -183,7 +139,7 @@ class PlannerPageState extends State<PlannerPage> {
               Row(children: <Widget>[
                 CircleView(color: Colors.amber, radius: 4.0),
 //                  Container(width: 12.0),
-                Text("   points added for day")
+                Text("   points added to you")
               ]),
               Row(children: <Widget>[
                 CircleView(color: Colors.blue, radius: 4.0),
