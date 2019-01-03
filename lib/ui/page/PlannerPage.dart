@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:calendarro/date_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileoffice/controller/CurrentMonthController.dart';
 import 'package:mobileoffice/events.dart';
 import 'package:mobileoffice/utils/DatePrinter.dart';
 import 'package:mobileoffice/ui/PlannerDateTileBuilder.dart';
@@ -68,6 +69,8 @@ class PlannerPageState extends State<PlannerPage> {
   }
 
   Column buildCurrentMonthPlanner() {
+    final pointsCounted = CurrentMonthReservationsController.get().getPointsCountedForMonth();
+
     return Column(children: <Widget>[
       Stack(
         children: <Widget>[
@@ -93,6 +96,7 @@ class PlannerPageState extends State<PlannerPage> {
       ),
       Container(height: 16.0),
       calendarro,
+      Text("Points counted: $pointsCounted")
     ]);
   }
 }

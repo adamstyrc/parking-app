@@ -35,4 +35,15 @@ class CurrentMonthReservationsController extends ReservationsController {
     await webService.postParkingGuest(serverDate, guestName);
     return await updateReservations();
   }
+
+  double getPointsCountedForMonth() {
+    int daysWithPointsCounted = 0;
+    monthReservations.days.forEach((date) {
+      if (isPointsCountedForDay(date.day)) {
+        daysWithPointsCounted++;
+      }
+    });
+
+    return daysWithPointsCounted * 2 / 10;
+  }
 }
