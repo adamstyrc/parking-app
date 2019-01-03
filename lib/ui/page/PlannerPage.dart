@@ -96,7 +96,14 @@ class PlannerPageState extends State<PlannerPage> {
       ),
       Container(height: 16.0),
       calendarro,
-      Text("Points counted: $pointsCounted")
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(child: Text("Points added: "), margin: EdgeInsets.only(bottom: 3.0),),
+          Text(pointsCounted.toString(), style: TextStyle(fontSize: 24.0, color: Colors.amber))
+        ],)
+
     ]);
   }
 }

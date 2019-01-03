@@ -21,7 +21,7 @@ class AccountPage extends StatelessWidget {
       Container(height: 32.0),
       Text("Points:", style: TextStyle(fontWeight: FontWeight.bold)),
       Container(height: 8.0),
-      Text("${userController.user.points.current}", style: TextStyle(color: Colors.orange, fontSize: 28.0)),
+      Text("${userController.user.points.current}", style: TextStyle(color: Colors.amber, fontSize: 28.0)),
       Text("which makes you no. ${userController.user.points.ranking} in the ranking."),
       Container(height: 32.0,),
       FlatButton(onPressed: () {
