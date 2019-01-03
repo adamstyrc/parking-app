@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DateTileDecorator {
+  static final LIGHTBLUE = new Color(0x881E88E5);
+
   static final _ORANGE_BORDER = Border.all(
     color: Colors.orange,
     width: 1.0,
@@ -26,7 +28,7 @@ class DateTileDecorator {
       color: Colors.blue, shape: BoxShape.circle, border: _DARKBLUE_BORDER);
   static final LIGHTBLUE_CIRCLE =
 //  BoxDecoration(color: Colors.lightBlue, shape: BoxShape.circle);
-  BoxDecoration(color: new Color(0x881E88E5), shape: BoxShape.circle);
+  BoxDecoration(color: LIGHTBLUE, shape: BoxShape.circle);
   static final ORANGE_BORDER =
   BoxDecoration(shape: BoxShape.circle, border: _ORANGE_BORDER);
   static final WHITE_BORDER =
