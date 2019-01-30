@@ -11,13 +11,13 @@ class ParkingMap extends StatelessWidget {
   ParkingMap(this.pathPDF);
 
   static Future<File> createFileOfPdfUrl() async {
-    final url = "http://africau.edu/images/default/sample.pdf";
+    final url = "https://emobilitymobileparking.blob.core.windows.net/parkingapp/parkingPlan.pdf";
     final filename = url.substring(url.lastIndexOf("/") + 1);
     var request = await HttpClient().getUrl(Uri.parse(url));
     var response = await request.close();
     var bytes = await consolidateHttpClientResponseBytes(response);
     String dir = (await getApplicationDocumentsDirectory()).path;
-    File file = new File('$dir/$filename');
+    File file = new File('$dir/${filename}_copy');
     await file.writeAsBytes(bytes);
     return file;
   }
@@ -26,7 +26,7 @@ class ParkingMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return PDFViewerScaffold(
         appBar: AppBar(
-          title: Text("Document"),
+          title: Text("Parking map"),
         ),
         path: pathPDF);
   }
