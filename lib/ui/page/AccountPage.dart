@@ -1,11 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/api/WebService.dart';
 import 'package:mobileoffice/controller/UserController.dart';
 import 'package:mobileoffice/ui/screen/Login.dart';
 import 'package:mobileoffice/ui/screen/Manual.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+
+
 
 class AccountPage extends StatelessWidget {
 
@@ -15,11 +16,12 @@ class AccountPage extends StatelessWidget {
 
     return Column(children: <Widget>[
       Container(height: 16.0,),
-      Text("Account:", style: TextStyle(fontWeight: FontWeight.bold)),
-      Container(height: 8.0,),
-      Text("${userController.userName}"),
-      Container(height: 32.0),
+//      Text("Account:", style: TextStyle(fontWeight: FontWeight.bold)),
+//      Container(height: 8.0,),
+//      Container(height: 32.0),
       Text("Points:", style: TextStyle(fontWeight: FontWeight.bold)),
+      Container(height: 8.0),
+      Text("${userController.userName}"),
       Container(height: 8.0),
       Text("${userController.user.points.current}", style: TextStyle(color: Colors.amber, fontSize: 28.0)),
       Text("which makes you no. ${userController.user.points.ranking} in the ranking."),
@@ -55,4 +57,5 @@ class AccountPage extends StatelessWidget {
       Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => Login()));
     });
   }
+
 }

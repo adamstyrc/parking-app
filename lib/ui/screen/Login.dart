@@ -21,8 +21,6 @@ class Login extends StatefulWidget {
 }
 
 class LoginViewState extends State<Login> {
-  final loginTFController = TextEditingController(text: "@vattenfall.com");
-  final passwordTFController = TextEditingController();
   FlutterWebviewPlugin flutterWebviewPlugin;
 
   @override
@@ -69,14 +67,6 @@ class LoginViewState extends State<Login> {
         context,
         MaterialPageRoute(
             builder: (context) => Dashboard()));
-  }
-
-  @override
-  void dispose() {
-    loginTFController.dispose();
-    passwordTFController.dispose();
-//    flutterWebviewPlugin.dispose();
-    super.dispose();
   }
 
   Future loadDataForUser() async {
