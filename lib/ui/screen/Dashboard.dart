@@ -86,6 +86,7 @@ class DashboardState extends State<Dashboard>
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context) => ParkingMap(file.path)));
               }).catchError((error) {
+                Logger.log("pdf loading error: ${error.toString()}");
                 Utils.displaySnackbarText(
                     context, "Could not load the map. Please try again later.");
               });

@@ -17,7 +17,7 @@ class ParkingMap extends StatelessWidget {
     var response = await request.close();
     var bytes = await consolidateHttpClientResponseBytes(response);
     String dir = (await getApplicationDocumentsDirectory()).path;
-    File file = new File('$dir/${filename}_copy');
+    File file = new File('$dir/$filename');
     await file.writeAsBytes(bytes);
     return file;
   }
