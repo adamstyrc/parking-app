@@ -5,7 +5,6 @@ class Manual extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-//        child: Expanded(
             padding: EdgeInsets.only(top: 20.0, left: 8.0, right: 8.0),
             child: new ListView(
               shrinkWrap: true,
@@ -43,29 +42,5 @@ class Manual extends StatelessWidget {
                 )
               ],
             )));
-
-    Container(
-//        child: Expanded(
-        child: new ListView(
-      shrinkWrap: true,
-      children: <Widget>[
-        Text(
-            "1. For each parking reservation, the parking system will count you 0.2 point if a day of reservation reached full state in the past.")
-      ],
-    )
-//        )
-        );
-
-//    return Container(
-//        child: Stack(children: <Widget>[
-//          Align(
-//              child: Theme(
-//                child: CircularProgressIndicator(),
-//                data: Theme
-//                    .of(context)
-//                    .copyWith(accentColor: Colors.orangeAccent),
-//              ),
-//              alignment: Alignment(0.0, 0.9)),
-//        ]));
   }
 }
