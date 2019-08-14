@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mobileoffice/ui/screen/Splash.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 
-void main() => runApp(MaterialApp(
-  title: 'Parking Vattenfall',
-  theme: new ThemeData(
-    primaryColor: Colors.orange,
-  ),
-  home: new Splash(),
-));
+void main() {
+  Crashlytics.instance.enableInDevMode = true;
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+
+  runApp(MaterialApp(
+    title: 'Parking Vattenfall',
+    theme: new ThemeData(
+      primaryColor: Colors.orange,
+    ),
+    home: new Splash(),
+  ));
+}
 
