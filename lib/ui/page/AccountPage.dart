@@ -28,7 +28,6 @@ class AccountPage extends StatelessWidget {
       Container(height: 32.0,),
       FlatButton(onPressed: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => Manual()));
-
       },
         child: Text("MANUAL"),
       ),

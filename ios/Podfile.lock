@@ -1,4 +1,7 @@
 PODS:
+  - Crashlytics (3.13.2):
+    - Fabric (~> 1.10.2)
+  - Fabric (1.10.2)
   - Firebase/Core (5.16.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.5.0)
@@ -7,6 +10,11 @@ PODS:
   - Firebase/Messaging (5.16.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (= 3.3.0)
+  - firebase_crashlytics (0.0.1):
+    - Crashlytics
+    - Fabric
+    - Firebase/Core
+    - Flutter
   - firebase_messaging (0.0.1):
     - Firebase/Core
     - Firebase/Messaging
@@ -77,6 +85,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
   - flutter_full_pdf_viewer (from `.symlinks/plugins/flutter_full_pdf_viewer/ios`)
@@ -87,6 +96,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Crashlytics
+    - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -99,6 +110,8 @@ SPEC REPOS:
     - Protobuf
 
 EXTERNAL SOURCES:
+  firebase_crashlytics:
+    :path: ".symlinks/plugins/firebase_crashlytics/ios"
   firebase_messaging:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
@@ -115,8 +128,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher/ios"
 
 SPEC CHECKSUMS:
+  Crashlytics: 611738c7847f8291a1a51084e35987b86ba6b3ee
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 749a8ff4962f9d8c79dda1966de20f6f77583d67
-  firebase_messaging: b25b2fa94e685146bcf9d706ed87b4e95cd2a17d
+  firebase_crashlytics: 8493272a94ea1144fc0b4a25b98e0fc3ea2dab1f
+  firebase_messaging: efa1c09df5b6fbf505ee319bf27a0c88efe9ff8c
   FirebaseAnalytics: d35d47c03c50c73c14a7fd31463c5775843e78a9
   FirebaseAnalyticsInterop: e5f21be9af6548372e2f0815834ff909bff395a2
   FirebaseCore: ea2d1816723ef21492b8e9113303e1350db5e08c
