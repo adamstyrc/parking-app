@@ -33,13 +33,20 @@ ReservationType getReservationTypeFromString(String type) {
 class MonthReservations {
 
   List<ReservationDay> days;
-  int spots;
+  int spots ;
   MonthType type;
 
-  MonthReservations({this.days, this.spots, this.type, });
+  MonthReservations({
+    this.days,
+    this.spots,
+    this.type
+  });
 
   factory MonthReservations.fromJson(Map<String, dynamic> json) {
-    var spots = json['spots'] as int;
+    var spots = 52;
+    if (json['spots'] != null) {
+      spots = json['spots'] as int;
+    }
     var type = json['type'] as String;
 
     var monthType = getMonthTypeFromString(type.toUpperCase());
@@ -47,7 +54,6 @@ class MonthReservations {
     var reservations = reservationsMap.map((entry) {
       return ReservationDay.fromJson(entry);
     });
-
 
     return MonthReservations(
         days: reservations.toList(),

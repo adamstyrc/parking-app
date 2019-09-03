@@ -56,10 +56,12 @@ class NextMonthPlannerPage extends StatelessWidget {
     var futureReservationsController = NextMonthReservationsController.get();
 
     var nextMonthGranted = futureReservationsController.isNextMonthGranted();
+    var firstDayOfNextMonth = DateUtils.getFirstDayOfNextMonth();
+    var lastDayOfNextMonth = DateUtils.getLastDayOfNextMonth();
     nextMonthCalendarro = Calendarro(
       key: nextMonthCalendarroStateKey,
-      startDate: DateUtils.getFirstDayOfNextMonth(),
-      endDate: DateUtils.getLastDayOfNextMonth(),
+      startDate: firstDayOfNextMonth,
+      endDate: lastDayOfNextMonth,
       displayMode: DisplayMode.MONTHS,
       dayTileBuilder: PlannerNextMonthTileBuilder(),
       selectionMode:
